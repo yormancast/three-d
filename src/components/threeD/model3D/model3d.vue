@@ -7,6 +7,7 @@
 <script>
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export default {
   name: "model-3d",
   methods: {
@@ -16,30 +17,45 @@ export default {
       this.load3Dmodel();
       this.animate();
     },
+    createCamera() {
+      this.camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight,
+        0.37,
+        1000
+      );
+      this.setupOrbitControls();
+    },
+    setupOrbitControls(){
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      this.camera.position.set(2.751, -0.397, 3.201);
+      this.controls.enabled = false;
+      this.controls.update();
+    },
     animate() {
       requestAnimationFrame(this.animate);
+      this.controls.update();
       this.renderer.render(this.scene, this.camera);
     },
     load3Dmodel() {
       const loader = new GLTFLoader();
-      loader.load("/gltf/crow.glb", (gltf) => {
-        gltf.scene.children[0].scale.set(0.1,0.1,0.1)
-        window.model3D = gltf.scene.children[0];
+      loader.load("/gltf/skull1.glb", (gltf) => {
         this.scene.add(gltf.scene.children[0]);
       });
     },
+    createLights(){
+      const hemi = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
+      this.scene.add(hemi);
+    }
   },
   created () {
     this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(
-      100,
-      window.innerWidth / window.innerHeight,
-      0.1,
-      1000
-    ),
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
     this.renderer = new THREE.WebGLRenderer();
+    //this.scene.background = new THREE.Color( 0xf2f2f2 );
+    this.createCamera();
+    this.createLights();
+    window.scene = this.scene;
+    window.camera = this.controls;
   },
   mounted() {
     this.setup3DScene();
