@@ -11,7 +11,7 @@ export default {
   name: "model-3d",
   methods: {
     setup3DScene() {
-      this.renderer.setSize(window.innerWidth/2, window.innerHeight/2);
+      this.renderer.setSize(window.innerWidth, window.innerHeight);
       this.$refs.model.appendChild(this.renderer.domElement);
       this.load3Dmodel();
       this.animate();
@@ -22,7 +22,9 @@ export default {
     },
     load3Dmodel() {
       const loader = new GLTFLoader();
-      loader.load("/gltf/crow.glb", (gltf) => { 
+      loader.load("/gltf/crow.glb", (gltf) => {
+        gltf.scene.children[0].scale.set(0.1,0.1,0.1)
+        window.model3D = gltf.scene.children[0];
         this.scene.add(gltf.scene.children[0]);
       });
     },
@@ -30,11 +32,13 @@ export default {
   created () {
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
-      75,
+      100,
       window.innerWidth / window.innerHeight,
       0.1,
       1000
     ),
+    this.camera.aspect = window.innerWidth / window.innerHeight;
+    this.camera.updateProjectionMatrix();
     this.renderer = new THREE.WebGLRenderer();
   },
   mounted() {
