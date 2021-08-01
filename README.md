@@ -1,5 +1,13 @@
 # three-d
 
+## To do
+### Finish nav
+### Rotate 3D model on click
+#### - set up event bus
+### Build main body info sections
+### Build footer
+### clean up media queries
+
 ## Project setup
 ```
 npm install
