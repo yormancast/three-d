@@ -10,9 +10,15 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export default {
   name: "model-3d",
+  data() {
+    return {
+      canvasHeight: window.innerWidth - (window.innerHeight * 0.05),
+      canvasWidth: window.innerWidth - (window.innerWidth *0.05)
+    }
+  },
   methods: {
     setup3DScene() {
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
+      this.renderer.setSize(this.canvasWidth, this.canvasHeight);
       this.$refs.model.appendChild(this.renderer.domElement);
       this.load3Dmodel();
       this.animate();
@@ -62,6 +68,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

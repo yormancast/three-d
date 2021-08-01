@@ -1,0 +1,19 @@
+button {
+  background: $black;
+  border: 0;
+  color: $white;
+  font: $font;
+  margin: 0;
+  outline: none;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.primary {
+    &:hover {
+      color: $primary;
+    }
+  }
+}

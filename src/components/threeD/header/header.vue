@@ -1,18 +1,17 @@
 <template>
-  <section class="header">
-    <div class="header-logo"></div>
-    <div class="header-nav">
-      <ul>
-        <li v-for="i in nav" @click="navClickHandler(i)" :key="i.title">{{ i.title }}</li>
-      </ul>
+  <section class="main-header row">
+    <div class="main-header-logo col-sm-3"></div>
+    <div class="main-header-nav col-sm-9">
+      <div class="row">
+        <button class="col-sm-3 main-header-nav-list primary" v-for="i in nav" @click="navClickHandler(i)" :key="i.title">{{ i.title }}</button>
+      </div>
     </div>
-
   </section>
 </template>
 
 <script>
 export default {
-  name: "header",
+  name: "main-header",
   data() {
     return {
       nav: [
@@ -35,8 +34,10 @@ export default {
       ]
     }
   },
+  methods: {
+    navClickHandler(navItem) {
+      console.log(navItem);
+    }
+  },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

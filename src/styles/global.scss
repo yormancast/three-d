@@ -1,2 +1,23 @@
+// grid
 @import '~flexboxgrid/dist/flexboxgrid.min.css';
+// globals
 @import './globals/variables';
+@import './globals/fonts';
+@import './globals/buttons';
+
+// components
+@import './components/model3d';
+@import './components/header';
+
+body {
+  color: $font-color;
+  font: $font;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+
+  .three-d {
+    height: 100%;
+    width: 100%;
+  }
+}
