@@ -1,6 +1,8 @@
 <template>
-  <section class="main-header row">
-    <div class="main-header-logo col-sm-3"></div>
+  <section class="main-header row middle-xs">
+    <div class="main-header-logo col-sm-3">
+      <img src="@/assets/logo.png" alt="logo">
+    </div>
     <div class="main-header-nav col-sm-9">
       <div class="row">
         <button class="col-sm-3 main-header-nav-list primary" v-for="i in nav" @click="navClickHandler(i)" :key="i.title">{{ i.title }}</button>

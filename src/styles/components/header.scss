@@ -8,5 +8,13 @@
     margin: 0;
     padding: 5px;
   }
- } 
+ }
+ 
+ &-logo {
+   width: 100%;
+
+   img {
+     width: 100%;
+   }
+ }
 }

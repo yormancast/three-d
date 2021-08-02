@@ -4,10 +4,14 @@
 ### Finish nav
 ### Rotate 3D model on click
 #### - set up event bus
+### Theme 
+#### - set up logo
 ### Build main body info sections
+### Draco compress models
 ### Preloader 
 ### Build footer
 ### clean up media queries
+### Animate 3D model
 
 ## Project setup
 ```

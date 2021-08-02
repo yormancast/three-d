@@ -55,12 +55,12 @@ export default {
     },
     load3Dmodel() {
       const loader = new GLTFLoader();
-      loader.load("/gltf/skull1.glb", (gltf) => {
+      loader.load("/gltf/sad_toaster.glb", (gltf) => {
         this.scene.add(gltf.scene.children[0]);
       });
     },
     createLights(){
-      const hemi = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
+      const hemi = new THREE.HemisphereLight( 0xffffff, 0x000000, 1.5 );
       this.scene.add(hemi);
     },
     animateCamera(position) {
