@@ -5,6 +5,7 @@
 ### Rotate 3D model on click
 #### - set up event bus
 ### Build main body info sections
+### Preloader 
 ### Build footer
 ### clean up media queries
 

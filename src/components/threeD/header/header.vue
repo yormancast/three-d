@@ -17,26 +17,26 @@ export default {
       nav: [
         {
           title: "Bio",
-          modelPosition: [0,0,0]
+          modelPosition: {x: -2.751, y: 0.2, z: 2}
         },
         {
           title: "Link 2",
-          modelPosition: [0,0,0]
+          modelPosition: {x: 2.751, y: -0.397, z: 3.201}
         },
         {
           title: "Link 3",
-          modelPosition: [0,0,0]
+          modelPosition: {x: -3, y: 2, z: 0}
         },
         {
           title: "Contact",
-          modelPosition: [0,0,0]
+          modelPosition: {x: 3, y: -4, z: 1}
         }
       ]
     }
   },
   methods: {
     navClickHandler(navItem) {
-      console.log(navItem);
+      this.$emit('cameraPosition', navItem.modelPosition);
     }
   },
 };

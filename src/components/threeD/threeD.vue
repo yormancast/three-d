@@ -1,7 +1,7 @@
 <template>
   <section class="three-d">
-    <main-header/>
-    <model-3d/>
+    <main-header @cameraPosition="updateCamera"/>
+    <model-3d  :cameraPosition="cameraPOV"/>
   </section>
 </template>
 
@@ -12,7 +12,16 @@ import mainHeader from './header/header.vue'
 export default {
   name:'threeD',
   components: { model3d, mainHeader },
-  
+  data() {
+    return {
+      cameraPOV: []
+    }
+  },
+  methods: {
+    updateCamera(position) {
+      this.cameraPOV = position;
+    }
+  }
 };
 </script>
 

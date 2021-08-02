@@ -7,13 +7,22 @@
 <script>
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+
+const TWEEN = require('@tweenjs/tween.js');
 export default {
   name: "model-3d",
+  props: {
+    cameraPosition: {
+      type: Object,
+      default: ()=>{return {}}
+    },
+  },
   data() {
     return {
       canvasHeight: window.innerWidth - (window.innerHeight * 0.05),
-      canvasWidth: window.innerWidth - (window.innerWidth *0.05)
+      canvasWidth: window.innerWidth - (window.innerWidth *0.05),
+      tween: null
     }
   },
   methods: {
@@ -40,6 +49,7 @@ export default {
     },
     animate() {
       requestAnimationFrame(this.animate);
+      TWEEN.update();
       this.controls.update();
       this.renderer.render(this.scene, this.camera);
     },
@@ -52,19 +62,30 @@ export default {
     createLights(){
       const hemi = new THREE.HemisphereLight( 0xffffff, 0x000000, 1 );
       this.scene.add(hemi);
+    },
+    animateCamera(position) {
+      const currentPosition = this.camera.position;
+      const newPosition = JSON.parse(JSON.stringify(position));
+      this.tween = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
+      this.tween.onComplete(() => {delete this.tween;});
     }
   },
   created () {
     this.scene = new THREE.Scene();
     this.renderer = new THREE.WebGLRenderer();
-    //this.scene.background = new THREE.Color( 0xf2f2f2 );
     this.createCamera();
     this.createLights();
-    window.scene = this.scene;
     window.camera = this.controls;
   },
   mounted() {
     this.setup3DScene();
   },
+  watch: {
+    cameraPosition(newValue) {
+      if(newValue) {
+        this.animateCamera(newValue)
+      }
+    }
+  }
 };
 </script>
