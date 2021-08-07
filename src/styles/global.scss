@@ -11,7 +11,7 @@
 @import './components/window';
 
 body {
-  background: $bg;
+  background-color: $bg;
   color: $font-color;
   font: $font;
   margin: 0;
@@ -19,6 +19,7 @@ body {
   width: 100%;
 
   .three-d {
+    background: radial-gradient(circle, #630b1c 0%, $black 70%);
     height: 100%;
     position: relative;
     width: 100%;

@@ -28,6 +28,8 @@ export default {
   methods: {
     setup3DScene() {
       this.renderer.setSize(this.canvasWidth, this.canvasHeight);
+      this.renderer.setClearColor( new THREE.Color( 0xff0000 ) );
+      this.renderer.setClearAlpha( 0 );
       this.$refs.model.appendChild(this.renderer.domElement);
       this.load3Dmodel();
       this.animate();
@@ -72,7 +74,7 @@ export default {
   },
   created () {
     this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer();
+    this.renderer = new THREE.WebGLRenderer( { alpha: true } );
     this.createCamera();
     this.createLights();
     window.camera = this.controls;
