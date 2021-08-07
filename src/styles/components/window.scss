@@ -1,0 +1,15 @@
+.window-wrapper {
+  color: $white;
+  left: 0;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 8px;
+  position: absolute;
+  right: 0;
+  top: 10%;
+  width: 60%;
+
+  &-copy {
+    font-size: 1.3em;
+  }   
+}

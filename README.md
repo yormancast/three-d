@@ -1,12 +1,13 @@
 # three-d
 
 ## To do
-### Finish nav
-### Rotate 3D model on click
-#### - set up event bus
+### *Finish nav
+### *Rotate 3D model on click
+#### *- set up event bus
 ### Theme 
-#### - set up logo
+#### *- set up logo
 ### Build main body info sections
+#### - animations?
 ### Draco compress models
 ### Preloader 
 ### Build footer

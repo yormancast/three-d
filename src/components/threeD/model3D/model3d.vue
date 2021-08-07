@@ -55,7 +55,7 @@ export default {
     },
     load3Dmodel() {
       const loader = new GLTFLoader();
-      loader.load("/gltf/sad_toaster.glb", (gltf) => {
+      loader.load("/gltf/skull1.glb", (gltf) => {
         this.scene.add(gltf.scene.children[0]);
       });
     },

@@ -8,6 +8,7 @@
 // components
 @import './components/model3d';
 @import './components/header';
+@import './components/window';
 
 body {
   background: $bg;
@@ -19,6 +20,7 @@ body {
 
   .three-d {
     height: 100%;
+    position: relative;
     width: 100%;
   }
 }
