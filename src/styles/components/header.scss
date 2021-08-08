@@ -1,8 +1,10 @@
 .main-header {
-  margin-top: 5px;
+  margin-left: 0;
   width: 100%;
 
  &-nav {
+   margin-bottom: 10px;
+
   &-list {
     font-weight: bold;
     list-style: none;
@@ -12,12 +14,19 @@
  }
  
  &-logo {
-   width: 100%;
-
-   img {
+  img {
+    display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 100%;
-   }
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 50%;
+
+    @include breakpoint(medium) {
+      margin-top: auto;
+      margin-bottom: auto;
+      width: 100%;
+    }
+  }
  }
 }

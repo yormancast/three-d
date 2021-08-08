@@ -4,6 +4,7 @@
 @import './globals/variables';
 @import './globals/fonts';
 @import './globals/buttons';
+@import './globals/mixins';
 
 // components
 @import './components/model3d';
@@ -19,7 +20,6 @@ body {
   width: 100%;
 
   .three-d {
-    background: radial-gradient(circle, #630b1c 0%, $black 70%);
     height: 100%;
     position: relative;
     width: 100%;

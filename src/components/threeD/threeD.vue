@@ -2,7 +2,7 @@
   <section class="three-d">
     <main-header :nav="dataModel" @navItemClicked="handleNavClickEvent" />
     <model-3d :cameraPosition="cameraPOV"/>
-    <window v-show="i.visible" v-for="i in dataModel" :key="i.title" :itemData="i" />
+    <window :class="{ isVisible :  i.visible }" v-for="i in dataModel" :key="i.title" :itemData="i" />
   </section>
 </template>
 

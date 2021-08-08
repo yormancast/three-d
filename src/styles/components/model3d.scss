@@ -1,4 +1,5 @@
 .model-3d {
+  background: radial-gradient(circle, #630b1c 0%, $black 50%);
   height: 100%;
   width: 100%;
 
@@ -6,7 +7,10 @@
     canvas {
       margin-left: auto;
       margin-right: auto;
-      max-height: 882px;
+      
+      @include breakpoint(large) {
+        max-height: 882px;
+      }
     }
   }
 }

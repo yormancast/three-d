@@ -20,7 +20,7 @@ export default {
   },
   data() {
     return {
-      canvasHeight: window.innerWidth - (window.innerHeight * 0.05),
+      canvasHeight: window.innerWidth - (window.innerWidth * 0.05),
       canvasWidth: window.innerWidth - (window.innerWidth *0.05),
       tween: null
     }
@@ -70,6 +70,19 @@ export default {
       const newPosition = JSON.parse(JSON.stringify(position));
       this.tween = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
       this.tween.onComplete(() => {delete this.tween;});
+    },
+    windowResizeEvent() {
+      if (window.innerWidth > window.innerHeight) {
+        this.canvasHeight = window.innerHeight - (window.innerHeight * 0.05);
+        this.canvasWidth = window.innerWidth - (window.innerWidth * 0.05);
+      } else {
+        this.canvasHeight = window.innerHeight;
+        this.canvasWidth = window.innerWidth;
+      }
+
+      this.renderer.setSize(this.canvasWidth, this.canvasHeight);
+      this.camera.aspect = this.canvasWidth / this.canvasHeight;
+      this.camera.updateProjectionMatrix();
     }
   },
   created () {
@@ -80,7 +93,9 @@ export default {
     window.camera = this.controls;
   },
   mounted() {
+    window.addEventListener('resize', this.windowResizeEvent);
     this.setup3DScene();
+    this.windowResizeEvent();
   },
   watch: {
     cameraPosition(newValue) {
