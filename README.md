@@ -1,16 +1,16 @@
 # three-d
 
 ## To do
-### *Finish nav
-### *Rotate 3D model on click
-#### *- set up event bus
 ### Theme 
-#### *- set up logo
+#### Better logo
+#### color palette
 #### Build better theme
 ##### - nicer bg
 ### Build main body info sections
 #### - animations?
 ### Draco compress models
+### rig model
+### buttons to change pose
 ### Preloader 
 ### Build footer
 ### clean up media queries

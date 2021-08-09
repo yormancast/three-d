@@ -1,0 +1,29 @@
+
+@keyframes slidein {
+    0% { margin-left:-1800px;opacity:0; }
+    20% { margin-left:-800px; }
+    35% { margin-left:0px; }
+    100% { margin-left:0px;opacity:1 }
+}
+
+
+@keyframes titleAnimation {
+    0% {
+      transform: translateY(-50px);
+      opacity: 0;
+      -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 80%);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 80%);
+  }
+  20% {
+      transform: translateY(0);
+      opacity: 1;
+      -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+  }
+  100% {
+       transform: translateY(0);
+       opacity: 1;
+      -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 0);
+  }
+}

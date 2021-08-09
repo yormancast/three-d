@@ -5,11 +5,21 @@
  &-nav {
    margin-bottom: 10px;
 
+   @include breakpoint(medium) {
+     margin: 0;
+   }
+
   &-list {
-    font-weight: bold;
     list-style: none;
     margin: 0;
     padding: 5px;
+    text-transform: uppercase;
+
+    &:hover,
+    &.active {
+      color: $primary;
+      font-weight: bold;
+    }
   }
  }
  
@@ -20,12 +30,10 @@
     margin-right: auto;
     margin-top: 10px;
     margin-bottom: 10px;
-    width: 50%;
+    max-width: 150px;
 
     @include breakpoint(medium) {
-      margin-top: auto;
-      margin-bottom: auto;
-      width: 100%;
+      margin: 0;
     }
   }
  }

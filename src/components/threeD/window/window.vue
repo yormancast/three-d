@@ -1,7 +1,7 @@
 <template>
-  <section class="window-wrapper">
-    <h2 class="window-wrapper-title"> {{ itemData.title }} </h2>
-    <p class="window-wrapper-copy"> {{ itemData.copy }} </p>
+  <section class="window-wrapper row middle-xs">
+    <h2 class="window-wrapper-title col-sm-4"> {{ itemData.title }} </h2>
+    <p class="window-wrapper-copy col-sm-8"> <span>{{ itemData.copy }} </span></p>
   </section>
 </template>
 

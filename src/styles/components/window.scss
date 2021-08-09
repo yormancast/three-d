@@ -1,4 +1,5 @@
 .window-wrapper {
+  background-color: $bg-op;
   color: $white;
   left: 0;
   margin-left: auto;
@@ -9,17 +10,34 @@
   right: 0;
   top: 12%;
   transition: opacity 0.6s ease;
-  width: 60%;
-
+  
   @include breakpoint(large) {
     top: 10%;
+    width: 60%;
   }
 
   &-copy {
     font-size: 1.3em;
   }
+
+  &-title {
+    margin: 0;
+    text-align: center;
+  }
   
   &.isVisible {
     opacity: 1;
+
+    .window-wrapper-copy {  
+      -webkit-clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 80%);
+      clip-path: polygon(100% 0, 100% 100%, 0 100%, 0 80%);
+      transform: translateY(-50px);
+      opacity: 0;
+      animation: titleAnimation 3s ease forwards;
+    }
+  
+    .window-wrapper-title {
+      animation: titleAnimation 2s 1 forwards;
+    }
   }
 }
