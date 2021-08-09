@@ -22,7 +22,7 @@ export default {
     return {
       canvasHeight: window.innerWidth - (window.innerWidth * 0.05),
       canvasWidth: window.innerWidth - (window.innerWidth *0.05),
-      tween: null
+      cameraAnimation: null
     }
   },
   methods: {
@@ -45,7 +45,7 @@ export default {
     },
     setupOrbitControls(){
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.camera.position.set(2.751, -0.397, 3.201);
+      this.camera.position.set(2.751, 0, 8);
       this.controls.enabled = false;
       this.controls.update();
     },
@@ -57,8 +57,9 @@ export default {
     },
     load3Dmodel() {
       const loader = new GLTFLoader();
-      loader.load("/gltf/skull1.glb", (gltf) => {
-        this.scene.add(gltf.scene.children[0]);
+      loader.load("/gltf/bunny.glb", (gltf) => {
+        const model = gltf.scene.children[0];
+        this.scene.add(model);
       });
     },
     createLights(){
@@ -68,8 +69,16 @@ export default {
     animateCamera(position) {
       const currentPosition = this.camera.position;
       const newPosition = JSON.parse(JSON.stringify(position));
-      this.tween = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
-      this.tween.onComplete(() => {delete this.tween;});
+      this.cameraAnimation = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
+      this.cameraAnimation.onComplete(() => {delete this.tween;});
+    },
+    animateScene() {
+      let scenePosition = this.scene.position;
+      let sceneAnimationUp = new TWEEN.Tween(scenePosition).to({y: scenePosition.y + 0.03}, 900);
+      let sceneAnimationDown = new TWEEN.Tween(scenePosition).to({y: scenePosition.y - 0.03}, 900);
+      sceneAnimationUp.chain(sceneAnimationDown);
+      sceneAnimationDown.chain(sceneAnimationUp);
+      sceneAnimationUp.start();
     },
     windowResizeEvent() {
       if (window.innerWidth > window.innerHeight) {
@@ -87,15 +96,16 @@ export default {
   },
   created () {
     this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer( { alpha: true } );
+    this.renderer = new THREE.WebGLRenderer( { antialiasing: true, alpha: true } );
     this.createCamera();
     this.createLights();
-    window.camera = this.controls;
+    window.scene = this.scene;
   },
   mounted() {
     window.addEventListener('resize', this.windowResizeEvent);
     this.setup3DScene();
     this.windowResizeEvent();
+    this.animateScene();
   },
   watch: {
     cameraPosition(newValue) {

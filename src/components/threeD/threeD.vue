@@ -22,7 +22,7 @@ export default {
           visible: true,
           name: 'bio',
           title: 'Bio',
-          modelPosition: {x: -2.751, y: 0.2, z: 2},
+          modelPosition: {x: -2.751, y: 0.2, z: 4},
           copy: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id elit eu ipsum aliquam viverra. Maecenas sed ipsum dignissim, feugiat quam eget, tincidunt tellus.'
         },
         {
@@ -36,7 +36,7 @@ export default {
           visible: false,
           name: 'link3',
           title: "Link 3",
-          modelPosition: {x: -3, y: 2, z: 0},
+          modelPosition: {x: -5, y: 2, z: 6},
           copy: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id elit eu ipsum aliquam viverra. Maecenas sed ipsum dignissim, feugiat quam eget, tincidunt tellus.'
         },
         {
