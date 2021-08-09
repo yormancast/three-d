@@ -6,6 +6,8 @@
 #### *- set up event bus
 ### Theme 
 #### *- set up logo
+#### Build better theme
+##### - nicer bg
 ### Build main body info sections
 #### - animations?
 ### Draco compress models

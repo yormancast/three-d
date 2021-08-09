@@ -63,7 +63,7 @@ export default {
       });
     },
     createLights(){
-      const hemi = new THREE.HemisphereLight( 0xffffff, 0x000000, 1.5 );
+      const hemi = new THREE.HemisphereLight( 0x00aaff, 0xffaa00, 1.5 );
       this.scene.add(hemi);
     },
     animateCamera(position) {

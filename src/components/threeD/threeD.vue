@@ -29,7 +29,7 @@ export default {
           visible: false,
           name: 'link2',
           title: "Link 2",
-          modelPosition: {x: 2.751, y: -0.397, z: 3.201},
+          modelPosition: {x: 2.751, y: -0.397, z: 3.8},
           copy: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id elit eu ipsum aliquam viverra. Maecenas sed ipsum dignissim, feugiat quam eget, tincidunt tellus.'
         },
         {
