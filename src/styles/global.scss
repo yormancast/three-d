@@ -13,8 +13,8 @@
 @import './components/window';
 
 body {
-  background-color: $bg;
-  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%);
+  background: url('../../assets/img/bg.jpg') $bg bottom no-repeat;
+  background-size: cover;
   color: $font-color;
   font: $font;
   margin: 0;
@@ -22,6 +22,7 @@ body {
   width: 100%;
 
   .three-d {
+    background-image: radial-gradient(at 50% 50%, rgba(158, 10, 42, 0.9) 10%, rgba(10, 11, 19, 0.97) 60%);
     height: 100%;
     position: relative;
     width: 100%;

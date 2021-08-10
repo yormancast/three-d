@@ -1,7 +1,7 @@
 <template>
   <section class="main-header row middle-xs">
     <div class="main-header-logo col-xs-12 col-sm">
-      <img src="@/assets/logo.png" alt="logo">
+      <img src="@/assets/img/logo.png" alt="logo">
     </div>
     <div class="main-header-nav col-xs-12 col-sm">
       <div class="row">

@@ -105,7 +105,7 @@ export default {
     window.addEventListener('resize', this.windowResizeEvent);
     this.setup3DScene();
     this.windowResizeEvent();
-    this.animateScene();
+    //this.animateScene();
   },
   watch: {
     cameraPosition(newValue) {

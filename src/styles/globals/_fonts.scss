@@ -1,3 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cairo:wght@300;400&display=swap');
 
-$font: 14px 'Roboto Condensed', sans-serif;
+$font: 14px 'Cairo', sans-serif;
+$title-font: 'Bebas Neue', cursive;
+
+h1,h2,h3 {
+  font-family: $title-font;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 2em;
+}
