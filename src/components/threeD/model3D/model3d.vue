@@ -51,6 +51,7 @@ export default {
     },
     animate() {
       requestAnimationFrame(this.animate);
+      this.animateScene();
       TWEEN.update();
       this.controls.update();
       this.renderer.render(this.scene, this.camera);
@@ -73,12 +74,8 @@ export default {
       this.cameraAnimation.onComplete(() => {delete this.tween;});
     },
     animateScene() {
-      let scenePosition = this.scene.position;
-      let sceneAnimationUp = new TWEEN.Tween(scenePosition).to({y: scenePosition.y + 0.03}, 900);
-      let sceneAnimationDown = new TWEEN.Tween(scenePosition).to({y: scenePosition.y - 0.03}, 900);
-      sceneAnimationUp.chain(sceneAnimationDown);
-      sceneAnimationDown.chain(sceneAnimationUp);
-      sceneAnimationUp.start();
+      let scenePosition = this.scene.rotation;
+      scenePosition.y = scenePosition.y + 0.01;
     },
     windowResizeEvent() {
       if (window.innerWidth > window.innerHeight) {
@@ -105,7 +102,6 @@ export default {
     window.addEventListener('resize', this.windowResizeEvent);
     this.setup3DScene();
     this.windowResizeEvent();
-    //this.animateScene();
   },
   watch: {
     cameraPosition(newValue) {
