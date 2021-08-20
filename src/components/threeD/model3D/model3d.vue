@@ -20,9 +20,10 @@ export default {
   },
   data() {
     return {
-      canvasHeight: window.innerWidth - (window.innerWidth * 0.05),
-      canvasWidth: window.innerWidth - (window.innerWidth *0.05),
-      cameraAnimation: null
+      canvasHeight: window.innerWidth - (window.innerWidth * this.resizeRatio),
+      canvasWidth: window.innerWidth - (window.innerWidth * this.resizeRatio),
+      cameraAnimation: null,
+      resizeRatio: 0.08
     }
   },
   methods: {
@@ -37,7 +38,7 @@ export default {
     createCamera() {
       this.camera = new THREE.PerspectiveCamera(
         60,
-        window.innerWidth / window.innerHeight,
+        this.canvasWidth / this.canvasHeight,
         0.37,
         1000
       );
@@ -78,14 +79,8 @@ export default {
       scenePosition.y = scenePosition.y + 0.01;
     },
     windowResizeEvent() {
-      if (window.innerWidth > window.innerHeight) {
-        this.canvasHeight = window.innerHeight - (window.innerHeight * 0.05);
-        this.canvasWidth = window.innerWidth - (window.innerWidth * 0.05);
-      } else {
-        this.canvasHeight = window.innerHeight;
-        this.canvasWidth = window.innerWidth;
-      }
-
+      this.canvasHeight = window.innerHeight - (window.innerHeight * this.resizeRatio);
+      this.canvasWidth = window.innerWidth - (window.innerWidth * this.resizeRatio);
       this.renderer.setSize(this.canvasWidth, this.canvasHeight);
       this.camera.aspect = this.canvasWidth / this.canvasHeight;
       this.camera.updateProjectionMatrix();

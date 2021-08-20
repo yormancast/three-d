@@ -1,4 +1,4 @@
-button {
+button, a {
   background-color: transparent;
   border: 0;
   color: $white;
@@ -15,5 +15,14 @@ button {
     &:hover {
       color: $primary;
     }
+  }
+}
+
+a {
+  color: $primary;
+
+  &:hover {
+    color: $secondary;
+    cursor: pointer;
   }
 }

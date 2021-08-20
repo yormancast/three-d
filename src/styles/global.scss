@@ -11,6 +11,13 @@
 @import './components/model3d';
 @import './components/header';
 @import './components/window';
+@import './components/socials';
+
+* {
+  box-sizing: initial;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   background: url('../../assets/img/bg.jpg') $bg bottom no-repeat;
@@ -27,4 +34,8 @@ body {
     position: relative;
     width: 100%;
   }
+}
+
+img {
+  width: 101%;
 }
