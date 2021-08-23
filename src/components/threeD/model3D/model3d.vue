@@ -84,6 +84,12 @@ export default {
       this.renderer.setSize(this.canvasWidth, this.canvasHeight);
       this.camera.aspect = this.canvasWidth / this.canvasHeight;
       this.camera.updateProjectionMatrix();
+    },
+    flipSkateboard() {
+      const skateBoard = this.scene.getObjectByName("Bunny_2").rotation;
+      const rotation = skateBoard.y === 20 ? {x:skateBoard.x, y: 0, z: skateBoard.z} : {x:skateBoard.x, y: 20, z: skateBoard.z}
+      const flip = new TWEEN.Tween(skateBoard).to(rotation, 800).easing(TWEEN.Easing.Quadratic.InOut);
+      flip.start();
     }
   },
   created () {
@@ -101,7 +107,8 @@ export default {
   watch: {
     cameraPosition(newValue) {
       if(newValue) {
-        this.animateCamera(newValue)
+        this.animateCamera(newValue);
+        this.flipSkateboard();
       }
     }
   }
