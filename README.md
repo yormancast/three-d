@@ -1,20 +1,11 @@
 # three-d
 
 ## To do
-### Theme 
-#### Better logo
-#### color palette
-#### Build better theme
-##### - nicer bg
-### Build main body info sections
-#### - animations?
-### Draco compress models
-### rig model
-### buttons to change pose
-### Preloader 
-### Build footer
-### clean up media queries
-### Animate 3D model
+### - Draco compress models
+### - rig model
+### - buttons to change pose
+### - Model Preloader 
+### - Build footer
 
 ## Project setup
 ```
