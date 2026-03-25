@@ -1,17 +1,18 @@
-// grid
-@import '~flexboxgrid/dist/flexboxgrid.min.css';
 // globals
-@import './globals/variables';
-@import './globals/fonts';
-@import './globals/buttons';
-@import './globals/mixins';
-@import './globals/animations';
+@use './globals/variables' as *;
+@use './globals/fonts' as *;
+@use './globals/buttons';
+@use './globals/mixins';
+@use './globals/animations';
 
 // components
-@import './components/model3d';
-@import './components/header';
-@import './components/window';
-@import './components/socials';
+@use './components/model3d';
+@use './components/header';
+@use './components/window';
+@use './components/socials';
+
+// grid
+@import '~flexboxgrid/dist/flexboxgrid.min.css';
 
 * {
   box-sizing: initial;

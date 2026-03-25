@@ -5,12 +5,13 @@
 </template>
 
 <script>
+import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 const TWEEN = require('@tweenjs/tween.js');
-export default {
+export default defineComponent({
   name: "model-3d",
   props: {
     cameraPosition: {
@@ -18,99 +19,138 @@ export default {
       default: ()=>{return {}}
     },
   },
-  data() {
-    return {
-      canvasHeight: window.innerWidth - (window.innerWidth * this.resizeRatio),
-      canvasWidth: window.innerWidth - (window.innerWidth * this.resizeRatio),
-      cameraAnimation: null,
-      resizeRatio: 0.08
-    }
-  },
-  methods: {
-    setup3DScene() {
-      this.renderer.setSize(this.canvasWidth, this.canvasHeight);
-      this.renderer.setClearColor( new THREE.Color( 0xff0000 ) );
-      this.renderer.setClearAlpha( 0 );
-      this.$refs.model.appendChild(this.renderer.domElement);
-      this.load3Dmodel();
-      this.animate();
-    },
-    createCamera() {
-      this.camera = new THREE.PerspectiveCamera(
+  setup(props) {
+    const model = ref(null);
+    const resizeRatio = 0.08;
+    const canvasHeight = ref(window.innerWidth - (window.innerWidth * resizeRatio));
+    const canvasWidth = ref(window.innerWidth - (window.innerWidth * resizeRatio));
+    const cameraAnimation = ref(null);
+    const scene = new THREE.Scene();
+    const renderer = new THREE.WebGLRenderer({ antialiasing: true, alpha: true });
+    let camera;
+    let controls;
+    let animationFrameId = null;
+
+    const setupOrbitControls = () => {
+      controls = new OrbitControls(camera, renderer.domElement);
+      camera.position.set(2.751, 0, 8);
+      controls.enabled = false;
+      controls.update();
+    };
+
+    const createCamera = () => {
+      camera = new THREE.PerspectiveCamera(
         60,
-        this.canvasWidth / this.canvasHeight,
+        canvasWidth.value / canvasHeight.value,
         0.37,
         1000
       );
-      this.setupOrbitControls();
-    },
-    setupOrbitControls(){
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.camera.position.set(2.751, 0, 8);
-      this.controls.enabled = false;
-      this.controls.update();
-    },
-    animate() {
-      requestAnimationFrame(this.animate);
-      this.animateScene();
+
+      setupOrbitControls();
+    };
+
+    const animateScene = () => {
+      const scenePosition = scene.rotation;
+      scenePosition.y = scenePosition.y + 0.01;
+    };
+
+    const animate = () => {
+      animationFrameId = requestAnimationFrame(animate);
+      animateScene();
       TWEEN.update();
-      this.controls.update();
-      this.renderer.render(this.scene, this.camera);
-    },
-    load3Dmodel() {
+      controls.update();
+      renderer.render(scene, camera);
+    };
+
+    const load3Dmodel = () => {
       const loader = new GLTFLoader();
       loader.load("/gltf/bunny.glb", (gltf) => {
         const model = gltf.scene.children[0];
-        this.scene.add(model);
+        scene.add(model);
       });
-    },
-    createLights(){
+    };
+
+    const createLights = () => {
       const hemi = new THREE.HemisphereLight( 0x00aaff, 0xffaa00, 2 );
-      this.scene.add(hemi);
-    },
-    animateCamera(position) {
-      const currentPosition = this.camera.position;
+      scene.add(hemi);
+    };
+
+    const animateCamera = (position) => {
+      const currentPosition = camera.position;
       const newPosition = JSON.parse(JSON.stringify(position));
-      this.cameraAnimation = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
-      this.cameraAnimation.onComplete(() => {delete this.tween;});
-    },
-    animateScene() {
-      let scenePosition = this.scene.rotation;
-      scenePosition.y = scenePosition.y + 0.01;
-    },
-    windowResizeEvent() {
-      this.canvasHeight = window.innerHeight - (window.innerHeight * this.resizeRatio);
-      this.canvasWidth = window.innerWidth - (window.innerWidth * this.resizeRatio);
-      this.renderer.setSize(this.canvasWidth, this.canvasHeight);
-      this.camera.aspect = this.canvasWidth / this.canvasHeight;
-      this.camera.updateProjectionMatrix();
-    },
-    flipSkateboard() {
-      const skateBoard = this.scene.getObjectByName("Bunny_2").rotation;
+      cameraAnimation.value = new TWEEN.Tween(currentPosition).to(newPosition, 500).easing(TWEEN.Easing.Quadratic.InOut).start();
+      cameraAnimation.value.onComplete(() => {
+        cameraAnimation.value = null;
+      });
+    };
+
+    const windowResizeEvent = () => {
+      canvasHeight.value = window.innerHeight - (window.innerHeight * resizeRatio);
+      canvasWidth.value = window.innerWidth - (window.innerWidth * resizeRatio);
+      renderer.setSize(canvasWidth.value, canvasHeight.value);
+      camera.aspect = canvasWidth.value / canvasHeight.value;
+      camera.updateProjectionMatrix();
+    };
+
+    const flipSkateboard = () => {
+      const bunny = scene.getObjectByName("Bunny_2");
+
+      if (!bunny) {
+        return;
+      }
+
+      const skateBoard = bunny.rotation;
       const rotation = skateBoard.y === 20 ? {x:skateBoard.x, y: 0, z: skateBoard.z} : {x:skateBoard.x, y: 20, z: skateBoard.z}
       const flip = new TWEEN.Tween(skateBoard).to(rotation, 800).easing(TWEEN.Easing.Quadratic.InOut);
       flip.start();
-    }
-  },
-  created () {
-    this.scene = new THREE.Scene();
-    this.renderer = new THREE.WebGLRenderer( { antialiasing: true, alpha: true } );
-    this.createCamera();
-    this.createLights();
-    window.scene = this.scene;
-  },
-  mounted() {
-    window.addEventListener('resize', this.windowResizeEvent);
-    this.setup3DScene();
-    this.windowResizeEvent();
-  },
-  watch: {
-    cameraPosition(newValue) {
-      if(newValue) {
-        this.animateCamera(newValue);
-        this.flipSkateboard();
+    };
+
+    const setup3DScene = () => {
+      renderer.setSize(canvasWidth.value, canvasHeight.value);
+      renderer.setClearColor( new THREE.Color( 0xff0000 ) );
+      renderer.setClearAlpha( 0 );
+      model.value.appendChild(renderer.domElement);
+      load3Dmodel();
+      animate();
+    };
+
+    createCamera();
+    createLights();
+    window.scene = scene;
+
+    onMounted(() => {
+      window.addEventListener('resize', windowResizeEvent);
+      setup3DScene();
+      windowResizeEvent();
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('resize', windowResizeEvent);
+
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
-    }
+
+      if (controls) {
+        controls.dispose();
+      }
+
+      renderer.dispose();
+    });
+
+    watch(
+      () => props.cameraPosition,
+      (newValue) => {
+        if (newValue) {
+          animateCamera(newValue);
+          flipSkateboard();
+        }
+      }
+    );
+
+    return {
+      model
+    };
   }
-};
+});
 </script>

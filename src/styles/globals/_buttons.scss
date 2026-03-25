@@ -1,3 +1,6 @@
+@use './variables' as *;
+@use './fonts' as *;
+
 button, a {
   background-color: transparent;
   border: 0;

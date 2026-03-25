@@ -6,13 +6,18 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'window',
   props: {
     itemData: {
       type: Object,
       default: () => {return {}} 
     }
+  },
+  setup() {
+    return {}
   }
-};
+});
 </script>

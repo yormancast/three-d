@@ -18,7 +18,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: "main-header",
   props: {
     nav: {
@@ -26,10 +28,15 @@ export default {
       default: ()=> {return []}
     }
   },
-  methods: {
-    navClickHandler(navItem) {
-      this.$emit('navItemClicked', navItem.name);
+  emits: ['navItemClicked'],
+  setup(props, { emit }) {
+    const navClickHandler = (navItem) => {
+      emit('navItemClicked', navItem.name);
+    }
+
+    return {
+      navClickHandler
     }
   },
-};
+});
 </script>

@@ -1,3 +1,6 @@
+@use '../globals/variables' as *;
+@use '../globals/mixins' as *;
+
 .window-wrapper {
   background-color: $bg-op;
   color: $white;

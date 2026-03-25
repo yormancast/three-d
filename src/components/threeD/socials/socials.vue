@@ -9,7 +9,12 @@
 </template>
 
 <script>
-export default {
-  name: 'socials'
-};
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'socials',
+  setup() {
+    return {}
+  }
+});
 </script>
