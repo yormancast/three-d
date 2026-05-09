@@ -2,8 +2,8 @@
   <three-d/>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent } from 'vue';
 import threeD from '@/components/threeD/threeD.vue'
 
 export default defineComponent({
@@ -12,7 +12,7 @@ export default defineComponent({
     threeD
   },
   setup() {
-    return {}
+    return {};
   }
-})
+});
 </script>

@@ -7,7 +7,7 @@
       <div class="row">
         <button
           :class="[{active : i.visible}, 'col-xs-3 main-header-nav-list primary']" 
-          v-for="i in nav" 
+          v-for="i in props.nav" 
           @click="navClickHandler(i)" 
           :key="i.title">
             {{ i.title }}.
@@ -17,26 +17,28 @@
   </section>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent } from 'vue';
+import type { PortfolioSection } from '@/definitions/portfolio';
 
 export default defineComponent({
-  name: "main-header",
+  name: 'mainHeader',
   props: {
     nav: {
       type: Array,
-      default: ()=> {return []}
+      default: () => []
     }
   },
   emits: ['navItemClicked'],
   setup(props, { emit }) {
-    const navClickHandler = (navItem) => {
+    const navClickHandler = (navItem: PortfolioSection) => {
       emit('navItemClicked', navItem.name);
-    }
+    };
 
     return {
+      props,
       navClickHandler
-    }
-  },
+    };
+  }
 });
 </script>
