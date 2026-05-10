@@ -5,23 +5,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
 import { createPortfolioScene } from '@/libs/three/createPortfolioScene';
 import { portfolioSceneConfig } from '@/content/portfolio';
 
 export default defineComponent({
   name: 'model3d',
-  props: {
-    cameraPosition: {
-      type: Object,
-      default: null
-    },
-    activeAnimation: {
-      type: String,
-      default: null
-    }
-  },
-  setup(props) {
+  setup() {
     const model = ref<HTMLElement | null>(null);
     let sceneController: any = null;
 
@@ -40,27 +30,8 @@ export default defineComponent({
 
     onBeforeUnmount(() => {
       window.removeEventListener('resize', handleResize);
-      sceneController?.destroy();
       sceneController = null;
     });
-
-    watch(
-      () => props.cameraPosition,
-      (newValue) => {
-        if (newValue) {
-          sceneController?.animateCamera(newValue);
-        }
-      }
-    );
-
-    watch(
-      () => props.activeAnimation,
-      (newValue) => {
-        if (newValue) {
-          sceneController?.playAnimation(newValue);
-        }
-      }
-    );
 
     return {
       model

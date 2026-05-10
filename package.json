@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service serve",
     "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build",
-    "lint": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service lint"
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "core-js": "^3.6.5",
@@ -24,8 +24,7 @@
     "flexboxgrid": "^6.3.1",
     "sass": "^1.98.0",
     "sass-loader": "^10.1.1",
-    "three": "0.131.1"
-    ,
+    "three": "0.131.1",
     "typescript": "~4.9.5"
   },
   "overrides": {
@@ -33,6 +32,10 @@
   },
   "eslintConfig": {
     "root": true,
+    "ignorePatterns": [
+      "*.d.ts",
+      "src/**/*.d.ts"
+    ],
     "env": {
       "node": true
     },

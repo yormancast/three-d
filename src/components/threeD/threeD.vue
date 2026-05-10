@@ -1,69 +1,56 @@
 <template>
   <section class="three-d">
-    <main-header :nav="sections" @navItemClicked="handleNavClickEvent" />
-    <model-3d :cameraPosition="cameraPOV" :activeAnimation="activeAnimation"/>
-    <window :class="{ isVisible :  section.visible }" v-for="section in sections" :key="section.title" :itemData="section" />
-    <socials />
+    <header class="portfolio-chrome" aria-label="Site identity">
+      <a class="portfolio-mark" href="/" aria-label="Yorman Castellanos home">YC</a>
+      <span class="portfolio-status" aria-hidden="true"></span>
+    </header>
+
+    <Model3d />
+
+    <div class="portfolio-hero" aria-label="Portfolio introduction">
+      <p class="portfolio-hero__eyebrow">Building interactive 3D commerce systems</p>
+      <h1>Yorman Castellanos</h1>
+      <p class="portfolio-hero__role">Frontend Technical Lead</p>
+
+      <nav class="portfolio-nav" aria-label="Portfolio navigation">
+        <button
+          v-for="section in sections"
+          :key="section.name"
+          :class="{ 'is-active': activeSection === section.name }"
+          type="button"
+          @click="openSection(section.name)"
+        >
+          {{ section.title }}
+        </button>
+      </nav>
+    </div>
+    <PortfolioWindow :active-window-name="activeSection" />
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import model3d from './model3D/model3d.vue';
-import mainHeader from './header/header.vue';
-import window from './window/window.vue';
-import socials from './socials/socials.vue';
+import Model3d from './model3D/model3d.vue';
+import PortfolioWindow from './window/window.vue';
 import { portfolioSections } from '@/content/portfolio';
-import type { CameraPosition, PortfolioSection } from '@/definitions/portfolio';
+import type { PortfolioSection } from '@/definitions/portfolio';
 
 export default defineComponent({
   name:'threeD',
-  components: { model3d, mainHeader, window, socials },
+  components: { Model3d, PortfolioWindow },
   setup() {
-    const cameraPOV = ref<CameraPosition | null>(null);
-    const activeAnimation = ref<string | null>(null);
+    const activeSection = ref('');
     const sections = ref<PortfolioSection[]>(
       portfolioSections.map((section) => ({ ...section }))
     );
-
-    const updateCamera = (position: CameraPosition) => {
-      cameraPOV.value = position;
-    };
-
-    const updateAnimation = (animationName: string) => {
-      activeAnimation.value = animationName;
-    };
-
-    const getNavItem = (itemName: string) => {
-      return sections.value.find((section) => {
-        return section.name === itemName;
-      });
-    };
-
-    const resetVisibility = () => {
-      sections.value.forEach((element) => {
-        element.visible = false;
-      });
-    };
-
-    const handleNavClickEvent = (itemClicked: string) => {
-      const currentNavItem = getNavItem(itemClicked);
-
-      if (!currentNavItem) {
-        return;
-      }
-
-      updateCamera(currentNavItem.modelPosition);
-      updateAnimation(currentNavItem.sceneAnimation);
-      resetVisibility();
-      currentNavItem.visible = true;
+    const openSection = (sectionName: string) => {
+      activeSection.value = activeSection.value === sectionName ? '' : sectionName;
     };
 
     return {
-      activeAnimation,
-      cameraPOV,
-      sections,
-      handleNavClickEvent
+      activeSection,
+      openSection,
+      sections
     };
   }
 });

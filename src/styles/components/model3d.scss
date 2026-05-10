@@ -1,16 +1,23 @@
 @use '../globals/mixins' as *;
 
 .model-3d {
+  inset: 0;
   height: 100%;
+  position: absolute;
   width: 100%;
+  z-index: 2;
 
   .model {
+    height: 100%;
+    width: 100%;
+
     canvas {
-      margin-left: auto;
-      margin-right: auto;
+      display: block;
+      height: 100% !important;
+      width: 100% !important;
       
       @include breakpoint(large) {
-        max-height: 882px;
+        max-height: none;
       }
     }
   }
