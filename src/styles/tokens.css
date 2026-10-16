@@ -1,0 +1,7 @@
+/*
+ * Tokens de diseño: color, tipografía, espaciado, movimiento.
+ * Lo definido en @theme es a la vez variable CSS (--color-accent)
+ * y utilidad de Tailwind (bg-accent).
+ */
+@theme {
+}
