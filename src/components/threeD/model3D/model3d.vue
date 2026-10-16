@@ -5,25 +5,26 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, onMounted, ref } from 'vue';
+import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { createPortfolioScene } from '@/libs/three/createPortfolioScene';
-import { portfolioSceneConfig } from '@/content/portfolio';
+import { portfolioSceneConfig, portfolioSections } from '@/content/portfolio';
 
 export default defineComponent({
   name: 'model3d',
-  setup() {
+  props: {
+    activeSection: {
+      type: String,
+      default: ''
+    }
+  },
+  setup(props) {
     const model = ref<HTMLElement | null>(null);
     let sceneController: any = null;
 
-    const handleResize = () => {
-      sceneController?.resize();
-    };
+    const handleResize = () => sceneController?.resize();
 
     onMounted(() => {
-      if (!model.value) {
-        return;
-      }
-
+      if (!model.value) return;
       sceneController = createPortfolioScene(model.value, portfolioSceneConfig);
       window.addEventListener('resize', handleResize);
     });
@@ -33,9 +34,15 @@ export default defineComponent({
       sceneController = null;
     });
 
-    return {
-      model
-    };
+    watch(
+      () => props.activeSection,
+      (sectionName) => {
+        const animationName = portfolioSections.find(s => s.name === sectionName)?.animationName ?? 'idle';
+        sceneController?.playAnimation(animationName);
+      }
+    );
+
+    return { model };
   }
 });
 </script>

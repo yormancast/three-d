@@ -5,7 +5,7 @@
       <span class="portfolio-status" aria-hidden="true"></span>
     </header>
 
-    <Model3d />
+    <Model3d :active-section="activeSection" />
 
     <div class="portfolio-hero" aria-label="Portfolio introduction">
       <p class="portfolio-hero__eyebrow">Building interactive 3D commerce systems</p>

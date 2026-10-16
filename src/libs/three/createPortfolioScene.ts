@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { SceneConfig } from '@/definitions/portfolio';
+import { setupAnimationMixer, type AnimationMixerController, type SceneAnimationName } from './setupAnimationMixer';
 import { setupCamera } from './setupCamera';
 import { setupLights } from './setupLights';
 import { setupMaterials } from './setupMaterials';
@@ -8,6 +9,7 @@ import { setupOrbitControls } from './setupOrbitControls';
 
 interface PortfolioSceneController {
   resize: () => void;
+  playAnimation: (name: SceneAnimationName) => void;
 }
 
 export const createPortfolioScene = (
@@ -19,6 +21,7 @@ export const createPortfolioScene = (
 
   debugWindow.scene = scene;
   const camera = setupCamera(config.initialCameraPosition);
+  const clock = new THREE.Clock();
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
     alpha: true,
@@ -37,6 +40,7 @@ export const createPortfolioScene = (
 
   const maxAnisotropy = renderer.capabilities.getMaxAnisotropy();
   const controls = setupOrbitControls(camera, renderer.domElement);
+  let animationMixer: AnimationMixerController | null = null;
 
   debugWindow.controls = controls;
 
@@ -54,6 +58,8 @@ export const createPortfolioScene = (
       model.position.set(position.x, position.y, position.z);
       model.rotation.set(rotation.x, rotation.y, rotation.z);
       setupMaterials(model, maxAnisotropy);
+      animationMixer = setupAnimationMixer(model, gltf.animations || []);
+      debugWindow.animationMixer = animationMixer;
 
       scene.add(model);
     },
@@ -65,6 +71,9 @@ export const createPortfolioScene = (
 
   const render = () => {
     window.requestAnimationFrame(render);
+    const delta = clock.getDelta();
+
+    animationMixer?.update(delta);
     controls.update();
     renderer.render(scene, camera);
   };
@@ -76,6 +85,9 @@ export const createPortfolioScene = (
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
+    },
+    playAnimation: (name: SceneAnimationName) => {
+      animationMixer?.playAnimation(name);
     }
   };
 };

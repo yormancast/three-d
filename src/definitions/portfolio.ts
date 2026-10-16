@@ -15,6 +15,7 @@ export interface PortfolioSection {
   title: string;
   copy: string;
   visible?: boolean;
+  animationName: string;
 }
 
 export interface SocialLink {

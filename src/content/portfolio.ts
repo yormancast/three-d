@@ -7,17 +7,20 @@ export const portfolioSections: PortfolioSection[] = [
   {
     name: 'case-study',
     title: 'Case Study',
-    copy: 'Selected storefront and configurator work focused on performant 3D product experiences, maintainable frontend systems, and measurable commerce outcomes.'
+    copy: 'Selected storefront and configurator work focused on performant 3D product experiences, maintainable frontend systems, and measurable commerce outcomes.',
+    animationName: 'walk'
   },
   {
     name: 'experience',
     title: 'Experience',
-    copy: 'Frontend Technical Lead with a focus on Vue, Three.js, design systems, and production teams building rich customer-facing interfaces.'
+    copy: 'Frontend Technical Lead with a focus on Vue, Three.js, design systems, and production teams building rich customer-facing interfaces.',
+    animationName: 'stand'
   },
   {
     name: 'contact',
     title: 'Contact',
-    copy: 'Available for frontend leadership, 3D web experiences, and commerce platform work. Reach out through GitHub or LinkedIn.'
+    copy: 'Available for frontend leadership, 3D web experiences, and commerce platform work. Reach out through GitHub or LinkedIn.',
+    animationName: 'idle'
   }
 ];
 
