@@ -1,5 +1,6 @@
 // Las reglas de capas y tipos de RULES.md se hacen cumplir aquí.
 import js from '@eslint/js'
+import prettier from 'eslint-config-prettier'
 import pluginVue from 'eslint-plugin-vue'
 import globals from 'globals'
 import tseslint from 'typescript-eslint'
@@ -12,6 +13,12 @@ const forbid = (regex, message, allowTypeImports = false) => ({ regex, message, 
 
 const VUE = forbid('^(vue|@vue/.*)$', 'Esta capa no puede depender de Vue.')
 const THREE = forbid('^three(/|$)', 'Esta capa no puede depender de Three.js.')
+const NO_UNTYPED_MODULES = {
+  selector: 'TSModuleDeclaration[kind="module"]:not([body])',
+  message: 'R5: no declares módulos sin tipos; instala o escribe sus tipos.',
+}
+const ARBITRARY_COLOR_CLASS = '/\\[(#|(rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\\()/'
+
 const restrict = (...patterns) => ({
   '@typescript-eslint/no-restricted-imports': ['error', { patterns }],
 })
@@ -22,6 +29,7 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
+  prettier,
 
   {
     files: ['**/*.{js,ts,vue}'],
@@ -37,13 +45,9 @@ export default tseslint.config(
     rules: {
       // R5
       '@typescript-eslint/no-explicit-any': 'error',
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'TSModuleDeclaration[kind="module"]:not([body])',
-          message: 'R5: no declares módulos sin tipos; instala o escribe sus tipos.',
-        },
-      ],
+      'no-restricted-syntax': ['error', NO_UNTYPED_MODULES],
+      // R7: en el template, nada de colores arbitrarios de Tailwind (bg-[#fff]).
+      'vue/no-restricted-class': ['error', ARBITRARY_COLOR_CLASS],
     },
   },
 
@@ -53,12 +57,33 @@ export default tseslint.config(
   },
 
   // R1: la escena no conoce Vue ni el contenido.
+  // R7: la escena no toca estilos del DOM ni define colores propios.
   {
     files: ['src/scene/**'],
-    rules: restrict(
-      { ...VUE, message: 'R1: scene/ no puede depender de Vue.' },
-      forbid(layer('(components|composables|content)'), 'R1: scene/ no puede importar UI, composables ni contenido.'),
-    ),
+    rules: {
+      ...restrict(
+        { ...VUE, message: 'R1: scene/ no puede depender de Vue.' },
+        forbid(layer('(components|composables|content)'), 'R1: scene/ no puede importar UI, composables ni contenido.'),
+      ),
+      'no-restricted-syntax': [
+        'error',
+        NO_UNTYPED_MODULES,
+        {
+          selector: 'MemberExpression[property.name=/^(style|classList|className)$/]',
+          message: 'R7: scene/ no toca estilos del DOM; el canvas lo estiliza la UI.',
+        },
+        {
+          selector:
+            'CallExpression[callee.property.name=/^(setAttribute|toggleAttribute)$/][arguments.0.value=/^(style|class)$/]',
+          message: 'R7: scene/ no toca estilos del DOM; el canvas lo estiliza la UI.',
+        },
+        {
+          selector:
+            'Literal[raw=/^0x[0-9a-fA-F]{6}$/], Literal[value=/^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/]',
+          message: 'R7: scene/ no define colores; llegan por configuración.',
+        },
+      ],
+    },
   },
 
   // R2 y R3: la UI no conoce Three.js ni la escena.

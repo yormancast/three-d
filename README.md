@@ -15,8 +15,11 @@ Node `^20.19.0 || >=22.12.0` (ver `.nvmrc`).
 ```bash
 npm install        # instala dependencias y el hook de pre-commit
 npm run dev        # servidor de desarrollo
-npm run lint       # ESLint, incluye las reglas de capas
+npm run check      # todo lo que corre el pre-commit: formato, lint, typecheck y tests
+npm run format     # aplica Prettier
+npm run lint       # ESLint y Stylelint, incluye las reglas de RULES.md
 npm run typecheck  # vue-tsc
+npm run test       # Vitest (archivos src/**/*.test.ts)
 npm run build      # typecheck + build de producción en dist/
 ```
 
@@ -29,7 +32,8 @@ src/
   composables/  puente entre Vue y la escena
   components/   UI en Vue
   styles/       tokens, base y entrada de estilos
-public/models/  modelos 3D
+public/models/  modelos 3D optimizados (los que carga la app)
+models/         exportaciones fuente, fuera de git (ver models/README.md)
 ```
 
 ## Estilos
@@ -38,7 +42,7 @@ CSS propio para lo que es nuestro y Tailwind v4 para el layout y las utilidades 
 
 - **Tailwind**, en el template: grid, flex, espaciado, responsive y utilidades estándar.
 - **CSS propio**, en `<style scoped>`: lo específico del componente (estados, animaciones, efectos). Para usar `@apply` o el tema dentro de un componente, empieza el bloque con `@reference '@/styles/main.css';`.
-- **Tokens**, solo en `src/styles/tokens.css`, dentro de `@theme`. Cada token es a la vez variable CSS (`--color-accent`) y utilidad (`bg-accent`). Nada de colores ni medidas sueltas fuera de ahí.
+- **Tokens**, solo en `src/styles/tokens.css`, dentro de `@theme`. Cada token es a la vez variable CSS (`--color-accent`) y utilidad (`bg-accent`). Fuera de ahí no se escriben colores (R7).
 - **Globales**, en `src/styles/base.css`, al mínimo. El reset lo pone el preflight de Tailwind.
 
 Orden de la cascada: `theme`, `base`, `components`, `utilities`.

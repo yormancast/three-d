@@ -38,6 +38,8 @@ Nada dentro de `src/components/` ni en la raíz de `src/` (`App.vue`, `main.ts`)
 
 **Se cumple con:** `no-restricted-imports` de ESLint sobre `src/content/**`.
 
+Las restricciones de importación cubren tanto el alias `@/` como las rutas relativas.
+
 ## Tipos
 
 ### R5. TypeScript estricto y sin `any`
@@ -48,18 +50,28 @@ Nada dentro de `src/components/` ni en la raíz de `src/` (`App.vue`, `main.ts`)
 
 ## Cada commit
 
-### R6. Nada entra sin pasar lint y type-check
+### R6. Nada entra sin pasar las comprobaciones
 
-Antes de cada commit se ejecutan `lint` y `typecheck`. Si alguno falla, el commit no se crea. En CI se repiten junto con `build`, y un PR que no pasa no se mergea.
+Antes de cada commit se ejecuta `npm run check`: formato (Prettier), lint (ESLint y Stylelint), type-check (`vue-tsc`) y tests (Vitest). Si algo falla, el commit no se crea. En CI se repite junto con el build, y un PR que no pasa no se mergea.
 
 **Se cumple con:** hook de pre-commit (`simple-git-hooks`, se instala con `npm install`) y `.github/workflows/ci.yml`.
 
-Las restricciones de importación cubren tanto el alias `@/` como las rutas relativas.
+## Estilos
+
+### R7. Los estilos son de la UI y los colores, de los tokens
+
+- `src/scene/` no toca estilos del DOM (`style`, `classList`, `className`, ni `setAttribute('style' | 'class')`). El canvas lo estiliza la UI.
+- `src/scene/` no escribe colores literales (`0xff8800`, `'#ff8800'`). Le llegan por configuración.
+- Los colores solo se definen en `src/styles/tokens.css`. En el resto del CSS y en los `<style>` de los componentes se usan tokens: nada de hex, nombres de color ni funciones de color (`rgb()`, `oklch()`…).
+- En los templates no se usan valores de color arbitrarios de Tailwind (`bg-[#fff]`).
+
+**Se cumple con:** `no-restricted-syntax` de ESLint sobre `src/scene/**`, Stylelint (`color-no-hex`, `color-named`, `function-disallowed-list`) y `vue/no-restricted-class`.
 
 ## Estado de los mecanismos
 
-| Regla | Mecanismo | Estado |
-| --- | --- | --- |
-| R1–R4 | `eslint.config.js`, `no-restricted-imports` | Activo |
-| R5 | `tsconfig.app.json` + `eslint.config.js` + `vue-tsc` | Activo |
-| R6 | `simple-git-hooks` (pre-commit) + `.github/workflows/ci.yml` | Activo |
+| Regla | Mecanismo                                                    | Estado |
+| ----- | ------------------------------------------------------------ | ------ |
+| R1–R4 | `eslint.config.js`, `no-restricted-imports`                  | Activo |
+| R5    | `tsconfig.app.json` + `eslint.config.js` + `vue-tsc`         | Activo |
+| R6    | `simple-git-hooks` (pre-commit) + `.github/workflows/ci.yml` | Activo |
+| R7    | `eslint.config.js` + `stylelint.config.js`                   | Activo |

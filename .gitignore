@@ -25,3 +25,6 @@ pnpm-debug.log*
 *.sw?
 
 *.tsbuildinfo
+
+models/*
+!models/README.md

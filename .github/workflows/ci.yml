@@ -1,4 +1,4 @@
-# R6: lint, type-check y build en cada push y PR.
+# R6: formato, lint, type-check, tests y build en cada push y PR.
 name: CI
 
 on:
@@ -15,6 +15,5 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run lint
-      - run: npm run typecheck
+      - run: npm run check
       - run: npx vite build
