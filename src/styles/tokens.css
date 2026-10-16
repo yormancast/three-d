@@ -4,4 +4,29 @@
  * y utilidad de Tailwind (bg-accent).
  */
 @theme {
+  /*
+   * Paleta inicial, extraída de los materiales de el_dirto_v10.glb
+   * (baseColorFactor lineal convertido a sRGB). Entre paréntesis, los
+   * materiales MAT_* que usan cada color.
+   */
+
+  /* Morados: sudadera y zapatillas */
+  --color-purple-950: #40234f; /* purple_dark */
+  --color-purple-900: #4b285f; /* hoodie_rib */
+  --color-purple-800: #57306f; /* purple */
+  --color-purple-700: #62367c; /* hoodie_seam */
+  --color-purple-500: #8956a2; /* sneaker_light_purple */
+
+  /* Hueso: calavera y suelas */
+  --color-bone: #ded2b6; /* bone, sole */
+  --color-bone-shadow: #a49392; /* bone_shadow */
+
+  /* Oscuros */
+  --color-ink: #1c1625; /* socket */
+  --color-lens: #1b2530; /* dark_lens */
+  --color-black: #292a35; /* black */
+  --color-charcoal: #43404e; /* charcoal */
+
+  /* Brillo */
+  --color-glint: #c2c2c7; /* lens_glint */
 }
