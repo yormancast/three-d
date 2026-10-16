@@ -1,31 +1,34 @@
 # three-d
 
-## To do
-### - Draco compress models
-### - rig model
-### - buttons to change pose
-### - Model Preloader 
-### - Build footer
+Portafolio personal de Yorman Castellanos: Vue 3 + Three.js.
 
-## Project setup
-```
-npm install
-```
+- `master`: v1, en producción.
+- `version-2`: experimento descartado.
+- `version-3`: versión actual en desarrollo.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Requisitos
 
-### Compiles and minifies for production
-```
-npm run build
+Node `^20.19.0 || >=22.12.0` (ver `.nvmrc`).
+
+## Comandos
+
+```bash
+npm install        # instala dependencias y el hook de pre-commit
+npm run dev        # servidor de desarrollo
+npm run lint       # ESLint, incluye las reglas de capas
+npm run typecheck  # vue-tsc
+npm run build      # typecheck + build de producción en dist/
 ```
 
-### Lints and fixes files
+## Estructura
+
 ```
-npm run lint
+src/
+  scene/        Three.js puro
+  content/      textos y configuración (solo datos)
+  composables/  puente entre Vue y la escena
+  components/   UI en Vue
+public/models/  modelos 3D
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Las reglas entre capas están en [RULES.md](RULES.md) y se aplican en cada commit.

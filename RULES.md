@@ -22,15 +22,15 @@ Nada dentro de `src/scene/` importa `vue`, `@/components`, `@/composables` ni `@
 
 ### R2. La UI no conoce Three.js
 
-Nada dentro de `src/components/` importa `three`, `three/*` ni `@/scene`. La UI habla con la escena solo a través de `src/composables/`.
+Nada dentro de `src/components/` ni en la raíz de `src/` (`App.vue`, `main.ts`) importa `three`, `three/*` ni `@/scene`, ni siquiera tipos. La UI habla con la escena solo a través de `src/composables/`.
 
-**Se cumple con:** `no-restricted-imports` de ESLint sobre `src/components/**`.
+**Se cumple con:** `no-restricted-imports` de ESLint sobre `src/components/**` y `src/*.{ts,vue}`.
 
 ### R3. Solo `composables/` crea y controla la escena
 
 `src/composables/` es la única capa que importa valores de `@/scene`. Fuera de `scene/` y `composables/`, `@/scene` solo se puede importar con `import type`.
 
-**Se cumple con:** `no-restricted-imports` de ESLint sobre `src/**` excepto `src/scene/**` y `src/composables/**`, permitiendo importaciones de solo tipos.
+**Se cumple con:** `no-restricted-imports` de ESLint: R2 lo bloquea en la UI y R4 solo permite `import type` en `content/`.
 
 ### R4. `content/` son datos
 
@@ -44,7 +44,7 @@ Nada dentro de `src/components/` importa `three`, `three/*` ni `@/scene`. La UI 
 
 `strict: true` en `tsconfig`. Prohibido `any` explícito y prohibido declarar módulos sin tipos (`declare module 'x';`) para librerías que tienen los suyos.
 
-**Se cumple con:** `@typescript-eslint/no-explicit-any` en `error` y `vue-tsc --noEmit`.
+**Se cumple con:** `@typescript-eslint/no-explicit-any` en `error`, `no-restricted-syntax` contra `declare module 'x';` y `vue-tsc -b`.
 
 ## Cada commit
 
@@ -52,12 +52,14 @@ Nada dentro de `src/components/` importa `three`, `three/*` ni `@/scene`. La UI 
 
 Antes de cada commit se ejecutan `lint` y `typecheck`. Si alguno falla, el commit no se crea. En CI se repiten junto con `build`, y un PR que no pasa no se mergea.
 
-**Se cumple con:** hook de pre-commit y workflow de CI.
+**Se cumple con:** hook de pre-commit (`simple-git-hooks`, se instala con `npm install`) y `.github/workflows/ci.yml`.
+
+Las restricciones de importación cubren tanto el alias `@/` como las rutas relativas.
 
 ## Estado de los mecanismos
 
 | Regla | Mecanismo | Estado |
 | --- | --- | --- |
-| R1–R4 | ESLint `no-restricted-imports` | Pendiente (se configura con el proyecto v3) |
-| R5 | `tsconfig` + ESLint + `vue-tsc` | Pendiente |
-| R6 | Hook pre-commit + CI | Pendiente |
+| R1–R4 | `eslint.config.js`, `no-restricted-imports` | Activo |
+| R5 | `tsconfig.app.json` + `eslint.config.js` + `vue-tsc` | Activo |
+| R6 | `simple-git-hooks` (pre-commit) + `.github/workflows/ci.yml` | Activo |
