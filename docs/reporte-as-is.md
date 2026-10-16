@@ -116,3 +116,4 @@ Respuestas del 16 de octubre de 2026:
 | Modelo | Cada sección cambia el ángulo de cámara y dispara una animación propia del modelo |
 | Fondo | Escena 3D propia en Three.js que comparte iluminación con el modelo |
 | Identidad | Empezar de cero: nada de la v1 (logo, rojo, tono nocturno); la identidad sale del nuevo modelo |
+| Dirección de arte | Aprobada: "Bajo el puente · Calle · Noche". Sustituye la exclusión del tono nocturno; ver [direccion-de-arte.md](direccion-de-arte.md) |

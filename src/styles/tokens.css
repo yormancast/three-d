@@ -29,4 +29,36 @@
 
   /* Brillo */
   --color-glint: #c2c2c7; /* lens_glint */
+
+  /*
+   * Dirección de arte aprobada: "Bajo el puente · Calle · Noche".
+   * Ver docs/direccion-de-arte.md.
+   */
+
+  /* Paleta propia de la identidad */
+  --color-lime: #c8f04a; /* acento: botón activo, enlaces, punto de anclaje, neón */
+  --color-paper: #ede8dc; /* texto sobre superficies oscuras */
+  --color-paper-bright: #f4f0e6; /* titulares sobre superficies oscuras */
+  --color-paper-muted: #bdb8c6; /* texto secundario de la tarjeta */
+  --color-nav-text: #e4e1e8;
+  --color-night: #111018; /* fondo del body mientras carga la escena */
+
+  /* Roles de UI */
+  --color-accent: var(--color-lime);
+  --color-on-accent: var(--color-ink);
+  --color-surface-card: rgb(33 30 42 / 72%); /* cristal carbón */
+  --color-border-card: rgb(200 240 74 / 22%); /* lima tenue */
+  --color-border-chip: rgb(237 232 220 / 25%);
+  --color-surface-nav: rgb(33 30 42 / 78%);
+  --color-shadow-card: rgb(0 0 0 / 60%);
+  --color-anchor-ring: rgb(200 240 74 / 25%); /* halo del punto sobre el modelo */
+
+  /* Tipografía (Google Fonts, cargadas en index.html) */
+  --font-display: 'Archivo', system-ui, sans-serif; /* titulares: ancho 112-125 %, peso 800-900 */
+  --font-sans: 'Archivo', system-ui, sans-serif; /* cuerpo */
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace; /* navegación, etiquetas, chips */
+
+  /* Tarjeta flotante */
+  --radius-card: 6px;
+  --blur-card: 16px;
 }
