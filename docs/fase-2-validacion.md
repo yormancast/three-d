@@ -1,6 +1,6 @@
 # Evidencia de cierre — Fase 2
 
-Registro incremental de validación y del límite entre archivos de entrega y recursos locales. Actualizado durante la implementación, 20 de octubre de 2026.
+Registro incremental de validación y del límite entre archivos de entrega y recursos locales. Actualizado durante la implementación, 21 de octubre de 2026.
 
 ## F2-08 — Inventario de entrega
 
@@ -69,3 +69,11 @@ Las pruebas de fallo se hicieron en la copia temporal `/private/tmp/three-d-phas
 - Build público: `npm run build` aprobado; en `127.0.0.1:4173` se observó un canvas y el encabezado público, sin botones o controles técnicos. Continúa el aviso de Vite por chunk JS de 749.96 kB.
 
 **Comprobaciones tras el cambio de manejo de errores:** `npm run check` aprobado (30 pruebas en 6 archivos) y `npm run build` aprobado. Node 20.20.2. Las comprobaciones no son de un checkout limpio de commit; esa evidencia pertenece a F2-12.
+
+## F2-12 — Checkout limpio del commit de entrega
+
+**Revisión verificada:** `fec7714004adc26399adec589563e1cd3c2f790b` (`Complete phase 2 scene foundation`), en la rama `version-3`.
+
+Se clonó ese commit en `/private/tmp/three-d-phase2-commit-check`; el clone empezó sin `node_modules` ni `dist`, y `models/` contenía solo el README versionado, sin recursos históricos ignorados. Con Node 20.20.2 y npm 10.8.2, `npm ci`, `npm run check` (30 pruebas en 6 archivos) y `npm run build` aprobaron. El build mantiene el aviso de Vite por el chunk de 749.96 kB y npm mostró seis vulnerabilidades high en el informe de auditoría durante la instalación; no se ejecutó `npm audit fix`.
+
+El preview del build limpio sirvió `models/continuous/dirto-continuous.glb` con HTTP 200 (15.449.252 bytes) y `models/continuous/preview.jpg` con HTTP 200 (147.784 bytes). No quedan cambios de prueba en la copia ni en el árbol de entrega. Esta comprobación valida el commit de código y assets indicado; el commit documental posterior añade esta evidencia, marca la lista de tareas y actualiza el estado del plan.

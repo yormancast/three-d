@@ -58,7 +58,7 @@ No se asigna un porcentaje global: tener los clips y el render funcionando no mi
 
 ## Fase 2 — Consolidar la base técnica
 
-**Estado: parcial.**
+**Estado: completada.**
 
 Ya disponible:
 
@@ -77,7 +77,7 @@ Evidencia de implementación y entrega:
 - [x] Separar los controles del visor de la presentación pública; acceso de revisión solo para desarrollo.
 - [x] Revisar recursos compartidos y su liberación.
 - [x] Comprobar instalación aislada y reproducción interactiva del recurso completo en navegador.
-- [ ] Revisar e incorporar deliberadamente los cambios y assets a un commit; comprobar instalación/build desde un checkout limpio de ese commit.
+- [x] Revisar e incorporar deliberadamente los cambios y assets a un commit; comprobar instalación/build desde un checkout limpio de ese commit.
 
 **Cierre:** escena recuperable y reproducible desde el repositorio, contrato de recurso validado y visor separado. No basta con que los archivos existan en esta máquina.
 
@@ -174,11 +174,9 @@ Pendiente:
 
 ## Evidencia actual y próximo paso
 
-Última validación, tras organizar los assets: `npm run check` aprobado, 12 pruebas en 4 archivos y `npm run build` aprobado. Persiste el aviso de tamaño del paquete JavaScript. Las pruebas de geometría en Node no verifican decodificación de texturas ni apariencia en navegador.
+El commit de código y assets `fec7714004adc26399adec589563e1cd3c2f790b` pasó instalación, check, build y verificación HTTP de las rutas del modelo y el póster desde un clone limpio. Ver [evidencia de fase 2](fase-2-validacion.md). Persiste el aviso de tamaño del paquete JavaScript; `npm ci` reportó seis vulnerabilidades high. La revisión emulada no certifica rendimiento en un móvil real.
 
-Los cambios siguen en el árbol de trabajo, con archivos nuevos sin seguimiento. No se certifica todavía una instalación limpia ni una revisión visual del nuevo sitio.
-
-**Próximo paso recomendado:** cerrar la fase 2 y después implementar las fases 3–4 como primer recorrido Home + Bio. No se requiere trabajo adicional de esqueleto o animación para comenzar.
+**Próximo paso recomendado:** implementar las fases 3–4 como primer recorrido Home + Bio. La revisión visual del portafolio público completo queda pendiente de esas fases.
 
 ## Referencias
 

@@ -178,13 +178,15 @@ No incluye navegación de secciones, tarjetas Home/Bio, nuevas animaciones, ajus
 
 ### F2-12 — Cerrar evidencia y comprobar la entrega versionada
 
-- [ ] Pendiente: requiere que se solicite por separado el commit final.
+- [x] Completada: commit y clone limpio verificados.
 
 **Dependencias:** F2-11 y commit final disponible.
 
 **Trabajo:** ejecutar `npm run check` y `npm run build` sobre el estado final. Tras disponer de un commit que incluya deliberadamente código y assets, repetir instalación/check/build en un checkout limpio temporal de ese commit y verificar las URLs del modelo/poster. Registrar revisión exacta, resultados y limitaciones. Actualizar el estado de fase 2 en `docs/plan-v3.md` según evidencia. La creación del commit se solicita por separado; no la presupone este listado.
 
 **Cierre:** contrato validado, recursos con limpieza comprobada, visor exclusivo de desarrollo, revisión interactiva documentada y entrega reproducible desde Git. Si falta el commit o alguna comprobación, mantener esta tarea y la fase abiertas e indicar exactamente qué falta.
+
+**Evidencia:** commit de código/assets `fec7714004adc26399adec589563e1cd3c2f790b` en `version-3`; clone limpio con `npm ci`, `npm run check` (30 pruebas/6 archivos), `npm run build` y rutas GLB/póster HTTP 200. Detalle de versión y límites en [validación F2-12](fase-2-validacion.md#f2-12--checkout-limpio-del-commit-de-entrega). El commit documental posterior registra el cierre y actualiza el plan.
 
 ## Orden de ejecución
 
