@@ -1,0 +1,110 @@
+[
+  {
+    "from": "public/models/.DS_Store",
+    "to": "models/archive/public-models/.DS_Store",
+    "bytes": 6148,
+    "sha256": "97d4f1dae5b09cdabf97df80a08081a41c8a469f48301fdbc389f7e518bdbaa9"
+  },
+  {
+    "from": "public/models/.gitkeep",
+    "to": "models/archive/public-models/.gitkeep",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "from": "public/models/ball-animations/Crossover.glb",
+    "to": "models/archive/public-models/ball-animations/Crossover.glb",
+    "bytes": 739256,
+    "sha256": "dc9d51417479e6c26ecaa8218475a1e4a4a109f3c9555b3172da52cf4acbb640"
+  },
+  {
+    "from": "public/models/ball-animations/Crossover.json",
+    "to": "models/archive/public-models/ball-animations/Crossover.json",
+    "bytes": 12538,
+    "sha256": "d8d0a59998b69fb2253ab4190444c66d9a0481820348e9bc849a6cde0ecd8a65"
+  },
+  {
+    "from": "public/models/ball-animations/Dribble.glb",
+    "to": "models/archive/public-models/ball-animations/Dribble.glb",
+    "bytes": 412768,
+    "sha256": "ea943799bf5fec86229c1c014d88d210915910d9ef60fad214cdde16226e863a"
+  },
+  {
+    "from": "public/models/ball-animations/Dribble.json",
+    "to": "models/archive/public-models/ball-animations/Dribble.json",
+    "bytes": 9178,
+    "sha256": "deaa37daff31ff5851363f27453f0abd0b9faf3634312ec49b52b823c1d7deb8"
+  },
+  {
+    "from": "public/models/ball-animations/entorno-ball.glb",
+    "to": "models/archive/public-models/ball-animations/entorno-ball.glb",
+    "bytes": 676132,
+    "sha256": "c75c0ac4b0a39887679270f3489d6aa005b5275deca2eee13d35b31528025593"
+  },
+  {
+    "from": "public/models/continuous/motions.json",
+    "to": "models/archive/public-models/continuous/motions.json",
+    "bytes": 144941,
+    "sha256": "58a5e35a20f787ea3014246be6e80e6bf2941940484a178630306a2ae7fb3985"
+  },
+  {
+    "from": "public/models/el_dirto_v10.glb",
+    "to": "models/archive/public-models/el_dirto_v10.glb",
+    "bytes": 334320,
+    "sha256": "037b2fb27f2ccc8e1e34859d22cee553a6d3e7cebc86c7d5a9ee187caddcaa20"
+  },
+  {
+    "from": "public/models/el_dirto_v11.glb",
+    "to": "models/archive/public-models/el_dirto_v11.glb",
+    "bytes": 381300,
+    "sha256": "13f8ee9f3e401fa426045944161269a44487f787145edb44637fd403c5d51f37"
+  },
+  {
+    "from": "public/models/environment/asset-manifest.json",
+    "to": "docs/assets/polyhaven-manifest.json",
+    "bytes": 2765,
+    "sha256": "12197ee8229d966fd8a24e6a9d3756d7faed01cdaf8a4625a9468fd250f9580a"
+  },
+  {
+    "from": "public/models/environment/dirto-pose-b-static.glb",
+    "to": "models/archive/public-models/environment/dirto-pose-b-static.glb",
+    "bytes": 617264,
+    "sha256": "7a06997b3215c6715bb0b5f42e6a97d50cd8c92e310c9d16c26dc639c8d43884"
+  },
+  {
+    "from": "public/models/environment/entorno.glb",
+    "to": "models/archive/public-models/environment/entorno.glb",
+    "bytes": 734932,
+    "sha256": "4242edfbea4b713236a7a35fa46ef9cb36c4218f5b36fcc74c29713c9d1b7b83"
+  },
+  {
+    "from": "public/models/environment/preview.jpg",
+    "to": "public/models/continuous/preview.jpg",
+    "bytes": 147784,
+    "sha256": "4a4ab16f503c1aa6ce1aee5ba13f836bcf653729246f65fca06e221192a1d341"
+  },
+  {
+    "from": "public/models/phase3/dirto-pose-b-lit.glb",
+    "to": "models/archive/public-models/phase3/dirto-pose-b-lit.glb",
+    "bytes": 293736,
+    "sha256": "c7718c9cc746b3da2c85e8e435d91b046fa60b1a18370ba0167121f03c66e5f9"
+  },
+  {
+    "from": "public/models/phase3/emissives.glb",
+    "to": "models/archive/public-models/phase3/emissives.glb",
+    "bytes": 53340,
+    "sha256": "c6098376d15080285ff014c23144faccf545c8fe612297836fad31028cd3dda0"
+  },
+  {
+    "from": "public/models/phase3/entorno.glb",
+    "to": "models/archive/public-models/phase3/entorno.glb",
+    "bytes": 670356,
+    "sha256": "efeeffc93c0d88a91a0567054e6560a633adcfbafdc58c1c48b4794585128506"
+  },
+  {
+    "from": "public/models/recovery/dirto-recovery.glb",
+    "to": "models/archive/public-models/recovery/dirto-recovery.glb",
+    "bytes": 323300,
+    "sha256": "8c7e0d8833a00ac1405264e956a2ae4413279b5488f395bb28e20f044581d381"
+  }
+]

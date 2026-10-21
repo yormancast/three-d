@@ -1,15 +1,26 @@
-# Modelos fuente
+# Entradas y archivo local de modelos
 
-Aquí van las exportaciones sin optimizar (GLB desde Blender). La carpeta está en `.gitignore`: solo se versiona el resultado optimizado en `public/models/`.
+Esta carpeta no se sirve con la web. Su contenido está ignorado por Git salvo este README. No es una copia de seguridad remota: conservar aparte los originales de Blender y los archivos locales que se necesiten compartir.
+
+| Ruta                                   | Uso                                                                                            |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `dirto-continuous.glb`                 | Entrada local de la escena integrada actual; ya está comprimida y tiene las animaciones listas |
+| `el_dirto_v10.glb`, `el_dirto_v11.glb` | Exportaciones históricas del personaje                                                         |
+| `archive/public-models/`               | Distribuciones históricas retiradas de `public/models/` el 20 de octubre de 2026               |
+
+La app usa `public/models/continuous/dirto-continuous.glb`. Al organizar los archivos, esa distribución y la entrada local eran idénticas. En cambio, los v10/v11 de esta carpeta y sus antiguas versiones públicas tienen hashes y tamaños distintos: se conservan ambos, pues son exportaciones diferentes.
+
+## Preparación de una nueva distribución
+
+Inspeccionar primero el archivo y sus extensiones. No aplicar otra optimización por defecto al GLB integrado: ya usa Meshopt, cuantización y texturas incrustadas. Comparar clips, metadata, materiales y aspecto antes de reemplazar la distribución.
+
+Para exportaciones que sí requieran optimización se conservan los comandos:
 
 ```bash
+npm run model:inspect -- models/<nombre>.glb
 npm run model:optimize -- models/<nombre>.glb public/models/<nombre>.glb
-npm run model:inspect -- public/models/<nombre>.glb
 ```
 
-`model:optimize` aplica compresión Meshopt a la geometría y convierte las texturas a WebP con un máximo de 2048 px. El modelo resultante requiere `EXT_meshopt_compression` y `KHR_mesh_quantization` (y `EXT_texture_webp` si tiene texturas), así que el loader de la escena tiene que registrar `MeshoptDecoder`.
+El optimizador tiene desactivados `palette` y `simplify` para preservar materiales y geometría. No asumir que todos los modelos usan los materiales `MAT_*` o un esqueleto: continuous usa color por vértice y deformaciones ya exportadas.
 
-Dos pasos de `optimize` están desactivados a propósito:
-
-- `--palette false`: la paleta fusiona todos los materiales en uno con una textura de colores. Se pierden los nombres `MAT_*`, que la escena necesita para aplicar los colores que le llegan por configuración (R7).
-- `--simplify false`: en `el_dirto_v10` solo quitaba un 2,5 % de triángulos (7 KB) y simplificar una malla con skinning puede romper las deformaciones.
+Consultar `public/models/README.md` para recursos activos y licencias, y `docs/assets/organization-manifest.json` para recuperar las rutas históricas.

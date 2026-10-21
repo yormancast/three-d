@@ -1,0 +1,72 @@
+[
+  {
+    "asset": "asphalt_02",
+    "map": "Diffuse",
+    "file": "asphalt_02_diff_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_diff_2k.jpg",
+    "sha256": "28f5ba8690553f192c0e5e1a5ff40f34765b4b93f4cc7059b1a3e9c795b6c28c",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/asphalt_02",
+    "bytes": 3075676
+  },
+  {
+    "asset": "asphalt_02",
+    "map": "Rough",
+    "file": "asphalt_02_rough_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_rough_2k.jpg",
+    "sha256": "b9a516b61b7040a9245ac206642d5f767ad9589a0169c4a1668221429e8a998c",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/asphalt_02",
+    "bytes": 2230457
+  },
+  {
+    "asset": "asphalt_02",
+    "map": "nor_gl",
+    "file": "asphalt_02_nor_gl_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/asphalt_02/asphalt_02_nor_gl_2k.jpg",
+    "sha256": "ffe49db71a0fd34c1e259625df66a302a237597d6ef655307987ec4e45bc6f21",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/asphalt_02",
+    "bytes": 4943950
+  },
+  {
+    "asset": "concrete_wall_006",
+    "map": "Diffuse",
+    "file": "concrete_wall_006_diff_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/concrete_wall_006/concrete_wall_006_diff_2k.jpg",
+    "sha256": "daee26f5b5dae37e3fb2947c64f4045fd4e6d3b89884eb0d878ba6414746e8e8",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/concrete_wall_006",
+    "bytes": 3109558
+  },
+  {
+    "asset": "concrete_wall_006",
+    "map": "Rough",
+    "file": "concrete_wall_006_rough_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/concrete_wall_006/concrete_wall_006_rough_2k.jpg",
+    "sha256": "4c463e871c50def9252c38a81e06624ff2fcd8c9ffcdd54534524efacba286ed",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/concrete_wall_006",
+    "bytes": 1102752
+  },
+  {
+    "asset": "concrete_wall_006",
+    "map": "nor_gl",
+    "file": "concrete_wall_006_nor_gl_2k.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/2k/concrete_wall_006/concrete_wall_006_nor_gl_2k.jpg",
+    "sha256": "22bd9c17a6dfe3441f671cba1b40e2329767c79b6472004d1633aeac368d5210",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/concrete_wall_006",
+    "bytes": 4939794
+  },
+  {
+    "asset": "rooftop_night",
+    "map": "hdri",
+    "file": "rooftop_night_2k.hdr",
+    "url": "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/rooftop_night_2k.hdr",
+    "sha256": "8ace3b81da7659381998ea4423fb4c7ffc1310ac27c4baa7a32088bd093de82e",
+    "license": "CC0-1.0",
+    "source": "https://polyhaven.com/a/rooftop_night",
+    "bytes": 6509158
+  }
+]

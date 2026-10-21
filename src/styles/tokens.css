@@ -43,6 +43,13 @@
   --color-nav-text: #e4e1e8;
   --color-night: #111018; /* fondo del body mientras carga la escena */
 
+  --color-transparent: rgb(0 0 0 / 0%);
+
+  --color-light-warm: #ffdab1;
+  --color-light-cool: #b3a2da;
+  --color-shadow-3d: #140e1e;
+  --color-fog-3d: #171322;
+
   /* Roles de UI */
   --color-accent: var(--color-lime);
   --color-on-accent: var(--color-ink);

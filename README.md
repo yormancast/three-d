@@ -32,8 +32,8 @@ src/
   composables/  puente entre Vue y la escena
   components/   UI en Vue
   styles/       tokens, base y entrada de estilos
-public/models/  modelos 3D optimizados (los que carga la app)
-models/         exportaciones fuente, fuera de git (ver models/README.md)
+public/models/  escena integrada y poster activos (se copian al build)
+models/         entradas y archivo histórico local, fuera de git
 ```
 
 ## Estilos

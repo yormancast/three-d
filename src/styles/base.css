@@ -1,1 +1,17 @@
-/* Estilos globales mínimos. El reset lo pone el preflight de Tailwind. */
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#app {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+body {
+  font-family: var(--font-sans);
+  background: var(--color-night);
+}
+button {
+  font: inherit;
+}
