@@ -1,21 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 
-defineProps<{
-  status: 'loading' | 'ready' | 'error'
-  posterUrl: string
-  triangles: number
-  drawCalls: number
-  submissionMs: number
-  quality: 'desktop' | 'mobile'
-  atmosphere: boolean
-  playing: boolean
-  animationTime: number
-  animation: string
-  targetAnimation: string
-  transitioning: boolean
-  animationDuration: number
-}>()
+withDefaults(
+  defineProps<{
+    language?: 'en' | 'es'
+    status: 'loading' | 'ready' | 'error'
+    posterUrl: string
+    triangles: number
+    drawCalls: number
+    submissionMs: number
+    quality: 'desktop' | 'mobile'
+    atmosphere: boolean
+    playing: boolean
+    animationTime: number
+    animation: string
+    targetAnimation: string
+    transitioning: boolean
+    animationDuration: number
+  }>(),
+  { language: 'es' },
+)
 
 const emit = defineEmits<{ canvasReady: [canvas: HTMLCanvasElement] }>()
 const canvas = ref<HTMLCanvasElement | null>(null)
@@ -30,7 +34,11 @@ onMounted(() => {
       v-if="status !== 'ready'"
       class="scene-poster"
       :src="posterUrl"
-      alt="El Dirto sentado en una cancha nocturna bajo el puente"
+      :alt="
+        language === 'en'
+          ? 'Basketball character seated on a night court under the bridge'
+          : 'Personaje de básquetbol sentado en una cancha nocturna bajo el puente'
+      "
     />
     <canvas
       ref="canvas"
@@ -48,7 +56,11 @@ onMounted(() => {
       :data-animation-duration="animationDuration"
       class="scene-canvas"
       :class="{ 'is-ready': status === 'ready' }"
-      aria-label="El Dirto descansando y jugando con el balón, sentado, de pie y lanzando al aro"
+      :aria-label="
+        language === 'en'
+          ? 'Basketball character resting, dribbling, standing and shooting hoops'
+          : 'Personaje de básquetbol descansando y jugando con el balón, sentado, de pie y lanzando al aro'
+      "
     />
   </div>
 </template>

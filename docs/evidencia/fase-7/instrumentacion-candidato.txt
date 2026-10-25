@@ -1,0 +1,90 @@
+(() => {
+  const save = (value) => fetch('/__qa/results', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ recordedAt: new Date().toISOString(), ...value }) });
+  const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const canvas = () => document.querySelector('canvas');
+  const wait = async (condition, timeout = 30000) => {
+    const started = performance.now();
+    while (!condition()) { if (performance.now() - started > timeout) throw Error('QA condition timed out'); await sleep(100); }
+  };
+  const select = (label) => [...document.querySelectorAll('.section-nav button')].find((e) => e.textContent.trim() === label)?.click();
+  const environment = () => ({ viewport: [innerWidth, innerHeight], dpr: devicePixelRatio, coarse: matchMedia('(pointer: coarse)').matches, reduced: matchMedia('(prefers-reduced-motion: reduce)').matches, hidden: document.hidden, quality: canvas()?.dataset.quality, userAgent: navigator.userAgent });
+  let contentMs;
+  let readyMs;
+  const observer = new MutationObserver(() => {
+    if (contentMs === undefined && document.querySelector('.section-nav')) contentMs = performance.now();
+    if (readyMs === undefined && canvas()?.dataset.sceneStatus === 'ready') {
+      readyMs = performance.now();
+      if(new URLSearchParams(location.search).has('static')) document.querySelector('.playback-control')?.click();
+      observer.disconnect();
+      requestAnimationFrame(() => requestAnimationFrame(async () => {
+        await save({ kind: 'load', condition: location.search, contentAvailableMs: contentMs, readyMs, readyPlusTwoRafMs: performance.now(), fcpMs: performance.getEntriesByName('first-contentful-paint')[0]?.startTime, environment: environment(), heapUsedBytes: performance.memory?.usedJSHeapSize, resources: performance.getEntriesByType('resource').filter((e) => /\.(glb|js|css)(\?|$)/.test(e.name)).map((e) => ({ name: e.name.split('/').pop(), durationMs: e.duration, transferSize: e.transferSize, decodedBodySize: e.decodedBodySize })) });
+      }));
+    }
+  });
+  observer.observe(document, { childList: true, subtree: true, attributes: true, attributeFilter: ['data-scene-status'] });
+  window.__qaSampleSuite = async () => {
+    await wait(() => canvas()?.dataset.sceneStatus === 'ready');
+    if (canvas().dataset.playing !== 'true') document.querySelector('.playback-control').click();
+    const initialEnvironment = environment();
+    await sleep(4000);
+    for (const label of ['Home', 'Bio']) {
+      let navigationTimer;
+      if(label==='Navigation') {let step=0;navigationTimer=setInterval(()=>select(['Experience','Contact','Projects','Bio'][step++%4]),1500);} else select(label);
+      await sleep(2000);
+      await wait(() => canvas().dataset.transitioning === 'false');
+      await sleep(1000);
+      const intervals = [];
+      let invalidVisibility = document.hidden;
+      const changed = () => { if (document.hidden) invalidVisibility = true; };
+      document.addEventListener('visibilitychange', changed);
+      await new Promise((resolve) => {
+        let started;
+        let previous;
+        const tick = (now) => {
+          started ??= now;
+          if (previous !== undefined) intervals.push(now - previous);
+          previous = now;
+          if (now - started < 30000) requestAnimationFrame(tick); else resolve();
+        };
+        requestAnimationFrame(tick);
+      });
+      document.removeEventListener('visibilitychange', changed);
+      const sorted = [...intervals].sort((a, b) => a - b);
+      clearInterval(navigationTimer);
+      await save({ kind: 'frames', label, elapsedMs: intervals.reduce((a,b)=>a+b,0), frameIntervals: intervals.length, fps: intervals.length * 1000 / intervals.reduce((a,b)=>a+b,0), p95Ms: sorted[Math.floor(sorted.length * 0.95)], maxMs: sorted.at(-1), over33ms: intervals.filter(x=>x>33.3).length, over50ms: intervals.filter(x=>x>50).length, invalidVisibility, initialEnvironment, environment: environment(), heapUsedBytes: performance.memory?.usedJSHeapSize, canvas: { ...canvas().dataset } });
+    }
+    await save({ kind: 'suite-complete' });
+    console.log('QA sample suite complete');
+  };
+  window.__qaRecoveryCycles = async () => {
+    const rows=[];
+    for(let cycle=1;cycle<=3;cycle++) {
+      select('Contact');
+      await sleep(1000);
+      if(canvas().dataset.playing==='true') document.querySelector('.playback-control').click();
+      const old=canvas();
+      old.getContext('webgl2').getExtension('WEBGL_lose_context').loseContext();
+      await wait(()=>canvas().dataset.sceneStatus==='error');
+      const errorShown=!!document.querySelector('.load-panel button');
+      select('Bio');
+      document.querySelector('.load-panel button').click();
+      await wait(()=>canvas().dataset.sceneStatus==='ready');
+      rows.push({cycle,errorShown,replaced:old!==canvas(),canvasCount:document.querySelectorAll('canvas').length,hash:location.hash,playing:canvas().dataset.playing,heapUsedBytes:performance.memory?.usedJSHeapSize});
+    }
+    await save({kind:'recovery-cycles',rows});
+    console.log('QA recovery complete',JSON.stringify(rows));
+  };
+  window.__qaProbe = async (name, duration = 1200) => {
+    let calls = 0;
+    const proto = WebGL2RenderingContext.prototype;
+    const originals = Object.fromEntries(['drawArrays','drawElements','drawArraysInstanced','drawElementsInstanced'].map((key)=>[key,proto[key]]));
+    for(const [key, original] of Object.entries(originals)) proto[key]=function(...args){ calls++; return original.apply(this,args); };
+    const timeBefore=canvas()?.dataset.animationTime;
+    const hiddenBefore=document.hidden;
+    await sleep(duration);
+    for(const [key, original] of Object.entries(originals)) proto[key]=original;
+    const result={kind:'draw-probe',name,durationMs:duration,calls,timeBefore,timeAfter:canvas()?.dataset.animationTime,hiddenBefore,hiddenAfter:document.hidden,playing:canvas()?.dataset.playing,hash:location.hash};
+    await save(result);
+    console.log('QA probe',JSON.stringify(result));
+  };
+})();

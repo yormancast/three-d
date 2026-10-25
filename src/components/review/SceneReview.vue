@@ -6,8 +6,9 @@ import { useEnvironment } from '@/composables/useEnvironment'
 const canvas = ref<HTMLCanvasElement | null>(null)
 const {
   status,
+  canvasVersion,
+  compactLayout,
   error,
-  progress,
   activeView,
   views,
   stats,
@@ -31,8 +32,9 @@ const posterUrl = `${import.meta.env.BASE_URL}models/continuous/preview.jpg`
 </script>
 
 <template>
-  <main class="environment-review">
+  <main class="environment-review" :class="{ 'layout-compact': compactLayout }">
     <SceneViewport
+      :key="canvasVersion"
       :status="status"
       :poster-url="posterUrl"
       :triangles="stats.triangles"
@@ -49,7 +51,7 @@ const posterUrl = `${import.meta.env.BASE_URL}models/continuous/preview.jpg`
       @canvas-ready="(element) => (canvas = element)"
     />
     <header class="review-header">
-      <div class="wordmark">EL DIRTO<span>®</span></div>
+      <div class="wordmark">YORMAN C.</div>
       <div class="review-context">
         <span class="status-dot" />Bajo el puente<span class="review-phase">Del descanso al juego</span>
       </div>
@@ -85,7 +87,7 @@ const posterUrl = `${import.meta.env.BASE_URL}models/continuous/preview.jpg`
     <p v-if="status === 'ready' && transitioning" class="transition-status" aria-live="polite">
       {{ playing ? transitionLabel : 'Reproduce para continuar el cambio' }}
     </p>
-    <SceneStatus :status="status" :error="error" :progress="progress" @retry="retry" />
+    <SceneStatus :status="status" :error="error" @retry="retry" />
     <footer class="review-footer">
       <div class="scene-caption">
         <span>01 / NOCHE</span>
@@ -187,12 +189,6 @@ const posterUrl = `${import.meta.env.BASE_URL}models/continuous/preview.jpg`
   font-weight: 900;
   letter-spacing: -0.06em;
 }
-.wordmark span {
-  color: var(--color-lime);
-  font: 12px var(--font-mono);
-  margin-left: 6px;
-  vertical-align: top;
-}
 .review-context {
   font: 12px var(--font-mono);
   display: grid;
@@ -245,6 +241,7 @@ const posterUrl = `${import.meta.env.BASE_URL}models/continuous/preview.jpg`
   pointer-events: auto;
 }
 button {
+  min-height: 44px;
   cursor: pointer;
   border: 0;
   border-radius: 3px;
@@ -268,69 +265,73 @@ button:focus-visible {
   outline: 2px solid var(--color-lime);
   outline-offset: 4px;
 }
-@media (width < 800px) {
-  .review-header {
-    padding: 22px;
-  }
-  .atmosphere-toggle {
-    pointer-events: auto;
-    position: absolute;
-    right: 40px;
-    top: 78px;
-    border: 1px solid var(--color-border-chip);
-    padding: 8px 12px;
-    font: 10px var(--font-mono);
-    background: var(--color-surface-nav);
-  }
-  .animation-controls {
-    inset: auto 16px 132px;
-    justify-content: space-between;
-    gap: 0;
-  }
-  .animation-controls button {
-    padding: 12px 6px;
-    font-size: 11px;
-  }
-  .playback-controls {
-    inset: auto 16px 86px;
-    justify-content: space-between;
-  }
-  .transition-status {
-    inset: auto 16px 180px;
-    text-align: right;
-  }
-  .scene-caption {
-    display: none;
-  }
-  .wordmark {
-    font-size: 24px;
-  }
-  .review-context {
-    font-size: 10px;
-  }
-  .review-phase {
-    max-width: 130px;
-    line-height: 1.5;
-  }
-  .review-footer {
-    padding: 50px 16px 20px;
-    flex-direction: column;
-    align-items: start;
-    gap: 16px;
-  }
-  .scene-caption p {
-    font-size: 22px;
-  }
-  .camera-nav {
-    width: 100%;
-    justify-content: space-between;
-  }
-  .camera-nav button {
-    padding: 10px 9px;
-    font-size: 11px;
-  }
-  .review-note {
-    display: none;
+.environment-review.layout-compact .review-header {
+  padding: calc(22px + env(safe-area-inset-top)) calc(22px + env(safe-area-inset-right)) 22px
+    calc(22px + env(safe-area-inset-left));
+}
+.environment-review.layout-compact .atmosphere-toggle {
+  pointer-events: auto;
+  position: absolute;
+  right: calc(40px + env(safe-area-inset-right));
+  top: calc(78px + env(safe-area-inset-top));
+  border: 1px solid var(--color-border-chip);
+  padding: 8px 12px;
+  font: 10px var(--font-mono);
+  background: var(--color-surface-nav);
+}
+.environment-review.layout-compact .animation-controls {
+  inset: auto 16px calc(152px + env(safe-area-inset-bottom));
+  justify-content: space-between;
+  gap: 0;
+}
+.environment-review.layout-compact .animation-controls button {
+  padding: 12px 6px;
+  font-size: 11px;
+}
+.environment-review.layout-compact .playback-controls {
+  inset: auto 16px calc(86px + env(safe-area-inset-bottom));
+  justify-content: space-between;
+}
+.environment-review.layout-compact .transition-status {
+  inset: auto 16px calc(210px + env(safe-area-inset-bottom));
+  text-align: right;
+}
+.environment-review.layout-compact .scene-caption {
+  display: none;
+}
+.environment-review.layout-compact .wordmark {
+  font-size: 24px;
+}
+.environment-review.layout-compact .review-context {
+  font-size: 10px;
+}
+.environment-review.layout-compact .review-phase {
+  max-width: 130px;
+  line-height: 1.5;
+}
+.environment-review.layout-compact .review-footer {
+  padding: 50px 16px calc(20px + env(safe-area-inset-bottom));
+  flex-direction: column;
+  align-items: start;
+  gap: 16px;
+}
+.environment-review.layout-compact .scene-caption p {
+  font-size: 22px;
+}
+.environment-review.layout-compact .camera-nav {
+  width: 100%;
+  justify-content: space-between;
+}
+.environment-review.layout-compact .camera-nav button {
+  padding: 10px 9px;
+  font-size: 11px;
+}
+.environment-review.layout-compact .review-note {
+  display: none;
+}
+@media (height < 480px) {
+  .environment-review {
+    min-height: 100svh;
   }
 }
 </style>

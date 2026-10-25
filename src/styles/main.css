@@ -1,6 +1,7 @@
 /* Punto de entrada de estilos. El orden de las capas define la cascada. */
 @layer theme, base, components, utilities;
 
-@import 'tailwindcss';
+@import 'tailwindcss' source('../');
+@source '../../index.html';
 @import './tokens.css';
 @import './base.css' layer(base);

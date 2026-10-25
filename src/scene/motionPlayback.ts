@@ -64,6 +64,16 @@ export class MotionPlayback {
     this.target = id
   }
 
+  snap(id: MotionId) {
+    this.active = this.target = this.clip = id
+    this.time = 0
+    this.phase = 'loop'
+    this.direction = 1
+    this.destination = place(id)
+    this.settleTime = 0
+    this.offset = 0
+  }
+
   private enter(clip: ClipId, time: number) {
     const angle = this.offset + this.angleAt(this.clip, this.time)
     this.clip = clip

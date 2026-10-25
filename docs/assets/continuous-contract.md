@@ -1,6 +1,6 @@
 # Contrato del recurso continuous
 
-Revisado directamente desde `public/models/continuous/dirto-continuous.glb` el 20 de octubre de 2026. Este documento separa los requisitos que necesita el reproductor de los detalles descriptivos de la exportación inspeccionada.
+Contrato revisado desde `public/models/continuous/dirto-continuous.glb` el 24 de octubre de 2026. Este documento separa los requisitos que necesita el reproductor de los detalles descriptivos de la distribución web inspeccionada.
 
 ## Versiones
 
@@ -47,7 +47,9 @@ Pickup y Rise son clips conectores y participan en las transiciones aunque su `s
 
 ## Datos informativos de esta exportación
 
-- GLB: 15.449.252 bytes; SHA-256 registrado en `arquitectura-v3.md`.
+- Distribución web F6-04: 9.414.840 bytes; SHA-256 `a65517b2c8108d5a7fcbbe7ff6735070323de05d2f4035d9670dd3341084b1dc`.
+- Entrada fuente local ignorada: 15.449.252 bytes; hash histórico `6505a219d8834c80997a1a78222ed57dc99e921efcbcde434396e6a1753163bc`.
+- Las tres texturas PNG del balón en la distribución web miden 1024×512; las cinco texturas WebP del entorno mantienen sus dimensiones originales.
 - Generador: glTF-Transform v4.5.1.
 - Duraciones en segundos: Recovery 8; Dribble 2.375; Crossover 3.1666667; Standing 4.4166667; Rise 2.5; Pickup 3.5; Shot 10.5.
 - El archivo integra imágenes y geometría; sus URIs de imagen no dependen de archivos externos.

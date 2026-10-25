@@ -9,7 +9,7 @@ La aplicación carga exclusivamente:
 
 El GLB contiene sus imágenes y movimientos; no necesita `motions.json` ni los GLB de fases anteriores. Se carga con MeshoptDecoder. No volver a añadir los modelos históricos a `public/`: Vite copia todo su contenido al build aunque el código no lo importe.
 
-La entrada local está en `models/dirto-continuous.glb`. Al organizar los assets el 20 de octubre de 2026 era idéntica a la distribución. Es una separación intencional entre entrada y publicación, no una segunda descarga del sitio.
+La entrada local ignorada está en `models/dirto-continuous.glb` y conserva la exportación fuente sin cambio. Desde F6-04, la distribución pública usa una variante con las tres texturas del balón reducidas a 1024×512; no son copias idénticas. El recurso activo mide 9.414.840 bytes y su SHA-256 es `a65517b2c8108d5a7fcbbe7ff6735070323de05d2f4035d9670dd3341084b1dc`. Las cinco texturas WebP del entorno, la geometría, morph targets, clips y metadata se conservaron. La comparación y estimaciones están registradas en `docs/fase-6-validacion.md`.
 
 ## Procedencia y licencias
 

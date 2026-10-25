@@ -1,21 +1,21 @@
 # Plan de implementación v3 por fases
 
-Actualizado el 20 de octubre de 2026 a partir de la rama `version-3` y sus cambios locales. Arquitectura de referencia: [arquitectura-v3.md](arquitectura-v3.md). Este plan distingue implementación, validación automática y revisión visual; una no sustituye a las otras.
+Actualizado el 25 de octubre de 2026 a partir de la rama `version-3` y sus cambios locales. Arquitectura de referencia: [arquitectura-v3.md](arquitectura-v3.md). Este plan distingue implementación, validación automática y revisión visual; una no sustituye a las otras.
 
 ## Dónde estamos
 
-**Tenemos la base 3D y los assets organizados. La aplicación todavía es un visor de revisión, no el portafolio público. El próximo trabajo es conectar la navegación del sitio con la escena y construir Home + Bio completos.**
+**La base 3D, la coordinación de secciones y el portafolio de cinco vistas están implementados. La fase 5 está cerrada por decisión del usuario tras validar el recorrido y la implementación; se aceptó cerrar sin exportar las capturas PNG del navegador. La revisión editorial posterior se hará cuando el usuario la pida. Las fases 6–7 permanecen pendientes o parciales según su alcance.**
 
 | Fase | Estado actual | Qué falta para cerrarla |
 | --- | --- | --- |
 | 0. Dirección y arquitectura | Definida como base de trabajo | Revisar las decisiones propuestas durante su implementación |
 | 1. Assets | Completada para el alcance actual | Mantener el inventario al cambiar una exportación |
-| 2. Base técnica de escena | Parcial, implementación principal disponible | Validar contrato del GLB, separar visor y comprobar instalación limpia |
-| 3. Secciones y coordinación | Pendiente | Datos tipados y coordinación de sección, cámara y acción |
-| 4. Home + Bio | Pendiente | Interfaz pública y primer recorrido completo |
-| 5. Portafolio completo | Pendiente | Projects, Experience, Contact y contenido final |
-| 6. Móvil y rendimiento | Parcial, ajustes del visor disponibles | Validar la interfaz final y medir dispositivos |
-| 7. Entrega | Pendiente | Revisión integral y preparación para publicación |
+| 2. Base técnica de escena | Completada | Ver [evidencia de fase 2](fase-2-validacion.md) |
+| 3. Secciones y coordinación | Completada: implementación y validación integrada | Ver [tareas y evidencia de fase 3](tareas-fase-3.md) y [registro de validación](fase-3-validacion.md) |
+| 4. Home + Bio | Completada: recorrido, contenido y validación integrada | Ver [tareas](tareas-fase-4.md), [validación](fase-4-validacion.md) y [capturas](evidencia/fase-4/) |
+| 5. Portafolio completo | Completada el 22 de octubre de 2026 | Revisión editorial de textos de v1 queda para después; Experience permanece vacía por decisión explícita. Ver [tareas](tareas-fase-5.md) y [validación](fase-5-validacion.md) |
+| 6. Móvil y rendimiento | Parcial; matriz local, recuperación real y mediciones repetidas | Móvil físico, WebGL deshabilitado al inicio, frame GPU/memoria y rendimiento de 60 FPS; ver [continuación](rendimiento-local.md) |
+| 7. Entrega | Parcial; preparación local y correcciones responsive ejecutadas | Completar pruebas de entorno/rendimiento, revisión final y entrega reproducible; ver [validación](fase-7-validacion.md) |
 
 No se asigna un porcentaje global: tener los clips y el render funcionando no mide el avance del contenido, la interfaz o la validación visual.
 
@@ -52,7 +52,7 @@ No se asigna un porcentaje global: tener los clips y el render funcionando no mi
 - [x] Documentar recursos, licencias y movimientos en los README y `docs/assets/`.
 - [x] Verificar hashes de los archivos trasladados y salida del build.
 
-**Resultado:** 5.409.509 bytes de archivos históricos fuera de la distribución; modelo integrado de 15.449.252 bytes. La entrada local y la distribución son idénticas al revisar. v10/v11 locales y públicos eran exportaciones diferentes.
+**Resultado de fase 1:** 5.409.509 bytes de archivos históricos fuera de la distribución; modelo integrado de 15.449.252 bytes. En ese momento la entrada local y la distribución eran idénticas. En F6-04 la distribución pública se optimizó y ahora difiere intencionalmente de la entrada fuente. v10/v11 locales y públicos eran exportaciones diferentes.
 
 **Límite:** el archivo histórico está ignorado por Git; no es un respaldo remoto. Los documentos históricos conservan referencias a las rutas anteriores por trazabilidad.
 
@@ -83,15 +83,15 @@ Evidencia de implementación y entrega:
 
 ## Fase 3 — Secciones y coordinación
 
-**Estado: pendiente. Depende de la base de fase 2.**
+**Estado: completada. F3-01–F3-07 implementadas y validadas sobre el árbol de trabajo actual.**
 
-- [ ] Definir identidad, secciones, textos, enlaces y presets en `src/content/`.
-- [ ] Incorporar `usePortfolio` como dueño de la sección y tarjeta seleccionadas.
-- [ ] Mantener `useEnvironment` como dueño del ciclo de vida de escena y adaptador de eventos.
-- [ ] Definir un comando coherente de presentación: cámara, acción y anclaje.
-- [ ] Conservar la última selección antes de cargar y al reintentar.
-- [ ] Separar sección visible, animación solicitada y animación real.
-- [ ] Si se adopta hash, soportar entrada directa, atrás/adelante y valores desconocidos.
+- [x] Definir identidad, secciones, textos, enlaces y presets en `src/content/`.
+- [x] Incorporar `usePortfolio` como dueño de la sección y tarjeta seleccionadas.
+- [x] Mantener `useEnvironment` como dueño del ciclo de vida de escena y adaptador de eventos.
+- [x] Definir un comando coherente de presentación: cámara, acción y anclaje.
+- [x] Conservar la última selección antes de cargar y al reintentar.
+- [x] Separar sección visible, animación solicitada y animación real.
+- [x] Soportar entrada directa, atrás/adelante y hashes desconocidos.
 
 Propuesta inicial para implementar y revisar:
 
@@ -107,63 +107,71 @@ Propuesta inicial para implementar y revisar:
 
 ## Fase 4 — Home + Bio de extremo a extremo
 
-**Estado: pendiente. Primer incremento público. Depende de fase 3.**
+**Estado: completada el 21 de octubre de 2026. Primer incremento público. Depende de fase 3, completada.**
 
-- [ ] Crear identidad, navegación, tarjeta, cierre y estados de carga como componentes Vue.
-- [ ] Aplicar tokens y tipografía aprobados, con interfaz pública en inglés.
-- [ ] Hacer Home → Bio → Home con una tarjeta a la vez, Escape y foco coherente.
-- [ ] Interpolar cámara y objetivo sin reiniciar el modelo.
-- [ ] Proyectar un anclaje semántico por encuadre y dibujar su línea desde Vue en escritorio.
-- [ ] Garantizar que la cámara puede terminar su recorrido con el personaje pausado.
-- [ ] Resolver movimiento reducido sin dejar navegación esperando una transición detenida.
-- [ ] Mantener navegación y contenido disponibles durante carga o fallo de WebGL.
-- [ ] Revisar el recorrido en escritorio y pantalla estrecha antes de extender componentes.
+- [x] Crear identidad, navegación y tarjeta como componentes Vue; el estado de escena conserva carga y reintento.
+- [x] Aplicar tokens y tipografía aprobados, con interfaz pública en inglés.
+- [x] Hacer Home → Bio → Home con una tarjeta a la vez, Escape y foco coherente.
+- [x] Interpolar cámara y objetivo sin reiniciar el modelo.
+- [x] Proyectar un anclaje semántico por encuadre y dibujar su línea desde Vue en escritorio.
+- [x] Garantizar que la cámara puede terminar su recorrido con el personaje pausado.
+- [x] Resolver movimiento reducido con cámara inmediata y pose estable compatible.
+- [x] Mantener navegación y contenido disponibles durante carga, fallo del GLB y ausencia de WebGL.
+- [x] Ajustar cámara/anclaje del recorrido Home → Bio y revisar a 1280×720 y 390×844; la tarjeta queda separada del personaje y el conector sale por el borde izquierdo.
+- [x] Completar Bio con datos editoriales confirmados.
+- [x] Revisar el recorrido Home → Bio en escritorio y pantalla estrecha antes de extender componentes.
+- [x] Ejecutar check, build y validación integrada de producción; guardar capturas de escritorio, móvil y estado sin WebGL.
 
-**Cierre:** el primer recorrido se puede leer, abrir y cerrar con teclado y sin depender del render 3D. El texto no tapa rostro, manos ni balón.
+**Cierre:** el primer recorrido se puede leer, abrir y cerrar con teclado y sin depender del render 3D. La Bio permanece legible con GLB fallido y sin WebGL; el texto no tapa rostro, manos ni balón. Ver [validación integrada](fase-4-validacion.md) y [capturas](evidencia/fase-4/).
 
 ## Fase 5 — Completar el portafolio
 
-**Estado: pendiente. Depende de fase 4.**
+**Estado: completada el 22 de octubre de 2026, incluida la validación integrada F5-07. Depende de fase 4, completada. F5-00, F5-02 y F5-04 conservan contenido provisional de v1 por autorización del usuario; Experience queda vacía por decisión explícita. La revisión editorial completa se hará después, como acordó el usuario.**
 
-- [ ] Extender el patrón a Projects, Experience y Contact.
-- [ ] Ajustar cámaras y anclajes junto al contenido real de cada sección.
-- [ ] Incorporar proyectos con aportes y enlaces, experiencia con fechas y contacto confirmado.
-- [ ] Resolver navegación rápida y cambios mientras el personaje se levanta o vuelve a la banca.
-- [ ] Si se adopta Shot como interacción pública, mantener cámara de tiro hasta recuperar el balón y después atender la última sección solicitada.
-- [ ] Mantener pausa/reanudación accesibles sin exponer controles técnicos de inspección.
+Plan y resultados por tarea: [Fase 5 con Luna](tareas-fase-5.md); validación: [registro integrado](fase-5-validacion.md). El alcance base mantiene Shot fuera de la interfaz pública; no se adoptó la tarea opcional F5-08.
 
-**Cierre:** las cinco vistas funcionan con contenido final, sin información profesional inventada ni placeholders publicables.
+- [x] Extender el patrón a Projects, Experience y Contact; Experience permanece vacía a petición del usuario.
+- [x] Revisar cámaras, anclajes, composición móvil y recorrido completo.
+- [x] Incorporar texto de v1 y enlace de contacto autorizado provisionalmente; la revisión editorial queda para después.
+- [x] Resolver navegación rápida durante Rise/retorno y pausa/reanudación accesibles.
+- [x] Registrar Shot como no adoptado, fuera del alcance base.
 
-**Información editorial necesaria:** cargo y presentación definitivos, proyectos, trayectoria y vías de contacto. Puede avanzarse con la estructura mientras se completan esos datos.
+**Estado de implementación:** las cinco vistas funcionan con contenido autorizado provisional, sin información profesional inventada ni placeholders publicables. La revisión editorial completa sigue pendiente por decisión del usuario. F5-07 se cerró por decisión expresa del usuario; se aceptó no exportar imágenes PNG a la carpeta de evidencia. Ver tareas y registro integrado.
+
+**Estado editorial:** el usuario autorizó conservar por ahora el texto y el destino de contacto de v1, con revisión posterior, y pidió dejar Experience vacía. No añadir trayectoria ni más proyectos por inferencia. La estructura de las cinco vistas permanece lista para cambios editoriales futuros.
 
 ## Fase 6 — Móvil, carga y rendimiento
 
-**Estado: parcial en el visor; pendiente para el sitio final. Se trabaja desde fase 4 y se cierra después de fase 5.**
+**Estado: parcial.** La continuación del 25 de octubre completó la matriz emulada de cinco vistas por diez tamaños, zoom real al 200 %, contenido extenso, movimiento reducido, pestaña oculta y pérdida de contexto después de pausar. Se corrigió el reintento con canvas nuevo, conservando sección y pausa. Se repitieron cargas locales y muestras de 30 s por vista: 23–30 FPS en 1710×897, por debajo de la meta. Se rechazó una variante sin MSAA por degradación visual. No se acredita móvil físico, primer frame presentado por GPU, caché caliente completa del GLB ni estabilidad de memoria. Ver [continuación y resultados](rendimiento-local.md).
 
-Ya disponible:
+Plan detallado y criterios de cierre: [tareas de fase 6](tareas-fase-6.md). El estado por tarea está actualizado en el plan detallado; la fase sigue parcial.
+
+Implementado y observado en escritorio:
 
 - [x] Cámaras específicas para móvil y límite de resolución del render.
 - [x] Profundidad de campo desactivada en móvil y bloom reducido.
 - [x] Preferencia de movimiento reducido aplicada a la reproducción inicial.
 
-Pendiente:
+Pendiente de cierre:
 
-- [ ] Unificar breakpoints de escena y UI, respetar áreas seguras y orientación.
-- [ ] Ajustar tarjeta inferior y desplazamiento interno con texto largo o ampliado.
-- [ ] Validar descarga lenta, fallo, reintento y ausencia de WebGL con contenido utilizable.
-- [ ] Sustituir el contador de un recurso por indicador indeterminado o progreso real.
-- [ ] Medir descarga, memoria y FPS; `submissionMs` no es una medición de GPU.
-- [ ] Evaluar compresión/resolución de las tres texturas del balón, que ocupan 8.287.215 bytes, antes de reducir geometría.
-- [ ] Evaluar carga diferida del motor o variante ligera solo si las mediciones lo justifican.
-- [ ] Revisar visualmente los cinco encuadres, las transiciones y el tiro en navegador.
+- [x] Unificar breakpoints y completar matriz local y giro equivalente; áreas seguras/barras reales pendientes de móvil físico.
+- [x] Ajustar tarjeta inferior y scroll; comprobar 320 px, contenido extenso aislado, teclado y zoom real al 200 %. Ampliación del sistema móvil pendiente.
+- [x] Recorrer las cinco vistas en diez tamaños y registrar evidencia/zoom/texto extendido; aprobación artística final pendiente.
+- [ ] Iniciar con WebGL deshabilitado. La pérdida real después de pausar, movimiento reducido y pestaña oculta ya se comprobaron; no sustituyen ese caso inicial.
+- [ ] Completar frame GPU, caché caliente del GLB y memoria aislada. Descarga/ready locales y cuadros repetidos; 60 FPS no alcanzados. `submissionMs` no mide GPU.
+- [x] Optimizar las texturas del balón: distribución pública reducida de 15.449.252 a 9.414.840 bytes, con fuente local preservada. Ver `tareas-fase-6.md`.
+- [x] Dividir el motor en un chunk dinámico; falta verificar el impacto en el tiempo total de disponibilidad/primer frame.
+- [ ] Revisar todos los encuadres y la transición/tiro en el visor de desarrollo y en la matriz final.
 
 **Cierre:** resultados registrados en portátil y móvil, con dispositivo y condiciones identificados. Metas de diseño: 60 fps en portátil medio, al menos 30 fps en móvil medio y primera imagen en menos de 2 s. Son objetivos, todavía no resultados demostrados.
 
 ## Fase 7 — Preparar la entrega
 
-**Estado: pendiente. Depende del cierre de fases anteriores.**
+**Estado: parcial. Preparación local ejecutada el 25 de octubre; el cierre depende de las validaciones pendientes de fase 6.**
 
-- [ ] Cambiar `lang` a inglés y completar descripción, metadatos sociales e imagen de compartir.
+Ver [resultados y pendientes de entrega](fase-7-validacion.md). Se corrigieron los selectores móviles y la disposición de carga/error, se recorrieron 50 combinaciones de sección y viewport, y se incorporaron idioma inglés y metadatos sociales. Falta consolidar Git y verificar dispositivos, condiciones de carga y entorno que no cubre el navegador integrado.
+
+- [x] Cambiar `lang` a inglés y completar descripción, metadatos sociales e imagen de compartir; comprobar la URL pública y vista previa tras desplegar.
 - [ ] Revisar títulos, enlaces, contraste, foco y navegación por teclado.
 - [ ] Confirmar contenido, licencias e inventario final de recursos.
 - [ ] Ejecutar comprobaciones y build sobre la entrega final.
@@ -174,9 +182,9 @@ Pendiente:
 
 ## Evidencia actual y próximo paso
 
-El commit de código y assets `fec7714004adc26399adec589563e1cd3c2f790b` pasó instalación, check, build y verificación HTTP de las rutas del modelo y el póster desde un clone limpio. Ver [evidencia de fase 2](fase-2-validacion.md). Persiste el aviso de tamaño del paquete JavaScript; `npm ci` reportó seis vulnerabilidades high. La revisión emulada no certifica rendimiento en un móvil real.
+El commit de código y assets `fec7714004adc26399adec589563e1cd3c2f790b` pasó instalación, check, build y verificación HTTP de las rutas del modelo y el póster desde un clone limpio. Ver [evidencia de fase 2](fase-2-validacion.md). La fase 4 está completada; consultar [tareas](tareas-fase-4.md), [validación](fase-4-validacion.md) y [capturas](evidencia/fase-4/). Ese build histórico superaba 500 kB; el build de F6 separa la entrada (83,40 kB) del motor (680,60 kB), y Vite sigue avisando por el chunk de motor. `npm ci` reportó seis vulnerabilidades high en la validación de fase 2. El viewport emulado no certifica rendimiento en un móvil real.
 
-**Próximo paso recomendado:** implementar las fases 3–4 como primer recorrido Home + Bio. La revisión visual del portafolio público completo queda pendiente de esas fases.
+**Próximo paso recomendado:** repetir el protocolo final con red y caché definidas, completar la matriz visual en los tamaños enumerados y medir con un móvil físico. Las capturas PNG no se exportaron en esta ejecución; la inspección del navegador no se presenta como aprobación artística. F5 está cerrada y la revisión editorial queda para cuando el usuario la solicite. La preparación de entrega corresponde a fase 7.
 
 ## Referencias
 

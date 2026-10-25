@@ -1,0 +1,832 @@
+[
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      320,
+      568
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 336,
+      "overflow": false,
+      "scroll": true,
+      "w": 296,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      320,
+      568
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 336,
+      "overflow": false,
+      "scroll": true,
+      "w": 296,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      320,
+      568
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 148.1953125,
+      "overflow": false,
+      "scroll": false,
+      "w": 296,
+      "x": 12,
+      "y": 335.8046875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      320,
+      568
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 278.1953125,
+      "overflow": false,
+      "scroll": false,
+      "w": 296,
+      "x": 12,
+      "y": 205.8046875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      320,
+      568
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      699,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 334.203125,
+      "overflow": false,
+      "scroll": false,
+      "w": 675,
+      "x": 12,
+      "y": 301.796875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      699,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 488,
+      "overflow": false,
+      "scroll": true,
+      "w": 675,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      699,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 152.3515625,
+      "overflow": false,
+      "scroll": false,
+      "w": 675,
+      "x": 12,
+      "y": 483.6484375
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      699,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 210.3515625,
+      "overflow": false,
+      "scroll": false,
+      "w": 675,
+      "x": 12,
+      "y": 425.6484375
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      699,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      700,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 334.296875,
+      "overflow": false,
+      "scroll": false,
+      "w": 676,
+      "x": 12,
+      "y": 301.703125
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      700,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 488,
+      "overflow": false,
+      "scroll": true,
+      "w": 676,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      700,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 152.3984375,
+      "overflow": false,
+      "scroll": false,
+      "w": 676,
+      "x": 12,
+      "y": 483.6015625
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      700,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 210.3984375,
+      "overflow": false,
+      "scroll": false,
+      "w": 676,
+      "x": 12,
+      "y": 425.6015625
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      700,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      799,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 318.609375,
+      "overflow": false,
+      "scroll": false,
+      "w": 775,
+      "x": 12,
+      "y": 317.390625
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      799,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 480.6484375,
+      "overflow": false,
+      "scroll": false,
+      "w": 775,
+      "x": 12,
+      "y": 155.3515625
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      799,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 156.5546875,
+      "overflow": false,
+      "scroll": false,
+      "w": 775,
+      "x": 12,
+      "y": 479.4453125
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      799,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 214.5546875,
+      "overflow": false,
+      "scroll": false,
+      "w": 775,
+      "x": 12,
+      "y": 421.4453125
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      799,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": false,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      800,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 513.875,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 400,
+      "y": 110.125
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      800,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 540,
+      "overflow": false,
+      "scroll": true,
+      "w": 360,
+      "x": 400,
+      "y": 84
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      800,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 164.59375,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 400,
+      "y": 459.40625
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      800,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 270.59375,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 400,
+      "y": 353.40625
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      800,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      390,
+      844
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 423.0859375,
+      "overflow": false,
+      "scroll": false,
+      "w": 366,
+      "x": 12,
+      "y": 336.9140625
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      390,
+      844
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 612,
+      "overflow": false,
+      "scroll": true,
+      "w": 366,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      390,
+      844
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 148.1953125,
+      "overflow": false,
+      "scroll": false,
+      "w": 366,
+      "x": 12,
+      "y": 611.8046875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      390,
+      844
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 254.1953125,
+      "overflow": false,
+      "scroll": false,
+      "w": 366,
+      "x": 12,
+      "y": 505.8046875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      390,
+      844
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      844,
+      390
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 158,
+      "overflow": false,
+      "scroll": true,
+      "w": 820,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      844,
+      390
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 158,
+      "overflow": false,
+      "scroll": true,
+      "w": 820,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      844,
+      390
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 158,
+      "overflow": false,
+      "scroll": false,
+      "w": 820,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      844,
+      390
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 158,
+      "overflow": false,
+      "scroll": true,
+      "w": 820,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      844,
+      390
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": true,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      390,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 248,
+      "overflow": false,
+      "scroll": true,
+      "w": 366,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      390,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 248,
+      "overflow": false,
+      "scroll": true,
+      "w": 366,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      390,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 148.1953125,
+      "overflow": false,
+      "scroll": false,
+      "w": 366,
+      "x": 12,
+      "y": 247.8046875
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      390,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 248,
+      "overflow": false,
+      "scroll": true,
+      "w": 366,
+      "x": 12,
+      "y": 148
+    },
+    "compact": true,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      390,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": false,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      1280,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 300,
+      "overflow": false,
+      "scroll": true,
+      "w": 360,
+      "x": 880,
+      "y": 84
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      1280,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 300,
+      "overflow": false,
+      "scroll": true,
+      "w": 360,
+      "x": 880,
+      "y": 84
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      1280,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 168.796875,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 880,
+      "y": 215.203125
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      1280,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 274.796875,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 880,
+      "y": 109.203125
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      1280,
+      480
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": null,
+    "compact": false,
+    "overflow": false,
+    "section": "#home",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 540,
+      "overflow": false,
+      "scroll": true,
+      "w": 360,
+      "x": 880,
+      "y": 84
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#bio",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 540,
+      "overflow": false,
+      "scroll": true,
+      "w": 360,
+      "x": 880,
+      "y": 84
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#projects",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 168.796875,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 880,
+      "y": 455.203125
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#experience",
+    "size": [
+      1280,
+      720
+    ]
+  },
+  {
+    "canvasCount": 1,
+    "card": {
+      "h": 274.796875,
+      "overflow": false,
+      "scroll": false,
+      "w": 360,
+      "x": 880,
+      "y": 349.203125
+    },
+    "compact": false,
+    "overflow": false,
+    "section": "#contact",
+    "size": [
+      1280,
+      720
+    ]
+  }
+]

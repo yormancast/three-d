@@ -22,7 +22,9 @@ import { toWorld, verticalFov } from './camera'
 import { createPostprocessing } from './postprocessing'
 import { loadSceneAssets, releaseSceneAsset } from './assets'
 import { adaptSceneMaterials, enableBallShadows } from './materials'
-import type { SceneConfig, SceneStats } from './types'
+import type { SceneConfig, ScenePresentation, SceneStats } from './types'
+import { createPresentationIntent } from './presentation'
+import { projectSemanticAnchor } from './anchors'
 export type * from './types'
 
 export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
@@ -104,25 +106,38 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
   let character: Object3D | undefined
   let pose = { standing: 0, shot: 0 }
   let activeAnimation = config.initialAnimation
+  let anchorId: ScenePresentation['anchorId'] = null
+  let lastAnchor: { x: number; y: number; visible: boolean } | null = null
+  const presentationIntent = createPresentationIntent(
+    { cameraId: active, motionId: activeAnimation, anchorId },
+    new Set(Object.keys(config.cameras)),
+    new Set(Object.keys(config.atmosphere)),
+  )
   let playing = false
   let lastFrame = 0
   let animationFrame = 0
   let lastReport = 0
+  let cameraTransition: { startedAt: number; fromPosition: Vector3; fromTarget: Vector3; fromFov: number } | undefined
+  const cameraTarget = new Vector3()
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
   function tick(now: number) {
     animationFrame = 0
-    if (disposed || !ready || !playing || document.hidden || !motion) return
+    if (disposed || !ready || document.hidden) return
     const delta = lastFrame ? Math.min((now - lastFrame) / 1000, 0.1) : 0
     lastFrame = now
-    motion.playback.advance(delta)
-    pose = motion.apply()
-    renderer.shadowMap.needsUpdate = true
+    if (playing && motion) {
+      motion.playback.advance(delta)
+      pose = motion.apply()
+      renderer.shadowMap.needsUpdate = true
+    }
     render()
-    animationFrame = requestAnimationFrame(tick)
+    if (playing || cameraTransition) animationFrame = requestAnimationFrame(tick)
   }
   function syncPlayback() {
     cancelAnimationFrame(animationFrame)
     lastFrame = 0
-    if (playing && ready && !disposed && !document.hidden) animationFrame = requestAnimationFrame(tick)
+    if ((playing || cameraTransition) && ready && !disposed && !document.hidden)
+      animationFrame = requestAnimationFrame(tick)
   }
   document.addEventListener('visibilitychange', syncPlayback)
   let stats: SceneStats = { triangles: 0, drawCalls: 0, submissionMs: 0, quality: 'desktop' }
@@ -130,13 +145,12 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     if (disposed) return
     const width = Math.max(canvas.clientWidth, 1)
     const height = Math.max(canvas.clientHeight, 1)
-    const mobile = width < 700
-    const portrait = mobile && height > width
-    const preset = config.cameras[portrait ? `${active}_mobile` : active] ?? config.cameras[active]
+    const profile = config.getViewportProfile()
+    const preset = config.cameras[profile.portrait ? `${active}_mobile` : active] ?? config.cameras[active]
     const atmosphere = config.atmosphere[active]
     if (!preset || !atmosphere) return
-    const shotCamera = config.cameras[portrait ? 'Shot_mobile' : 'Shot'] ?? preset
-    const ratio = Math.min(window.devicePixelRatio, mobile ? 1 : 1.25)
+    const shotCamera = config.cameras[profile.portrait ? 'Shot_mobile' : 'Shot'] ?? preset
+    const ratio = Math.min(window.devicePixelRatio, profile.lowPower ? 1 : 1.25)
     const size = `${width}:${height}:${ratio}`
     if (size !== cachedSize) {
       renderer.setPixelRatio(ratio)
@@ -145,22 +159,50 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     }
     camera.aspect = width / height
     const shotLens = shotCamera.lens * Math.min(1, 16 / 9 / camera.aspect)
-    camera.fov = verticalFov(preset.lens + (shotLens - preset.lens) * pose.shot, camera.aspect)
+    const destinationFov = verticalFov(preset.lens + (shotLens - preset.lens) * pose.shot, camera.aspect)
     const framing = new Vector3(0, 0.25 * pose.standing, 0.3 * pose.standing)
-    camera.position.set(...toWorld(preset.position)).add(framing)
-    camera.position.lerp(new Vector3(...toWorld(shotCamera.position)), pose.shot)
-    camera.lookAt(
-      new Vector3(...toWorld(preset.target)).add(framing).lerp(new Vector3(...toWorld(shotCamera.target)), pose.shot),
-    )
+    const destinationPosition = new Vector3(...toWorld(preset.position))
+      .add(framing)
+      .lerp(new Vector3(...toWorld(shotCamera.position)), pose.shot)
+    const destinationTarget = new Vector3(...toWorld(preset.target))
+      .add(framing)
+      .lerp(new Vector3(...toWorld(shotCamera.target)), pose.shot)
+    if (cameraTransition) {
+      const progress = Math.min(1, (performance.now() - cameraTransition.startedAt) / (reduceMotion.matches ? 0 : 720))
+      const eased = progress * progress * (3 - 2 * progress)
+      camera.position.copy(cameraTransition.fromPosition).lerp(destinationPosition, eased)
+      cameraTarget.copy(cameraTransition.fromTarget).lerp(destinationTarget, eased)
+      camera.fov = cameraTransition.fromFov + (destinationFov - cameraTransition.fromFov) * eased
+      if (progress >= 1) cameraTransition = undefined
+    } else {
+      camera.position.copy(destinationPosition)
+      cameraTarget.copy(destinationTarget)
+      camera.fov = destinationFov
+    }
+    camera.lookAt(cameraTarget)
     camera.updateProjectionMatrix()
     camera.updateMatrixWorld()
+    const projectedAnchor = ready ? projectSemanticAnchor(anchorId, camera, pose.standing) : null
+    if (
+      projectedAnchor &&
+      (!lastAnchor ||
+        Math.abs(projectedAnchor.x - lastAnchor.x) > 0.001 ||
+        Math.abs(projectedAnchor.y - lastAnchor.y) > 0.001 ||
+        projectedAnchor.visible !== lastAnchor.visible)
+    ) {
+      lastAnchor = projectedAnchor
+      config.onAnchor(projectedAnchor)
+    } else if (!projectedAnchor && lastAnchor) {
+      lastAnchor = null
+      config.onAnchor(null)
+    }
     const focus = -new Vector3(...toWorld(atmosphere.focusPoint))
       .add(framing)
       .lerp(new Vector3(...toWorld(shotCamera.target)), pose.shot)
       .applyMatrix4(camera.matrixWorldInverse).z
     fog.density = atmosphere.fogDensity
     scene.fog = atmosphereEnabled ? fog : null
-    pipeline.configure(width, height, ratio, mobile, atmosphere, focus)
+    pipeline.configure(width, height, ratio, profile.lowPower, atmosphere, focus)
     renderer.info.reset()
     const start = performance.now()
     if (atmosphereEnabled) pipeline.render()
@@ -170,7 +212,7 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
         triangles: renderer.info.render.triangles,
         drawCalls: renderer.info.render.calls,
         submissionMs: performance.now() - start,
-        quality: mobile ? 'mobile' : 'desktop',
+        quality: profile.lowPower ? 'mobile' : 'desktop',
       }
       if (!playing || performance.now() - lastReport > 100) {
         config.onStats(stats)
@@ -199,6 +241,7 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
     throw error
   }
   return {
+    refresh: render,
     async load() {
       const assets = await loadSceneAssets(config.modelUrl)
       const { gltf, ball, clips, motionData } = assets
@@ -211,7 +254,6 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
       adaptSceneMaterials(assets, config, toon, shadowMaterial, retiredMaterials)
       character = assets.character
       scene.add(gltf.scene)
-      config.onProgress(1, 1)
       enableBallShadows(ball)
       if (!character) throw new Error('No se encontró el personaje de la escena.')
       motion = createContinuousMotion(character, ball, clips, motionData, activeAnimation)
@@ -226,6 +268,38 @@ export function createScene(canvas: HTMLCanvasElement, config: SceneConfig) {
       active = name
       render()
     },
+    setPresentation(presentation: ScenePresentation) {
+      if (!presentationIntent.request(presentation)) {
+        throw new Error('La presentación solicitada no coincide con las cámaras, atmósferas o acciones disponibles.')
+      }
+      const latest = presentationIntent.current
+      const cameraChanged = active !== latest.cameraId
+      if (cameraChanged && ready && !reduceMotion.matches) {
+        cameraTransition = {
+          startedAt: performance.now(),
+          fromPosition: camera.position.clone(),
+          fromTarget: cameraTarget.clone(),
+          fromFov: camera.fov,
+        }
+      } else if (cameraChanged) cameraTransition = undefined
+      active = latest.cameraId
+      activeAnimation = latest.motionId
+      anchorId = latest.anchorId
+      if (motion) {
+        if (reduceMotion.matches) {
+          motion.playback.snap(latest.motionId)
+          pose = motion.apply()
+        } else motion.playback.request(latest.motionId)
+      }
+      if (motion) config.onPlayback(motion.playback.state())
+      render()
+      syncPlayback()
+    },
+    getPresentation: (): ScenePresentation => ({
+      cameraId: active,
+      motionId: activeAnimation,
+      anchorId,
+    }),
     getStats: () => stats,
     setAnimation: selectAnimation,
     setPlaying(enabled: boolean) {
