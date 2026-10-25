@@ -169,12 +169,12 @@ Pendiente de cierre:
 
 **Estado: parcial. Preparación local ejecutada el 25 de octubre; el cierre depende de las validaciones pendientes de fase 6.**
 
-Ver [resultados y pendientes de entrega](fase-7-validacion.md). Se corrigieron los selectores móviles y la disposición de carga/error, se recorrieron 50 combinaciones de sección y viewport, y se incorporaron idioma inglés y metadatos sociales. Falta consolidar Git y verificar dispositivos, condiciones de carga y entorno que no cubre el navegador integrado.
+Ver [resultados y pendientes de entrega](fase-7-validacion.md). Se corrigieron los selectores móviles y la disposición de carga/error, se recorrieron 50 combinaciones de sección y viewport, y se incorporaron idioma inglés y metadatos sociales. La integración se consolidó en `f92a09f`, con instalación independiente y build idéntico desde clon limpio. Faltan dispositivos, mediciones GPU/memoria, WebGL inicial y resolver la desviación de rendimiento.
 
 - [x] Cambiar `lang` a inglés y completar descripción, metadatos sociales e imagen de compartir; comprobar la URL pública y vista previa tras desplegar.
 - [ ] Revisar títulos, enlaces, contraste, foco y navegación por teclado.
 - [ ] Confirmar contenido, licencias e inventario final de recursos.
-- [ ] Ejecutar comprobaciones y build sobre la entrega final.
+- [x] Ejecutar comprobaciones y build de la integración desde clon limpio; 61 pruebas aprobadas y archivos de build idénticos.
 - [ ] Revisar visualmente escritorio, móvil, carga, error y movimiento reducido.
 - [ ] Registrar limitaciones y preparar una entrega revisable.
 

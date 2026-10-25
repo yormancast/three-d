@@ -1,0 +1,52 @@
+[
+  {
+    "file": "bio-1280x480.jpg",
+    "width": 1280,
+    "height": 480
+  },
+  {
+    "file": "bio-1280x720.jpg",
+    "width": 1280,
+    "height": 720
+  },
+  {
+    "file": "bio-320x568.jpg",
+    "width": 320,
+    "height": 568
+  },
+  {
+    "file": "bio-390x480.jpg",
+    "width": 390,
+    "height": 480
+  },
+  {
+    "file": "bio-390x844.jpg",
+    "width": 390,
+    "height": 844
+  },
+  {
+    "file": "bio-699x720.jpg",
+    "width": 699,
+    "height": 720
+  },
+  {
+    "file": "bio-700x720.jpg",
+    "width": 700,
+    "height": 720
+  },
+  {
+    "file": "bio-799x720.jpg",
+    "width": 799,
+    "height": 720
+  },
+  {
+    "file": "bio-800x720.jpg",
+    "width": 800,
+    "height": 720
+  },
+  {
+    "file": "bio-844x390.jpg",
+    "width": 844,
+    "height": 390
+  }
+]

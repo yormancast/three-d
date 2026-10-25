@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "f92a09f",
+  "node": "20.20.2",
+  "cleanInstall": "npm ci --offline --ignore-scripts",
+  "checks": "61 tests; format, lint, types, build passed",
+  "identicalBuilds": true,
+  "files": {
+    "assets/index-DI4zssE0.js": "08ed4f4e336d501ffe7ded9077e1438433e7a22b6cf91538cf39fab4938639b3",
+    "assets/index-Jl5oAJOS.css": "32c6e2000f3c4fc8750407270d7008e2fba0e73af6f99ef5abd7cb97206e8149",
+    "assets/scene-Bu4W3bew.js": "e69c134ad603def6fe037f6e44b3f83b45a0cc24eca1360499db39073520df9d",
+    "favicon.ico": "94170e0a82ce565d899bc29afb5983789aa928353d7f554ba0a0547d1c284f2f",
+    "index.html": "9575a789c406564b2e1d2152270a850b8cfc30082607c4b327593b7785dda696",
+    "models/README.md": "95a9742f6a82c51fcdcc002e98d113e41f9077506977c471be7d0402e86b6ad8",
+    "models/continuous/dirto-continuous.glb": "a65517b2c8108d5a7fcbbe7ff6735070323de05d2f4035d9670dd3341084b1dc",
+    "models/continuous/preview.jpg": "4a4ab16f503c1aa6ce1aee5ba13f836bcf653729246f65fca06e221192a1d341"
+  }
+}

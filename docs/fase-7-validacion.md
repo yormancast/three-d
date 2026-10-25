@@ -1,6 +1,6 @@
 # Preparación de entrega — fase 7
 
-25 de octubre de 2026. Trabajo sobre `version-3`, referencia `5409bd8`, con cambios previos de fases 3–6 sin commit. La entrega sigue local: no se ha publicado ni creado un commit que incorpore automáticamente todo el árbol de trabajo.
+25 de octubre de 2026. Trabajo sobre `version-3`, referencia `5409bd8`, con cambios previos de fases 3–6 sin commit. Registro inicial sobre cambios locales. Después se consolidó la integración en el commit local `f92a09f` y se validó desde un clon limpio; no se ha publicado.
 
 ## Cambios realizados
 
@@ -64,7 +64,7 @@ Actualización: la continuación ya comprobó movimiento reducido en Chrome, zoo
 - Primer frame presentado por GPU, memoria aislada y caché caliente completa del GLB/hosting.
 - Aproximadamente 60 FPS en portátil: no alcanzados en la muestra local; falta optimizar sin degradar la imagen o aceptar explícitamente la desviación.
 - Revisión visual artística final, confirmación del dominio de despliegue y vista previa social tras publicación.
-- Consolidación deliberada en Git y comprobación desde checkout limpio antes de publicar.
+- Consolidación en Git y clon limpio: completados en `f92a09f`; no equivale a publicación.
 
 Fase 6 y fase 7 permanecen parciales. No se necesita cambiar el contenido editorial para completar las pruebas técnicas pendientes.
 
@@ -77,3 +77,11 @@ Se revisaron las capturas de Bio en vertical, horizontal y escritorio; el resto 
 ## Continuación de recuperación y mediciones
 
 Ver [registro de continuación](rendimiento-local.md). Se corrigió la recuperación ante pérdida de contexto con un canvas nuevo y se añadieron dos regresiones; check/build aprobaron con 61 pruebas. El alcance editorial se mantiene.
+
+## Entrega reproducible comprobada
+
+Commit de integración: `f92a09f`, en `version-3`. Clon local sin enlaces duros en `/tmp/three-d-clean-f92a09f`, instalación independiente desde lockfile con Node 20.20.2 y sin scripts de instalación, `check` y `build` aprobados con 61 pruebas. Se comparó el SHA-256 de todos los archivos de ambos builds: idénticos después de apartar un archivo ignorado de Finder de `public/` y reconstruir. El manifiesto está en `docs/evidencia/fase-7/manifest-entrega.json`. CSS final 16,34 kB (4,06 kB gzip), entrada 83,92 kB (32,46 kB gzip), motor 680,60 kB (172,14 kB gzip). El motor mantiene la advertencia de tamaño, y la meta de 60 FPS sigue pendiente.
+
+La revisión de dimensiones detectó capturas parciales durante cambios rápidos de viewport. Se repitieron las cinco capturas afectadas de Bio esperando la estabilización entre llamadas: las diez coinciden ahora con sus dimensiones nominales, registradas en `dimensiones-capturas.json`. La captura `shot-portrait-parcial.jpg` se conserva identificada como recorte y no acredita el encuadre vertical completo del visor.
+
+Se cerraron los servidores temporales y se restauró el zoom original del navegador. El preview del proyecto permanece disponible; no se hizo push ni publicación.

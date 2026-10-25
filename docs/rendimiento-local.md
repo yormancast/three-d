@@ -82,3 +82,7 @@ Siguen pendientes: móvil físico, WebGL deshabilitado desde el inicio, primer f
 ## Estabilidad del CSS de entrega
 
 La copia aislada y los nuevos archivos de evidencia cambiaban el CSS generado pese a mantener la UI: Tailwind estaba detectando palabras de los documentos como utilidades. Se restringió su detección a `src/` y `index.html` en la entrada de estilos, siguiendo la [configuración oficial de fuentes](https://tailwindcss.com/docs/detecting-classes-in-source-files#setting-your-base-path). La evidencia y los registros dejan de influir en los estilos distribuidos. Esta corrección no modifica el motor 3D ni invalida la comparación de MSAA.
+
+## Comprobación desde commit limpio
+
+Tras consolidar `f92a09f`, se clonó el repositorio local sin enlaces duros y se repitieron instalación offline, check y build con Node 20.20.2. Pasaron 61 pruebas. Los SHA-256 de todos los archivos del build coinciden con el build del proyecto, incluida la distribución GLB; se apartó del directorio público un archivo ignorado de Finder antes de repetir el build local. El [manifiesto](evidencia/fase-7/manifest-entrega.json) registra los archivos. Con la detección de fuentes acotada, el CSS final es 16,34 kB; añadir registros de evidencia ya no introduce utilidades en el build. Se cerraron los servidores de medición y se restauró el zoom previo.
