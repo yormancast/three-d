@@ -85,3 +85,9 @@ Commit de integración: `f92a09f`, en `version-3`. Clon local sin enlaces duros 
 La revisión de dimensiones detectó capturas parciales durante cambios rápidos de viewport. Se repitieron las cinco capturas afectadas de Bio esperando la estabilización entre llamadas: las diez coinciden ahora con sus dimensiones nominales, registradas en `dimensiones-capturas.json`. La captura `shot-portrait-parcial.jpg` se conserva identificada como recorte y no acredita el encuadre vertical completo del visor.
 
 Se cerraron los servidores temporales y se restauró el zoom original del navegador. El preview del proyecto permanece disponible; no se hizo push ni publicación.
+
+## Continuación del postproceso
+
+Se adoptó profundidad compartida entre el render principal y DOF, conservando MSAA 4 en geometría y retirándolo de buffers de efectos de pantalla completa. La comparación emparejada de Bio en una sesión nueva pasó de 32,9 a 43,4 FPS rAF. Check/build aprobaron con 65 pruebas; ver protocolo, capturas y límites en [rendimiento local](rendimiento-local.md). No se cierra la meta de 60 FPS ni las validaciones de dispositivo/GPU.
+
+La regresión integrada del postproceso pasó nueve recuperaciones reales conservando Bio, pausa y un canvas; se midió heap tras GC entre tandas (203,38–204,34 MB). Se revisó Bio móvil a 390×844. El intento de arrancar un navegador aislado sin WebGL fue bloqueado por la herramienta; sigue pendiente. La repetición de caché volvió a mostrar el GLB transferido completo, aun con caché del navegador habilitada. Ninguna de estas observaciones cierra memoria GPU, móvil físico ni hosting real.

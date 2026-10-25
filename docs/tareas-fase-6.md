@@ -149,3 +149,7 @@ Durante la preparación de entrega se corrigieron los selectores y el layout mó
 ## Recuperación y mediciones posteriores — 25 de octubre
 
 Se corrigió una pérdida real de contexto que dejaba la escena en ready sin reintento. La recuperación con canvas nuevo conserva sección y pausa, y pasó tres ciclos reales. Movimiento reducido, zoom real y pestaña oculta también fueron comprobados. Hay 61 pruebas aprobadas y una instalación independiente con check/build aprobados. Las muestras de 30 s quedaron en 23–30 FPS; el candidato sin MSAA se rechazó por dientes de sierra. Móvil físico, WebGL inicial deshabilitado, primer frame GPU, memoria aislada y la desviación de rendimiento mantienen abierta la fase. Ver [registro actualizado](rendimiento-local.md).
+
+## Optimización posterior del postproceso — 25 de octubre
+
+F6-05 incorpora una optimización medida: una sola pasada de geometría con color y profundidad compartidos para DOF, MSAA 4 reservado a geometría y buffers de efectos sin MSAA ni profundidad propia. Bio pasó de 32,9 a 43,4 FPS rAF en comparación emparejada de una sesión nueva; no se mezclan esos resultados con las muestras anteriores de otra sesión. Efectos, resolución y suavizado permanecen. Se añadieron cuatro regresiones y check/build aprobaron con 65 pruebas. Protocolo, captura comparativa y datos crudos en [rendimiento local](rendimiento-local.md). La fase continúa parcial por la meta de rendimiento y las validaciones físicas/GPU.

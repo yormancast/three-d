@@ -142,7 +142,7 @@ Plan y resultados por tarea: [Fase 5 con Luna](tareas-fase-5.md); validación: [
 
 ## Fase 6 — Móvil, carga y rendimiento
 
-**Estado: parcial.** La continuación del 25 de octubre completó la matriz emulada de cinco vistas por diez tamaños, zoom real al 200 %, contenido extenso, movimiento reducido, pestaña oculta y pérdida de contexto después de pausar. Se corrigió el reintento con canvas nuevo, conservando sección y pausa. Se repitieron cargas locales y muestras de 30 s por vista: 23–30 FPS en 1710×897, por debajo de la meta. Se rechazó una variante sin MSAA por degradación visual. No se acredita móvil físico, primer frame presentado por GPU, caché caliente completa del GLB ni estabilidad de memoria. Ver [continuación y resultados](rendimiento-local.md).
+**Estado: parcial.** La continuación del 25 de octubre completó la matriz emulada de cinco vistas por diez tamaños, zoom real al 200 %, contenido extenso, movimiento reducido, pestaña oculta y pérdida de contexto después de pausar. Se corrigió el reintento con canvas nuevo, conservando sección y pausa. Se repitieron cargas locales y muestras de 30 s por vista: 23–30 FPS en 1710×897, por debajo de la meta. Se rechazó una variante sin MSAA por degradación visual. Una nueva sesión aisló el coste de postproceso y la profundidad compartida adoptada mejoró Bio de 32,9 a 43,4 FPS conservando MSAA 4, efectos y resolución; todavía por debajo de 60 FPS. No se acredita móvil físico, primer frame presentado por GPU, caché caliente completa del GLB ni estabilidad de memoria. Ver [continuación y resultados](rendimiento-local.md).
 
 Plan detallado y criterios de cierre: [tareas de fase 6](tareas-fase-6.md). El estado por tarea está actualizado en el plan detallado; la fase sigue parcial.
 

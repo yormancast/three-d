@@ -86,3 +86,62 @@ La copia aislada y los nuevos archivos de evidencia cambiaban el CSS generado pe
 ## Comprobación desde commit limpio
 
 Tras consolidar `f92a09f`, se clonó el repositorio local sin enlaces duros y se repitieron instalación offline, check y build con Node 20.20.2. Pasaron 61 pruebas. Los SHA-256 de todos los archivos del build coinciden con el build del proyecto, incluida la distribución GLB; se apartó del directorio público un archivo ignorado de Finder antes de repetir el build local. El [manifiesto](evidencia/fase-7/manifest-entrega.json) registra los archivos. Con la detección de fuentes acotada, el CSS final es 16,34 kB; añadir registros de evidencia ya no introduce utilidades en el build. Se cerraron los servidores de medición y se restauró el zoom previo.
+
+## Optimización del postproceso con profundidad compartida
+
+Continuación del 25 de octubre, con Chrome Guest nuevo, alimentación conectada y modo de bajo consumo desactivado. Se mantuvieron viewport 1710×897, DPR del dispositivo 2 y resolución del render limitada a 1,25. Los resultados anteriores de 23–30 FPS pertenecen a otra sesión; no se usan como comparación directa del cambio. Cada muestra siguiente mide 30 s de intervalos rAF en Bio, con DevTools cerrado y pestaña visible. Son muestras individuales.
+
+| Variante diagnóstica | FPS rAF |
+| --- | ---: |
+| Base, efectos completos y MSAA 4 | 32,9 |
+| Sin profundidad de campo | 40,4 |
+| Sin bloom | 38,9 |
+| Render directo, sin postproceso | 60,0 |
+| Profundidad compartida, efectos completos y MSAA 4 | 43,4 |
+
+El render directo alcanza la cadencia de pantalla; retirar DOF o bloom también mejora el resultado. Esto sitúa el principal coste observado en el postproceso. Las variantes que retiran efectos son diagnósticas y no se incorporan.
+
+La variante adoptada dibuja la geometría una vez en un target HDR con MSAA 4 y textura de profundidad. El mismo BokehShader consume esa profundidad nativa con DEPTH_PACKING=0, evitando el segundo dibujo de geometría de BokehPass. Los efectos de pantalla completa usan buffers sin MSAA ni profundidad propia; conservan bloom, DOF, OutputPass y resolución. En móvil se conserva el test de profundidad y se omite su resolución MSAA, porque DOF continúa desactivado. Al terminar o fallar el render se restaura el target del llamador.
+
+La comparación emparejada de Bio pasa de 32,9 a 43,4 FPS (+31,8 % con valores redondeados). No acredita 60 FPS ni tiempos de presentación GPU. Las capturas a pose inicial y cámara iguales conservan desenfoque, sombras y bordes suaves del personaje y la banca. No se aprecia la degradación de la variante MSAA 0 previamente rechazada; la revisión artística del usuario sigue pendiente.
+
+Se añadieron cuatro regresiones sobre geometría dibujada una vez, conexión de color/profundidad, configuración móvil/escritorio y resize, restauración del target tras error y liberación de targets/pases. Check y build aprobaron con 65 pruebas en 13 archivos. El motor pasa a 679,02 kB (171,89 kB gzip); el aviso de tamaño permanece.
+
+Datos crudos: `evidencia/fase-6-rendimiento/diagnostico.jsonl` y `profundidad-compartida.jsonl`. Capturas: `base-estatica.png` y `profundidad-estatica.png`. La instrumentación vive en servidores locales temporales, sin añadirse al sitio distribuido.
+
+### Recorrido completo con profundidad compartida
+
+Después de la muestra emparejada se repitieron todas las vistas, 30 s cada una y 30 s de navegación con cambios cada 1,5 s. Todas mantuvieron viewport 1710×897 y pestaña visible.
+
+| Vista | FPS rAF | p95 (ms) |
+| --- | ---: | ---: |
+| Home | 49.7 | 33.4 |
+| Bio | 44.8 | 34.0 |
+| Projects | 44.8 | 34.0 |
+| Experience | 43.8 | 34.2 |
+| Contact | 37.9 | 34.2 |
+| Navigation | 38.6 | 34.3 |
+
+No se establece una mejora porcentual de cada vista respecto de la sesión antigua: la comparación controlada disponible es Bio de esta sesión. El recorrido acredita funcionamiento con los efectos activos, pero sigue por debajo de 60 FPS.
+
+### Arranque sin WebGL
+
+Se intentó preparar una instancia aislada del navegador con WebGL deshabilitado. La herramienta de control impide usar Terminal para ese inicio. No se cambió la configuración global del navegador ni se reemplazó esta prueba por una simulación; el caso sigue pendiente.
+
+### Recuperación y memoria después de GC
+
+La variante pasó nueve pérdidas reales de contexto en tres tandas. En cada ciclo apareció el error, se sustituyó el canvas, el reintento conservó Bio y la pausa, y quedó un solo canvas. Después de cada tanda se pulsó Collect garbage en Memory de DevTools y se verificó Garbage collection completed antes de registrar el heap.
+
+| Ciclos acumulados | Heap JS usado tras GC, MB decimales |
+| --- | ---: |
+| 3 | 203.378 |
+| 6 | 203.792 |
+| 9 | 204.343 |
+
+El intervalo observado es 203,38–204,34 MB, con aumento de 0,97 MB entre extremos. DevTools, historial de comandos y navegación no se aislaron por completo: esto mejora la evidencia respecto de muestras sin GC, pero no demuestra ausencia de fugas ni estabilidad de memoria GPU. Los recuentos de recursos y el heap JS no representan memoria física de GPU.
+
+### Móvil emulado y repetición de caché
+
+Con el postproceso nuevo se comprobó Bio a 390×844 en Chrome Responsive: calidad mobile, escena ready y personaje/entorno visibles. Tras un ajuste transitorio de ancho a 1 px, la emulación conservó escala visual 4; se recargó antes de tomar `movil-390x844.png`, que muestra la composición completa. No equivale a un teléfono físico.
+
+Se repitió la carga con Cache-Control local public,max-age=3600 y Disable cache de DevTools desmarcado. En la navegación `?cache=warm&static=1&run=2`, JavaScript y CSS registraron transferSize=0, pero el GLB volvió a transferir 9.414.840 bytes de cuerpo. Ready llegó a 551,3 ms en móvil emulado, con DevTools abierto. Se conserva como otro caso de caché mixta, sin atribuirlo al nuevo render ni acreditar caché caliente completa. La configuración de hosting real sigue pendiente.
