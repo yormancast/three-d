@@ -108,10 +108,14 @@ function select(id: SectionId) {
       class="playback-control"
       type="button"
       :aria-pressed="playing"
-      :aria-label="playing ? 'Pause animation' : 'Resume animation'"
+      :aria-label="playing ? 'Pause animations' : 'Play animations'"
+      :title="playing ? 'Pause animations' : 'Play animations'"
       @click="togglePlayback"
     >
-      {{ playing ? 'Pause animation' : 'Resume animation' }}
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+        <path v-if="playing" d="M6 4h4v16H6zM14 4h4v16h-4z" />
+        <path v-else d="m8 4 12 8-12 8z" />
+      </svg>
     </button>
     <SectionNavigation ref="navigation" :selected="selectedSection" @select="select" />
     <SectionCard v-if="activeCard" ref="card" :section="activeCard" @close="close" @navigate="select" />
@@ -173,14 +177,16 @@ function select(id: SectionId) {
   z-index: 2;
   top: 96px;
   left: 40px;
+  display: grid;
+  place-items: center;
+  width: 44px;
   min-height: 44px;
-  padding: 10px 14px;
+  padding: 10px;
   border: 1px solid var(--color-border-chip);
   border-radius: 999px;
   color: var(--color-nav-text);
   background: var(--color-surface-nav);
   cursor: pointer;
-  font: 0.6875rem var(--font-mono);
 }
 .playback-control:focus-visible {
   outline: 2px solid var(--color-lime);
