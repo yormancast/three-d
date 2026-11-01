@@ -1,38 +1,29 @@
 <script setup lang="ts">
 import { portfolio } from '@/content/portfolio'
+
+const logoUrl = `${import.meta.env.BASE_URL}identity/g2.svg`
 </script>
 
 <template>
   <div class="brand">
-    <span class="wordmark" aria-hidden="true">{{ portfolio.wordmark }}</span>
-    <span class="brand-name">{{ portfolio.name }}</span>
+    <img class="brand-symbol" :src="logoUrl" :alt="portfolio.name" width="76" height="48" />
   </div>
 </template>
 
 <style scoped>
 .brand {
-  display: grid;
-  gap: 3px;
+  display: flex;
+  align-items: center;
 }
-.wordmark {
-  font-family: var(--font-display);
-  font-size: 1.75rem;
-  font-weight: 900;
-  font-stretch: 120%;
-  letter-spacing: -0.035em;
+.brand-symbol {
+  display: block;
+  width: 76px;
+  height: auto;
 }
-.brand-name {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+:global(.public-scene.layout-compact .brand-symbol) {
+  width: 68px;
 }
-:global(.public-scene.layout-compact .wordmark) {
-  font-size: 1.875rem;
-}
-:global(.environment-review.layout-compact .wordmark) {
-  font-size: 1.5rem;
+:global(.environment-review.layout-compact .brand-symbol) {
+  width: 60px;
 }
 </style>
