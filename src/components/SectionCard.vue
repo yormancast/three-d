@@ -20,6 +20,7 @@ defineExpose({ focus: () => (heading.value ?? card.value)?.focus() })
       <button class="close-card" type="button" aria-label="Close section" @click="$emit('close')">×</button>
     </div>
     <p v-if="section.id === 'bio' && section.body" class="card-body">{{ section.body }}</p>
+    <p v-if="section.id === 'experience' && section.body" class="card-body">{{ section.body }}</p>
     <ul v-if="section.id === 'bio' && section.chips?.length" class="card-chips" aria-label="Core technologies">
       <li v-for="chip in section.chips" :key="chip">{{ chip }}</li>
     </ul>

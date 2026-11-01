@@ -61,6 +61,7 @@ export interface ProjectsSection extends SectionBase<'projects'> {
 
 export interface ExperienceSection extends SectionBase<'experience'> {
   title: string
+  body: string | null
   experience: readonly PortfolioExperience[]
 }
 
@@ -97,18 +98,22 @@ export const sections = [
     title: 'Projects',
     projects: [
       {
-        id: 'previous-portfolio-site',
-        title: 'Previous portfolio site',
+        id: 'vans-customizer',
+        title: 'Vans Customizer',
         description:
-          "I built this site using threejs and vuejs. Animations are done with Tweenjs. The skateboarder ninja bunny models is from Sketchfab. I plan to replace it once I step up my Blender skills, mainly because I spent what it feels like 300 weeks trying to rig this model and animate the skeleton, a task a wiser man would have deemed foolish after seen the initial position of the skater Bunny. The skater's glb file originally was around 70mb, so trimming that down to a manageable file size was also fun (lol), I want to draco compress the glb eventually but I promised myseld I'd stop increasing the scope and eventually pushing this site out.",
+          'A real-time 3D experience for customizing Vans footwear. Over a decade, I helped build and evolve the entire frontend, most recently serving as Frontend Tech Lead and Architecture Lead.',
         contribution: null,
-        technologies: ['Three.js', 'Vue.js', 'Tween.js', 'Blender'],
-        links: [
-          {
-            label: 'Original model on Sketchfab',
-            href: 'https://sketchfab.com/3d-models/silent-ash-bc44272e8c1047148b33c913e659fcfa',
-          },
-        ],
+        technologies: ['Three.js', 'WebGL', 'Vue', 'TypeScript'],
+        links: [],
+      },
+      {
+        id: 'interactive-portfolio',
+        title: 'Interactive Portfolio',
+        description:
+          'I built the original version of this site by hand with Vue and Three.js. This time around, I used Claude Code to bring the architecture up to date. The character started as an idea I sketched by hand and worked on with ChatGPT. The court and the overall look came from my own ideas too, which I bounced around with Opus 5.5. Astra took it all into Blender and did the heavy lifting: the character, the environment, textures, rigging, and all those basketball moves. Sol kept the multi-agent development process moving and helped bring it all together.',
+        contribution: null,
+        technologies: ['Vue', 'Three.js', 'TypeScript', 'Blender'],
+        links: [],
       },
     ],
   },
@@ -118,7 +123,35 @@ export const sections = [
     presentation: { cameraId: 'Experience', motionId: 'Standing', anchorId: 'standing' },
     nextSection: 'contact',
     title: 'Experience',
-    experience: [],
+    body: 'I studied graphic design at university, which shaped my affinity for frontend development. Today, I work across frontend, backend, full-stack development, and architecture, depending on what the project needs.',
+    experience: [
+      {
+        id: 'proxim-agency',
+        role: 'Senior Full Stack Developer, Tech Lead & Solutions Architect',
+        organization: 'Proxim Agency',
+        period: { label: 'Dec 2023 – Present', startDate: '2023-12', endDate: null },
+        description:
+          'Building frontend and backend applications, from architecture and API design to deployment, while working directly with stakeholders.',
+        technologies: ['Vue', 'TypeScript', 'Node.js', 'AWS'],
+      },
+      {
+        id: 'bairesdev',
+        role: 'Technical Lead',
+        organization: 'BairesDev',
+        period: { label: 'Apr 2021 – Dec 2023', startDate: '2021-04', endDate: '2023-12' },
+        description:
+          'Led an engineering team and frontend architecture for Vans Customizer, including its Vue 3 migration and enterprise integrations.',
+        technologies: ['Vue', 'Three.js', 'Salesforce', 'SAP'],
+      },
+      {
+        id: 'vans-e-customs',
+        role: 'Senior Frontend Engineer',
+        organization: 'Project Rauxa / Vans e-Customs',
+        period: { label: 'Jan 2016 – Apr 2021', startDate: '2016-01', endDate: '2021-04' },
+        description: 'Developed real-time 3D customization experiences and optimized rendering and product load times.',
+        technologies: ['Three.js', 'WebGL', 'Vue', 'TypeScript'],
+      },
+    ],
   },
   {
     id: 'contact',
@@ -126,7 +159,7 @@ export const sections = [
     presentation: { cameraId: 'Contact', motionId: 'Recovery', anchorId: 'seated' },
     nextSection: null,
     title: 'Contact',
-    body: 'I barely use LinkedIn these days but that is the best way to get in touch with me, because I will probably never put a form in this page, although it is on my to do list.',
+    body: 'Want to get in touch? LinkedIn is the best way to reach me.',
     links: [{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/yormancastellanos/?locale=en_US' }],
   },
 ] as const satisfies readonly PortfolioSection[]

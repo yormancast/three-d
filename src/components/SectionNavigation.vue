@@ -26,7 +26,7 @@ defineExpose({
       :aria-current="selected === section.id ? 'page' : undefined"
       @click="emit('select', section.id)"
     >
-      {{ section.label }}
+      .{{ section.label }}
     </button>
   </nav>
 </template>
