@@ -1,197 +1,131 @@
-# Plan de implementación v3 por fases
+# Plan consolidado del portafolio v3
 
-Actualizado el 25 de octubre de 2026 a partir de la rama `version-3` y sus cambios locales. Arquitectura de referencia: [arquitectura-v3.md](arquitectura-v3.md). Este plan distingue implementación, validación automática y revisión visual; una no sustituye a las otras.
+Actualizado el 1 de noviembre de 2026. Este archivo sustituye los planes por fase y resume arquitectura, decisiones, resultados y trabajo pendiente. Los documentos originales y sus evidencias permanecen en el historial de Git; no se conserva una copia comprimida.
 
-## Dónde estamos
+## Estado actual
 
-**La base 3D, la coordinación de secciones y el portafolio de cinco vistas están implementados. La fase 5 está cerrada por decisión del usuario tras validar el recorrido y la implementación; se aceptó cerrar sin exportar las capturas PNG del navegador. La revisión editorial posterior se hará cuando el usuario la pida. Las fases 6–7 permanecen pendientes o parciales según su alcance.**
+| Fase                        | Estado                                           | Resultado o pendiente                                             |
+| --------------------------- | ------------------------------------------------ | ----------------------------------------------------------------- |
+| 0. Dirección y arquitectura | Definida e implementada como base                | SPA Vue con escena persistente y tarjetas HTML                    |
+| 1. Assets                   | Completada para el alcance actual                | GLB integrado, póster y distribución optimizada                   |
+| 2. Base técnica             | Completada                                       | Contrato validado, recursos liberables, visor solo de desarrollo  |
+| 3. Secciones y coordinación | Completada                                       | Intención de presentación, navegación por hash y recuperación     |
+| 4. Home y Bio               | Completada                                       | Contenido aprobado, foco, tarjetas y encuadres integrados         |
+| 5. Portafolio completo      | Completada; contenido aprobado el 1 de noviembre | Projects, Experience y Contact definitivos para el alcance actual |
+| 6. Móvil y rendimiento      | Parcial                                          | Faltan dispositivo físico, métricas y cierre de rendimiento       |
+| 7. Entrega                  | Parcial                                          | Faltan revisión final y validaciones del entorno de publicación   |
 
-| Fase | Estado actual | Qué falta para cerrarla |
-| --- | --- | --- |
-| 0. Dirección y arquitectura | Definida como base de trabajo | Revisar las decisiones propuestas durante su implementación |
-| 1. Assets | Completada para el alcance actual | Mantener el inventario al cambiar una exportación |
-| 2. Base técnica de escena | Completada | Ver [evidencia de fase 2](fase-2-validacion.md) |
-| 3. Secciones y coordinación | Completada: implementación y validación integrada | Ver [tareas y evidencia de fase 3](tareas-fase-3.md) y [registro de validación](fase-3-validacion.md) |
-| 4. Home + Bio | Completada: recorrido, contenido y validación integrada | Ver [tareas](tareas-fase-4.md), [validación](fase-4-validacion.md) y [capturas](evidencia/fase-4/) |
-| 5. Portafolio completo | Completada el 22 de octubre de 2026 | Revisión editorial de textos de v1 queda para después; Experience permanece vacía por decisión explícita. Ver [tareas](tareas-fase-5.md) y [validación](fase-5-validacion.md) |
-| 6. Móvil y rendimiento | Parcial; matriz local, recuperación real y mediciones repetidas | Móvil físico, WebGL deshabilitado al inicio, frame GPU/memoria y rendimiento de 60 FPS; ver [continuación](rendimiento-local.md) |
-| 7. Entrega | Parcial; preparación local y correcciones responsive ejecutadas | Completar pruebas de entorno/rendimiento, revisión final y entrega reproducible; ver [validación](fase-7-validacion.md) |
+No hay un porcentaje global. Implementación, pruebas automáticas, revisión visual y aprobación artística son verificaciones distintas.
 
-No se asigna un porcentaje global: tener los clips y el render funcionando no mide el avance del contenido, la interfaz o la validación visual.
+## Decisiones vigentes
 
-## Decisiones que se conservan
+- Sitio público en inglés: Home, Bio, Projects, Experience y Contact. Una tarjeta abierta a la vez; cerrar devuelve a Home. Las etiquetas de navegación llevan punto inicial.
+- Bio se conserva sin cambios por decisión del usuario.
+- Projects destaca Vans Customizer y este portafolio. Vans incluye un enlace público con texto Link e icono externo.
+- Experience incluye formación universitaria en diseño gráfico, inclinación por frontend y flexibilidad para backend, full-stack o arquitectura; tres etapas profesionales basadas en el CV del usuario.
+- LinkedIn es la mejor vía de contacto. No se necesita un formulario para cerrar el alcance.
+- El texto del portafolio acredita las bases manuales del usuario, actualización con Claude Code, concepto y bocetos con ChatGPT, dirección visual y cancha ideadas por el usuario con Opus 5.5, personaje/entorno/texturas/rigging/animaciones de básquet con Astra y orquestación multiagente con Sol.
+- Identidad G2 aprobada integrada en el sitio y favicons. Las exploraciones del logo se guardaron fuera del repo en `~/.codex/memories/projects/three-d/identidad/`.
+- Shot sigue disponible en el visor de desarrollo; exponerlo en la interfaz pública no forma parte del alcance acordado.
+- Contenido aprobado no equivale a una nueva validación visual con todos los textos finales.
 
-- SPA Vue con escena Three.js persistente y contenido HTML superpuesto.
-- Home / Bio / Projects / Experience / Contact, sitio público en inglés y una tarjeta abierta a la vez; cerrar devuelve a Home.
-- Dirección aprobada «Bajo el puente · Calle · Noche», paleta lima/morado/hueso, Archivo y JetBrains Mono.
-- Tarjeta semitransparente con conexión al personaje en escritorio; tarjeta inferior sin línea en móvil.
-- GLB integrado con animaciones listas. No se incluye trabajo de rigging, esqueleto ni creación de clips.
-- Capas y reglas de `RULES.md`: contenido como datos, composables como puente, escena independiente y UI sin Three.js.
-- Las asociaciones entre secciones y clips, el acceso público a Shot y la navegación por hash siguen siendo propuestas de arquitectura, no decisiones artísticas aprobadas.
+## Arquitectura y dirección visual
 
-## Fase 0 — Dirección y arquitectura
+- Vue 3 y Three.js, una escena persistente, un personaje y una sola carga del GLB. La navegación no remonta el visor.
+- `content/` contiene datos y presets; `usePortfolio` controla sección y hash; `useEnvironment` controla el ciclo de vida; `scene/` maneja carga, reproducción, cámara y render; Vue dibuja la interfaz y el conector.
+- Conservar las reglas de capas, tipos y estilos de [RULES.md](../RULES.md). No duplicar la máquina de reproducción ni controlar la escena desde componentes.
+- Dirección visual: cancha nocturna bajo un puente, paleta lima/morado/hueso, Archivo y JetBrains Mono. Los colores de interfaz y luces configurables viven en `src/styles/tokens.css`; las texturas mantienen su paleta artística.
+- Tarjeta lateral y conector semántico en escritorio; tarjeta inferior sin conector en layout compacto. Scroll interno para textos largos y áreas seguras.
+- Movimiento reducido: cámara inmediata y pose estable. Navegación y contenido funcionan durante carga/error y sin depender de WebGL. Pausar no bloquea la cámara.
+- Asociación actual: Home/Recovery, Bio/Dribble, Projects/Crossover, Experience/Standing y Contact/Recovery.
+- `MotionPlayback` conserva gates compatibles, conectores Pickup/Rise y última solicitud. `continuousMotion` es el único escritor de deformaciones y transformación del balón durante la reproducción.
 
-**Estado: definida como base de trabajo.**
+## Recursos y contrato esencial
 
-- [x] Revisar decisiones de v3 y documentos posteriores de animación.
-- [x] Inspeccionar estructura, materiales, clips y metadata del GLB integrado.
-- [x] Documentar responsabilidades y contratos propuestos en `arquitectura-v3.md`.
-- [x] Aclarar que la integración consume animaciones terminadas.
+- Distribución activa: `public/models/continuous/dirto-continuous.glb` y `preview.jpg`. Entrada fuente local ignorada: `models/dirto-continuous.glb`.
+- GLB público: 9.414.840 bytes; SHA-256 `a65517b2c8108d5a7fcbbe7ff6735070323de05d2f4035d9670dd3341084b1dc`. Fuente original: 15.449.252 bytes. Las tres texturas del balón se redujeron a 1024×512; fuente y distribución difieren intencionalmente.
+- glTF 2.0, MeshoptDecoder y texturas incrustadas; sin dependencias externas de imagen o buffer.
+- `scenes[scene].extras.formatVersion: 1` y `extras.motionData` son propiedades hermanas. Rechazar versiones de movimiento ausentes o incompatibles.
+- Grupos requeridos: `ElDirto_Character`, `ElDirto_Environment`, `ElDirto_Emissives` y nodo `Ball`. Personaje animado por morph targets; no buscar huesos en el GLB para anclar tarjetas.
+- Clips: Recovery, Dribble, Crossover, Standing, Rise, Pickup y Shot. Requieren pesos del personaje y transformación del balón, con duraciones coherentes con el metadata.
+- Metadata: duración positiva finita; gates finitos, ordenados y únicos dentro de `[0, duration)`; al menos dos frames con tiempos estrictamente crecientes desde cero hasta duración. Position/scale/rotation son vectores finitos en coordenadas Blender; standing y shot son pesos entre 0 y 1, shot opcional equivale a cero. Convertir coordenadas en el consumidor.
+- Conservar entorno horneado unlit, material del balón y color por vértice del personaje. No reoptimizar geometría o deformaciones sin comparar apariencia y coreografía.
+- Licencias y procedencia siguen accesibles en [public/models/README.md](../public/models/README.md). No copiar modelos históricos a `public/`: Vite publica todo ese directorio.
 
-**Resultado:** arquitectura suficiente para empezar la implementación. Las cámaras y asociaciones visuales se revisan con tarjetas reales, no solo con el modelo aislado.
+## Fases 2–5: trabajo cerrado
 
-## Fase 1 — Organizar assets
+- F2-01–F2-12: contrato real del GLB, validación de metadata/estructura, propiedad y liberación de recursos, materiales extraídos, viewport y estados, visor de desarrollo, inventario y entrega reproducible desde Git.
+- F3-01–F3-07: catálogo tipado, comando de presentación, intención conservada al cargar/reintentar, selección, hash/historial e integración pública. Última selección prevalece durante transiciones y carga.
+- F4-00–F4-05: identidad personal, Bio confirmada, integración de contenido, teclado/lectura, composición y validación Home → Bio → Home.
+- F5-00–F5-07: contratos y tarjetas por sección, proyectos, experiencia, contacto, pausa/reanudación, recorrido y validación integrada. Cierre funcional el 22 de octubre; el usuario aceptó no exportar PNG en esa revisión.
+- F5-08: Shot público opcional, no adoptado. No constituye un bloqueo de entrega.
+- La revisión editorial que antes estaba aplazada se completó y aprobó el 1 de noviembre. Experience ya no está vacía; no restaurar el texto provisional anterior.
 
-**Estado: completada para el alcance actual.**
+## Fase 6: resultados y tareas pendientes
 
-- [x] Comparar archivos por hash y distinguir exportaciones distintas de copias exactas.
-- [x] Dejar en `public/models/continuous/` el GLB activo y `preview.jpg`.
-- [x] Conservar la entrada local `models/dirto-continuous.glb`.
-- [x] Archivar entregas anteriores en `models/archive/public-models/`, sin borrar sus binarios.
-- [x] Actualizar la ruta del poster en la app.
-- [x] Documentar recursos, licencias y movimientos en los README y `docs/assets/`.
-- [x] Verificar hashes de los archivos trasladados y salida del build.
+Implementado: breakpoint compartido de 800 px, perfiles de calidad separados del layout/orientación, cámaras móviles, límite de DPR, DOF desactivado y bloom reducido en móvil, scroll y áreas seguras, indicador de carga indeterminado, motor en chunk dinámico y recuperación con canvas nuevo que conserva sección y pausa.
 
-**Resultado de fase 1:** 5.409.509 bytes de archivos históricos fuera de la distribución; modelo integrado de 15.449.252 bytes. En ese momento la entrada local y la distribución eran idénticas. En F6-04 la distribución pública se optimizó y ahora difiere intencionalmente de la entrada fuente. v10/v11 locales y públicos eran exportaciones diferentes.
+Validaciones previas: cinco vistas por diez tamaños emulados, 320 px, zoom real al 200 %, texto extenso temporal, movimiento reducido, pestaña oculta y pérdidas reales de contexto. Nueve recuperaciones en tres tandas mantuvieron un solo canvas. Heap JS tras GC: 203,38–204,34 MB; no demuestra ausencia de fugas ni estabilidad de memoria GPU.
 
-**Límite:** el archivo histórico está ignorado por Git; no es un respaldo remoto. Los documentos históricos conservan referencias a las rutas anteriores por trazabilidad.
+La profundidad compartida evita un segundo dibujo de geometría para DOF, conserva MSAA 4 y efectos. En una comparación emparejada de Bio pasó de 32,9 a 43,4 FPS; la variante sin MSAA se rechazó por degradación visual. Mediciones posteriores de 30 s, a 1710×897 y DPR de render limitado a 1,25:
 
-## Fase 2 — Consolidar la base técnica
+| Vista      | FPS rAF | p95 de intervalo, ms |
+| ---------- | ------: | -------------------: |
+| Home       |    49,7 |                 33,4 |
+| Bio        |    44,8 |                 34,0 |
+| Projects   |    44,8 |                 34,0 |
+| Experience |    43,8 |                 34,2 |
+| Contact    |    37,9 |                 34,2 |
+| Navegación |    38,6 |                 34,3 |
 
-**Estado: completada.**
+Datos históricos del 25 de octubre; no son mediciones del contenido final ni de móvil físico. El principal coste observado fue el postproceso. Render directo alcanzó 60 FPS en la muestra diagnóstica; no se incorporó retirar los efectos.
 
-Ya disponible:
+| Tarea                                | Estado y siguiente paso                                                                                           |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| F6-00. Línea base y protocolo        | Registrada; repetir con dispositivo, viewport/DPR, navegador, alimentación, red y caché definidos                 |
+| F6-01. Layout, calidad y orientación | Implementada y matriz emulada recorrida; faltan barras/áreas seguras y rotación en móvil físico                   |
+| F6-02. Lectura y controles           | 320 px, scroll, texto extenso y zoom revisados; falta ampliación del sistema móvil y revisión con contenido final |
+| F6-03. Carga y recuperación          | Recuperación real, pausa y última sección verificadas; falta arrancar con WebGL realmente deshabilitado           |
+| F6-04. Texturas del balón            | Optimización adoptada; fuente preservada y distribución reducida a 9,41 MB                                        |
+| F6-05. Cuello de botella             | Chunk dinámico y profundidad compartida adoptados; faltan primer frame GPU y resolver o aceptar desviación de FPS |
+| F6-06. Composición final             | Falta revisar contenido final, encuadres/transiciones y Shot en visor; emulación no acredita aprobación artística |
+| F6-07. Repetición y cierre           | Faltan portátil/móvil físico, caché caliente completa y memoria aislada/GPU                                       |
 
-- [x] Carga de una sola URL con MeshoptDecoder y lectura de `userData.motionData`.
-- [x] Recovery, Dribble, Crossover, Standing y Shot; Pickup y Rise como conectores.
-- [x] Transiciones por recepción compatible, última solicitud pendiente y giro continuo.
-- [x] Shot de ejecución única con retorno a Standing.
-- [x] Materiales por grupo, entorno horneado, luz del personaje y postproceso.
-- [x] Carga/error/reintento, poster, liberación de recursos y pausa al ocultar la pestaña.
-- [x] Pruebas de recursos, reproducción, balón y conversiones de cámara.
+Criterios para medir y cerrar:
 
-Evidencia de implementación y entrega:
+- Tres cargas frías y mediana, separadas de caché caliente. Medir póster, HTML utilizable y primer frame 3D presentado; ready y `submissionMs` no representan tiempo GPU.
+- Muestras de 30 s por vista y navegación, con FPS/p95 y memoria JS/GPU distinguidas de estimaciones o conteos.
+- La prueba local de caché caliente mantuvo transferencia completa del GLB aunque JS/CSS salieron de caché; configurar y medir hosting real.
+- Metas de diseño: 60 FPS en portátil medio, al menos 30 FPS en móvil medio y primera imagen en menos de 2 s con red definida. No se consideran demostradas. Registrar desviaciones y obtener aceptación explícita si se cierra sin alcanzarlas.
 
-- [x] Validar explícitamente versión del recurso, grupos, clips y metadata, incluidos gates y valores finitos.
-- [x] Extraer la carga y adaptación de materiales de `scene/index.ts`.
-- [x] Separar los controles del visor de la presentación pública; acceso de revisión solo para desarrollo.
-- [x] Revisar recursos compartidos y su liberación.
-- [x] Comprobar instalación aislada y reproducción interactiva del recurso completo en navegador.
-- [x] Revisar e incorporar deliberadamente los cambios y assets a un commit; comprobar instalación/build desde un checkout limpio de ese commit.
+## Fase 7: entrega
 
-**Cierre:** escena recuperable y reproducible desde el repositorio, contrato de recurso validado y visor separado. No basta con que los archivos existan en esta máquina.
+Ya realizado: idioma inglés, título/descripción, Open Graph y tarjeta social, correcciones responsive de carga/error, instalación aislada y build reproducible de la integración anterior. El motor mantiene aviso de Vite por chunk superior a 500 kB.
 
-## Fase 3 — Secciones y coordinación
+- [ ] Completar o aceptar explícitamente los pendientes de fase 6.
+- [ ] Revisar contenido final en escritorio y móvil: tarjetas, enlaces, contraste, teclado/foco, carga, error y movimiento reducido.
+- [ ] Confirmar inventario final y licencias de recursos.
+- [ ] Ejecutar check y build del candidato final desde checkout limpio; registrar commit y resultados.
+- [ ] Preparar entrega con límites reales y revisión visual final.
+- [ ] Cuando se solicite publicar: configurar hosting/caché y comprobar URL pública e imagen de compartir en `yormancastellanos.com`.
 
-**Estado: completada. F3-01–F3-07 implementadas y validadas sobre el árbol de trabajo actual.**
+Última comprobación automática previa a esta consolidación: 65 pruebas aprobadas en 13 archivos, junto a formato, lint y TypeScript. No sustituye las validaciones físicas ni acredita un nuevo build de producción.
 
-- [x] Definir identidad, secciones, textos, enlaces y presets en `src/content/`.
-- [x] Incorporar `usePortfolio` como dueño de la sección y tarjeta seleccionadas.
-- [x] Mantener `useEnvironment` como dueño del ciclo de vida de escena y adaptador de eventos.
-- [x] Definir un comando coherente de presentación: cámara, acción y anclaje.
-- [x] Conservar la última selección antes de cargar y al reintentar.
-- [x] Separar sección visible, animación solicitada y animación real.
-- [x] Soportar entrada directa, atrás/adelante y hashes desconocidos.
+## Recuperar documentos y evidencias anteriores
 
-Propuesta inicial para implementar y revisar:
+Punto de recuperación completo: `293a86cf680a75ade43897b3d3d70d1ff4a96561`. Incluye los planes originales, arquitectura, contratos, reportes, manifiestos y capturas retirados al consolidar. Puede consultarse en [GitHub](https://github.com/yormancast/three-d/tree/293a86cf680a75ade43897b3d3d70d1ff4a96561/docs).
 
-| Sección | Acción solicitada | Intención |
-| --- | --- | --- |
-| Home | Recovery | Presentación tranquila de la banca |
-| Bio | Dribble | Acercamiento al personaje sentado |
-| Projects | Crossover | Actividad sentada y espacio para proyectos |
-| Experience | Standing | Incorporación y plano más abierto |
-| Contact | Recovery | Regreso a la banca y contacto legible |
+Leer un documento sin restaurarlo:
 
-**Cierre:** una selección actualiza el contenido inmediatamente y envía una intención a la escena sin duplicar su máquina de transiciones.
+```bash
+git show 293a86cf680a75ade43897b3d3d70d1ff4a96561:docs/tareas-fase-6.md
+```
 
-## Fase 4 — Home + Bio de extremo a extremo
+Extraer toda la documentación antigua fuera del árbol de trabajo:
 
-**Estado: completada el 21 de octubre de 2026. Primer incremento público. Depende de fase 3, completada.**
+```bash
+mkdir -p /tmp/three-d-docs-historicos
+git archive 293a86cf680a75ade43897b3d3d70d1ff4a96561 docs | tar -x -C /tmp/three-d-docs-historicos
+```
 
-- [x] Crear identidad, navegación y tarjeta como componentes Vue; el estado de escena conserva carga y reintento.
-- [x] Aplicar tokens y tipografía aprobados, con interfaz pública en inglés.
-- [x] Hacer Home → Bio → Home con una tarjeta a la vez, Escape y foco coherente.
-- [x] Interpolar cámara y objetivo sin reiniciar el modelo.
-- [x] Proyectar un anclaje semántico por encuadre y dibujar su línea desde Vue en escritorio.
-- [x] Garantizar que la cámara puede terminar su recorrido con el personaje pausado.
-- [x] Resolver movimiento reducido con cámara inmediata y pose estable compatible.
-- [x] Mantener navegación y contenido disponibles durante carga, fallo del GLB y ausencia de WebGL.
-- [x] Ajustar cámara/anclaje del recorrido Home → Bio y revisar a 1280×720 y 390×844; la tarjeta queda separada del personaje y el conector sale por el borde izquierdo.
-- [x] Completar Bio con datos editoriales confirmados.
-- [x] Revisar el recorrido Home → Bio en escritorio y pantalla estrecha antes de extender componentes.
-- [x] Ejecutar check, build y validación integrada de producción; guardar capturas de escritorio, móvil y estado sin WebGL.
-
-**Cierre:** el primer recorrido se puede leer, abrir y cerrar con teclado y sin depender del render 3D. La Bio permanece legible con GLB fallido y sin WebGL; el texto no tapa rostro, manos ni balón. Ver [validación integrada](fase-4-validacion.md) y [capturas](evidencia/fase-4/).
-
-## Fase 5 — Completar el portafolio
-
-**Estado: completada el 22 de octubre de 2026, incluida la validación integrada F5-07. Depende de fase 4, completada. F5-00, F5-02 y F5-04 conservan contenido provisional de v1 por autorización del usuario; Experience queda vacía por decisión explícita. La revisión editorial completa se hará después, como acordó el usuario.**
-
-Plan y resultados por tarea: [Fase 5 con Luna](tareas-fase-5.md); validación: [registro integrado](fase-5-validacion.md). El alcance base mantiene Shot fuera de la interfaz pública; no se adoptó la tarea opcional F5-08.
-
-- [x] Extender el patrón a Projects, Experience y Contact; Experience permanece vacía a petición del usuario.
-- [x] Revisar cámaras, anclajes, composición móvil y recorrido completo.
-- [x] Incorporar texto de v1 y enlace de contacto autorizado provisionalmente; la revisión editorial queda para después.
-- [x] Resolver navegación rápida durante Rise/retorno y pausa/reanudación accesibles.
-- [x] Registrar Shot como no adoptado, fuera del alcance base.
-
-**Estado de implementación:** las cinco vistas funcionan con contenido autorizado provisional, sin información profesional inventada ni placeholders publicables. La revisión editorial completa sigue pendiente por decisión del usuario. F5-07 se cerró por decisión expresa del usuario; se aceptó no exportar imágenes PNG a la carpeta de evidencia. Ver tareas y registro integrado.
-
-**Estado editorial:** el usuario autorizó conservar por ahora el texto y el destino de contacto de v1, con revisión posterior, y pidió dejar Experience vacía. No añadir trayectoria ni más proyectos por inferencia. La estructura de las cinco vistas permanece lista para cambios editoriales futuros.
-
-## Fase 6 — Móvil, carga y rendimiento
-
-**Estado: parcial.** La continuación del 25 de octubre completó la matriz emulada de cinco vistas por diez tamaños, zoom real al 200 %, contenido extenso, movimiento reducido, pestaña oculta y pérdida de contexto después de pausar. Se corrigió el reintento con canvas nuevo, conservando sección y pausa. Se repitieron cargas locales y muestras de 30 s por vista: 23–30 FPS en 1710×897, por debajo de la meta. Se rechazó una variante sin MSAA por degradación visual. Una nueva sesión aisló el coste de postproceso y la profundidad compartida adoptada mejoró Bio de 32,9 a 43,4 FPS conservando MSAA 4, efectos y resolución; todavía por debajo de 60 FPS. No se acredita móvil físico, primer frame presentado por GPU, caché caliente completa del GLB ni estabilidad de memoria. Ver [continuación y resultados](rendimiento-local.md).
-
-Plan detallado y criterios de cierre: [tareas de fase 6](tareas-fase-6.md). El estado por tarea está actualizado en el plan detallado; la fase sigue parcial.
-
-Implementado y observado en escritorio:
-
-- [x] Cámaras específicas para móvil y límite de resolución del render.
-- [x] Profundidad de campo desactivada en móvil y bloom reducido.
-- [x] Preferencia de movimiento reducido aplicada a la reproducción inicial.
-
-Pendiente de cierre:
-
-- [x] Unificar breakpoints y completar matriz local y giro equivalente; áreas seguras/barras reales pendientes de móvil físico.
-- [x] Ajustar tarjeta inferior y scroll; comprobar 320 px, contenido extenso aislado, teclado y zoom real al 200 %. Ampliación del sistema móvil pendiente.
-- [x] Recorrer las cinco vistas en diez tamaños y registrar evidencia/zoom/texto extendido; aprobación artística final pendiente.
-- [ ] Iniciar con WebGL deshabilitado. La pérdida real después de pausar, movimiento reducido y pestaña oculta ya se comprobaron; no sustituyen ese caso inicial.
-- [ ] Completar frame GPU, caché caliente del GLB y memoria aislada. Descarga/ready locales y cuadros repetidos; 60 FPS no alcanzados. `submissionMs` no mide GPU.
-- [x] Optimizar las texturas del balón: distribución pública reducida de 15.449.252 a 9.414.840 bytes, con fuente local preservada. Ver `tareas-fase-6.md`.
-- [x] Dividir el motor en un chunk dinámico; falta verificar el impacto en el tiempo total de disponibilidad/primer frame.
-- [ ] Revisar todos los encuadres y la transición/tiro en el visor de desarrollo y en la matriz final.
-
-**Cierre:** resultados registrados en portátil y móvil, con dispositivo y condiciones identificados. Metas de diseño: 60 fps en portátil medio, al menos 30 fps en móvil medio y primera imagen en menos de 2 s. Son objetivos, todavía no resultados demostrados.
-
-## Fase 7 — Preparar la entrega
-
-**Estado: parcial. Preparación local ejecutada el 25 de octubre; el cierre depende de las validaciones pendientes de fase 6.**
-
-Ver [resultados y pendientes de entrega](fase-7-validacion.md). Se corrigieron los selectores móviles y la disposición de carga/error, se recorrieron 50 combinaciones de sección y viewport, y se incorporaron idioma inglés y metadatos sociales. La integración se consolidó en `f92a09f`, con instalación independiente y build idéntico desde clon limpio. Faltan dispositivos, mediciones GPU/memoria, WebGL inicial y resolver la desviación de rendimiento.
-
-- [x] Cambiar `lang` a inglés y completar descripción, metadatos sociales e imagen de compartir; comprobar la URL pública y vista previa tras desplegar.
-- [ ] Revisar títulos, enlaces, contraste, foco y navegación por teclado.
-- [ ] Confirmar contenido, licencias e inventario final de recursos.
-- [x] Ejecutar comprobaciones y build de la integración desde clon limpio; 61 pruebas aprobadas y archivos de build idénticos.
-- [ ] Revisar visualmente escritorio, móvil, carga, error y movimiento reducido.
-- [ ] Registrar limitaciones y preparar una entrega revisable.
-
-**Cierre:** sitio listo para publicar. El despliegue se realiza cuando se solicite; no forma parte de esta actualización del plan.
-
-## Evidencia actual y próximo paso
-
-El commit de código y assets `fec7714004adc26399adec589563e1cd3c2f790b` pasó instalación, check, build y verificación HTTP de las rutas del modelo y el póster desde un clone limpio. Ver [evidencia de fase 2](fase-2-validacion.md). La fase 4 está completada; consultar [tareas](tareas-fase-4.md), [validación](fase-4-validacion.md) y [capturas](evidencia/fase-4/). Ese build histórico superaba 500 kB; el build de F6 separa la entrada (83,40 kB) del motor (680,60 kB), y Vite sigue avisando por el chunk de motor. `npm ci` reportó seis vulnerabilidades high en la validación de fase 2. El viewport emulado no certifica rendimiento en un móvil real.
-
-**Próximo paso recomendado:** repetir el protocolo final con red y caché definidas, completar la matriz visual en los tamaños enumerados y medir con un móvil físico. Las capturas PNG no se exportaron en esta ejecución; la inspección del navegador no se presenta como aprobación artística. F5 está cerrada y la revisión editorial queda para cuando el usuario la solicite. La preparación de entrega corresponde a fase 7.
-
-## Referencias
-
-- [Arquitectura v3](arquitectura-v3.md): límites, contratos y análisis del GLB.
-- [Dirección de arte](direccion-de-arte.md) y [escena](escena-fondo.md): diseño aprobado y objetivos visuales.
-- [Exportación integrada](exportacion-web-glb-unico.md): entrega del recurso actual.
-- [Recursos activos](../public/models/README.md) y [entradas locales](../models/README.md).
-- [Inventario de organización](assets/organization-manifest.json): rutas y hashes de los assets trasladados.
-
-Los reportes de v1/v2 y entregas de animaciones anteriores son contexto histórico. Sus pendientes ya resueltos no se vuelven a introducir como tareas.
+Rutas históricas útiles: `docs/rendimiento-local.md`, `docs/assets/continuous-contract.md`, `docs/assets/polyhaven-manifest.json`, `docs/assets/organization-manifest.json`, `docs/exportacion-web-glb-unico.md`, `docs/fase-*-validacion.md` y `docs/evidencia/`.

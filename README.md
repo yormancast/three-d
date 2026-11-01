@@ -48,3 +48,7 @@ CSS propio para lo que es nuestro y Tailwind v4 para el layout y las utilidades 
 Orden de la cascada: `theme`, `base`, `components`, `utilities`.
 
 Las reglas entre capas están en [RULES.md](RULES.md) y se aplican en cada commit.
+
+## Documentación
+
+El [plan consolidado](docs/plan-v3.md) reúne el estado de las fases, las decisiones vigentes y los pendientes de entrega. Los planes originales y las evidencias se consultan en el historial de Git; el mismo archivo explica cómo recuperarlos.

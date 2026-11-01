@@ -23,4 +23,4 @@ npm run model:optimize -- models/<nombre>.glb public/models/<nombre>.glb
 
 El optimizador tiene desactivados `palette` y `simplify` para preservar materiales y geometría. No asumir que todos los modelos usan los materiales `MAT_*` o un esqueleto: continuous usa color por vértice y deformaciones ya exportadas.
 
-Consultar `public/models/README.md` para recursos activos y licencias, y `docs/assets/organization-manifest.json` para recuperar las rutas históricas.
+Consultar `public/models/README.md` para recursos activos y licencias, y la sección de [recuperación del plan consolidado](../docs/plan-v3.md#recuperar-documentos-y-evidencias-anteriores) para consultar el manifiesto histórico `docs/assets/organization-manifest.json`.
