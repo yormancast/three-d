@@ -104,7 +104,7 @@ export const sections = [
           'A real-time 3D experience for customizing Vans footwear. Over a decade, I helped build and evolve the entire frontend, most recently serving as Frontend Tech Lead and Architecture Lead.',
         contribution: null,
         technologies: ['Three.js', 'WebGL', 'Vue', 'TypeScript'],
-        links: [],
+        links: [{ label: 'Link', href: 'https://www.vans.com/en-us/customizer/authentic-classic' }],
       },
       {
         id: 'interactive-portfolio',

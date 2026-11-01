@@ -35,7 +35,18 @@ defineExpose({ focus: () => (heading.value ?? card.value)?.focus() })
           </ul>
           <ul v-if="project.links.length" class="card-links">
             <li v-for="link in project.links" :key="link.href">
-              <a :href="link.href">{{ link.label }}</a>
+              <a :href="link.href" :aria-label="`${link.label}: ${project.title}`">
+                {{ link.label }}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path
+                    d="M13 5H5v14h14v-8M14 4h6v6m0-6-9 9"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
             </li>
           </ul>
         </article>
@@ -61,7 +72,18 @@ defineExpose({ focus: () => (heading.value ?? card.value)?.focus() })
     <p v-if="section.id === 'contact' && section.body" class="card-body">{{ section.body }}</p>
     <ul v-if="section.id === 'contact' && section.links.length" class="card-links">
       <li v-for="link in section.links" :key="link.href">
-        <a :href="link.href">{{ link.label }}</a>
+        <a :href="link.href">
+          {{ link.label }}
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M13 5H5v14h14v-8M14 4h6v6m0-6-9 9"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </a>
       </li>
     </ul>
     <button
@@ -93,18 +115,21 @@ defineExpose({ focus: () => (heading.value ?? card.value)?.focus() })
   box-shadow: 0 12px 36px var(--color-shadow-card);
   backdrop-filter: blur(var(--blur-card));
 }
+
 .card-heading {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
 }
+
 .card-kicker {
   margin: 0 0 8px;
   color: var(--color-lime);
   font: 0.625rem var(--font-mono);
   text-transform: uppercase;
 }
+
 h1 {
   margin: 0;
   color: var(--color-paper-bright);
@@ -112,10 +137,12 @@ h1 {
   font-size: clamp(1.5rem, 4vw, 2.25rem);
   line-height: 1.05;
 }
+
 h1:focus {
   outline: 2px solid var(--color-lime);
   outline-offset: 4px;
 }
+
 .close-card {
   flex: 0 0 44px;
   width: 44px;
@@ -128,12 +155,14 @@ h1:focus {
   font-size: 1.375rem;
   line-height: 1;
 }
+
 .card-body {
   margin: 14px 0 0;
   color: var(--color-paper-muted);
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
+
 .card-links {
   display: flex;
   flex-wrap: wrap;
@@ -142,6 +171,7 @@ h1:focus {
   padding: 0;
   list-style: none;
 }
+
 .content-list {
   display: grid;
   gap: 18px;
@@ -149,10 +179,12 @@ h1:focus {
   padding: 0;
   list-style: none;
 }
+
 .content-item + .content-item {
   padding-top: 18px;
   border-top: 1px solid var(--color-border-chip);
 }
+
 .content-item h2 {
   margin: 0;
   color: var(--color-paper-bright);
@@ -160,12 +192,14 @@ h1:focus {
   overflow-wrap: anywhere;
   line-height: 1.2;
 }
+
 .item-organization,
 .item-period {
   margin: 6px 0 0;
   color: var(--color-paper-muted);
   font: 0.75rem var(--font-mono);
 }
+
 .card-chips {
   display: flex;
   flex-wrap: wrap;
@@ -174,6 +208,7 @@ h1:focus {
   padding: 0;
   list-style: none;
 }
+
 .card-chips li {
   padding: 5px 9px;
   border: 1px solid var(--color-border-chip);
@@ -182,18 +217,22 @@ h1:focus {
   font: 0.6875rem var(--font-mono);
   overflow-wrap: anywhere;
 }
+
 .card-links li {
   min-width: 0;
   max-width: 100%;
 }
+
 .card-links a {
   display: inline-flex;
   min-height: 44px;
   max-width: 100%;
   align-items: center;
+  gap: 6px;
   color: var(--color-lime);
   overflow-wrap: anywhere;
 }
+
 .next-section {
   display: inline-flex;
   min-height: 44px;
@@ -207,15 +246,18 @@ h1:focus {
   font: 0.75rem var(--font-mono);
   text-align: left;
 }
+
 .close-card:focus-visible,
 .card-links a:focus-visible,
 .next-section:focus-visible {
   outline: 2px solid var(--color-lime);
   outline-offset: 3px;
 }
+
 :where(.card-links a, .next-section, .close-card):focus-visible {
   scroll-margin-block: 12px;
 }
+
 :global(.public-scene.layout-compact .section-card) {
   position: relative;
   grid-row: 1;
