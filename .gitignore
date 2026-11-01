@@ -1,3 +1,4 @@
+.docs
 .DS_Store
 node_modules
 /dist
@@ -22,3 +23,8 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+*.tsbuildinfo
+
+models/*
+!models/README.md

@@ -1,31 +1,54 @@
 # three-d
 
-## To do
-### - Draco compress models
-### - rig model
-### - buttons to change pose
-### - Model Preloader 
-### - Build footer
+Portafolio personal de Yorman Castellanos: Vue 3 + Three.js.
 
-## Project setup
-```
-npm install
-```
+- `master`: v1, en producción.
+- `version-2`: experimento descartado.
+- `version-3`: versión actual en desarrollo.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Requisitos
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Node `^20.19.0 || >=22.12.0` (ver `.nvmrc`).
 
-### Lints and fixes files
-```
-npm run lint
+## Comandos
+
+```bash
+npm install        # instala dependencias y el hook de pre-commit
+npm run dev        # servidor de desarrollo
+npm run check      # todo lo que corre el pre-commit: formato, lint, typecheck y tests
+npm run format     # aplica Prettier
+npm run lint       # ESLint y Stylelint, incluye las reglas de RULES.md
+npm run typecheck  # vue-tsc
+npm run test       # Vitest (archivos src/**/*.test.ts)
+npm run build      # typecheck + build de producción en dist/
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Estructura
+
+```
+src/
+  scene/        Three.js puro
+  content/      textos y configuración (solo datos)
+  composables/  puente entre Vue y la escena
+  components/   UI en Vue
+  styles/       tokens, base y entrada de estilos
+public/models/  escena integrada y poster activos (se copian al build)
+models/         entradas y archivo histórico local, fuera de git
+```
+
+## Estilos
+
+CSS propio para lo que es nuestro y Tailwind v4 para el layout y las utilidades predefinidas.
+
+- **Tailwind**, en el template: grid, flex, espaciado, responsive y utilidades estándar.
+- **CSS propio**, en `<style scoped>`: lo específico del componente (estados, animaciones, efectos). Para usar `@apply` o el tema dentro de un componente, empieza el bloque con `@reference '@/styles/main.css';`.
+- **Tokens**, solo en `src/styles/tokens.css`, dentro de `@theme`. Cada token es a la vez variable CSS (`--color-accent`) y utilidad (`bg-accent`). Fuera de ahí no se escriben colores (R7).
+- **Globales**, en `src/styles/base.css`, al mínimo. El reset lo pone el preflight de Tailwind.
+
+Orden de la cascada: `theme`, `base`, `components`, `utilities`.
+
+Las reglas entre capas están en [RULES.md](RULES.md) y se aplican en cada commit.
+
+## Documentación
+
+El [plan consolidado](docs/plan-v3.md) reúne el estado de las fases, las decisiones vigentes y los pendientes de entrega. Los planes originales y las evidencias se consultan en el historial de Git; el mismo archivo explica cómo recuperarlos.
